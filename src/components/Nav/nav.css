@@ -1,0 +1,25 @@
+.menu-icon {
+	display: none;
+}
+.menu-ul {
+}
+.account-cta {
+}
+@media screen and (max-width: 900px) {
+	.menu-ul,
+	.account-cta {
+		display: none;
+	}
+
+	.collapsible .menu-ul.active,
+	.collapsible .account-cta.active {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.menu-icon {
+		display: block;
+		cursor: pointer;
+	}
+}
