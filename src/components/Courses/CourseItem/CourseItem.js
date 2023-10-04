@@ -1,3 +1,4 @@
+// Import Icons
 import jsIcon from '../../../assets/icons/js-icon.png';
 import pythonIcon from '../../../assets/icons/python-icon.png';
 

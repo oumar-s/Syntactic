@@ -1,19 +1,25 @@
 // Import dependencies
-import './App.css';
-import { CourseItem } from './components/Courses/CourseItem/CourseItem';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // Import components
 import { Nav } from './components/Nav/Nav';
 import { Courses } from './routes/Courses/Courses';
 import { Home } from './routes/Home/Home';
 
+// Import styles
+import './App.css';
+
 function App() {
 	return (
 		<div className='App font-cabin'>
-			<Nav />
 			<div className='body-wrap'>
-				{/* <Home /> */}
-				<Courses />
+				<Router>
+					<Nav />
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/courses' element={<Courses />} />
+					</Routes>
+				</Router>
 			</div>
 		</div>
 	);

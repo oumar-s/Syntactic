@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+// Import dependencies
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom'; // Import NavLink
+
+// Import assets
 import dropdownIcon from '../../assets/icons/drop-down.png';
 import menu from '../../assets/icons/menu.png';
+
+// Import styles
 import './nav.css';
 
 export const Nav = () => {
@@ -11,7 +17,7 @@ export const Nav = () => {
 	};
 
 	return (
-		<nav className=' font-inconsolata text-lg bg-white border-b border-midnight w-full p-6'>
+		<nav className='font-inconsolata text-lg bg-white border-b border-midnight w-full p-6'>
 			<div
 				className='container mx-auto flex items-center justify-between relative'
 				style={{ maxWidth: '1800px' }}
@@ -20,22 +26,39 @@ export const Nav = () => {
 					{`<s>`}
 				</div>
 				<div className='collapsible flex items-center justify-between w-full'>
-					<div className=' m-auto text-center'>
+					<div className='m-auto text-center'>
 						<ul
 							className={`menu-ul flex justify-center space-x-10 ${
 								isActive ? 'active' : ''
 							}`}
 						>
-							<li>Home</li>
+							<li>
+								<NavLink
+									to='/'
+									className={({ isActive }) => (isActive ? 'active-link' : '')}
+								>
+									Home
+								</NavLink>
+							</li>{' '}
+							{/* Updated */}
 							<li className='relative inline-block'>
-								Courses
-								{/* <img
-									src={dropdownIcon}
-									alt='Dropdown Icon'
-									className='absolute top-1/2 -right-5 transform -translate-y-1/2 h-4 w-4'
-								/> */}
-							</li>
-							<li>About</li>
+								<NavLink
+									to='/courses'
+									className={({ isActive }) => (isActive ? 'active-link' : '')}
+								>
+									Courses
+								</NavLink>
+							</li>{' '}
+							{/* Updated */}
+							<li>
+								<NavLink
+									to='/about'
+									className={({ isActive }) => (isActive ? 'active-link' : '')}
+								>
+									About
+								</NavLink>
+							</li>{' '}
+							{/* Updated */}
 						</ul>
 					</div>
 
@@ -47,9 +70,6 @@ export const Nav = () => {
 						<a href='#' className='mr-4 font-bold'>
 							Log In
 						</a>
-						{/* <a href='#' className='bg-black text-white px-4 py-2 rounded-md'>
-							Join For Free
-						</a> */}
 					</div>
 				</div>
 

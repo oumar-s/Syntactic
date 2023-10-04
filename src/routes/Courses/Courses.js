@@ -1,7 +1,12 @@
+// Import dependencies
 import { CourseItem } from '../../components/Courses/CourseItem/CourseItem';
+
+// Import data
 import courses from '../../data/courses.json';
 
 export const Courses = () => {
+	document.title = 'Explore Courses';
+
 	return (
 		// <div className='courses-wrap bg-blue-200 sm:bg-green-200 md:bg-yellow-200 lg:bg-red-200 w-4/5 sm:w-4/5 md:w-4/5 lg:w-2/4 m-auto mt-20'>
 		<div className='courses-wrap w-4/5 sm:w-4/5 md:w-4/5 lg:w-2/4 m-auto mt-20'>
