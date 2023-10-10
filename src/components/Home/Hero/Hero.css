@@ -1,0 +1,11 @@
+.left-bg {
+	background-image: url('../../../assets/illustrations/dots.svg');
+	background-position: center;
+	background-size: cover;
+}
+
+.left-hero-wrap {
+	background-image: url('../../../assets/illustrations/goal-climb.png');
+	background-position: center;
+	background-size: 100%;
+}
