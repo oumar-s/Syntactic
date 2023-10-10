@@ -11,7 +11,7 @@ export const CourseItem = ({ name }) => {
 		<div className='course-item-wrap my-5'>
 			<div className='course-item bg-midnight border-2 border-black text-white rounded-md p-3'>
 				<div className='flex items-center'>
-					<div className='course-icon w-14 h-14'>
+					<div className='course-icon w-12 h-12'>
 						<img src={iconMap[name]} alt={name} className='invert' />
 					</div>
 					<h1 className='ml-4 text-xl'>{name}</h1>

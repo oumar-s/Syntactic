@@ -67,9 +67,9 @@ export const Nav = () => {
 							isActive ? 'active' : ''
 						}`}
 					>
-						<a href='#' className='mr-4 font-bold'>
+						<NavLink to='/login' className='mr-4 font-bold'>
 							Log In
-						</a>
+						</NavLink>
 					</div>
 				</div>
 

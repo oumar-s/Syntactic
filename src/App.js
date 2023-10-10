@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
 import { Courses } from './routes/Courses/Courses';
 import { Home } from './routes/Home/Home';
+import { Login } from './routes/Login/Login';
 
 // Import styles
 import './App.css';
@@ -12,15 +13,16 @@ import './App.css';
 function App() {
 	return (
 		<div className='App font-cabin'>
-			<div className='body-wrap'>
-				<Router>
-					<Nav />
+			<Router>
+				<Nav />
+				<div className='body-wrap'>
 					<Routes>
 						<Route path='/' element={<Home />} />
 						<Route path='/courses' element={<Courses />} />
+						<Route path='/login' element={<Login />} />
 					</Routes>
-				</Router>
-			</div>
+				</div>
+			</Router>
 		</div>
 	);
 }
