@@ -6,8 +6,10 @@ module.exports = {
 			colors: {
 				midnight: '#222c3c',
 				gallery: '#efefef',
-				'neon-blue': '#4a3ef4'
+				'neon-blue': '#4a3ef4',
+				'our-yellow': '#facc17',
 			},
+   main: 
 			fontFamily: {
 				mooli: ["'Mooli'", 'sans-serif'],
 				inconsolata: ['Inconsolata', 'monospace'],
