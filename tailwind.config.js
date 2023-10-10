@@ -7,6 +7,7 @@ module.exports = {
 				midnight: '#222c3c',
 				gallery: '#efefef',
 				'neon-blue': '#4a3ef4',
+				'our-yellow': '#facc17',
 			},
 			fontFamily: {
 				mooli: ["'Mooli'", 'sans-serif'],

@@ -1,10 +1,11 @@
 .menu-icon {
 	display: none;
 }
-.menu-ul {
+/* nav.css */
+.active-link {
+	@apply text-neon-blue font-bold;
 }
-.account-cta {
-}
+
 @media screen and (max-width: 900px) {
 	.menu-ul,
 	.account-cta {

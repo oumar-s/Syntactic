@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './Hero2.css';
 
@@ -15,9 +15,11 @@ export const Hero2 = () => {
 					<br />
 					Choose from an array of courses to fit your learning style.
 				</p>
-				<button className='bg-yellow-400 w-44 text-black font-bold px-4 py-2 my-2 rounded-md'>
-					Explore Courses
-				</button>
+				<Link to='/courses'>
+					<button className='bg-our-yellow w-44 text-black font-bold px-4 py-2 my-2 rounded-md'>
+						Explore Courses
+					</button>
+				</Link>
 			</div>
 
 			{/* Header on the right */}
