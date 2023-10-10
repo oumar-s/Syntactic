@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import courses from "../../data/courses.json"
+import { CourseItem } from "../../components/Courses/CourseItem/CourseItem"
 
 export const DashboardContent = () => {
     return(
@@ -30,8 +32,10 @@ export const DashboardContent = () => {
 
             {/* CourseList component goes here */}
             <div className="bg-white shadow-sm p-4">
-                <h2 className="text-xl font-bold">You Courses</h2>
-                <p className="mt-2">Course List component which will hold a list of enrolled courses</p>
+                <h2 className="text-xl font-bold">Your Courses</h2>
+                {courses.map((course) => (
+				    <CourseItem key={course.id} id={course.id} name={course.name} />
+			    ))}
             </div>
         </>
     );
