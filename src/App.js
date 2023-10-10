@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Nav } from './components/Nav/Nav';
 import { Courses } from './routes/Courses/Courses';
 import { Home } from './routes/Home/Home';
+
 import { Login } from './routes/Login/Login';
 
 // Import styles
