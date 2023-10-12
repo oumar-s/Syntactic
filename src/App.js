@@ -7,6 +7,7 @@ import { Courses } from './routes/Courses/Courses';
 import { Home } from './routes/Home/Home';
 import {Dashboard} from './routes/Dashboard/Dashboard'
 import { Login } from './routes/Login/Login';
+import { Signup } from './components/Form/Signup/Signup';
 
 // Import styles
 import './App.css';
@@ -24,6 +25,7 @@ function App() {
 					</Routes>
 				</div>
 			</Router>
+			<Signup />
 		</div>
 	);
 }
