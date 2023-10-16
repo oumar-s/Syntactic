@@ -1,4 +1,5 @@
 import React from 'react';
+import gIcon from '../../../assets/icons/icons8-google-30.png';
 import { useState } from "react";
 import { auth, googleProvider } from '../../../config/firebase-config';
 import { createUserWithEmailAndPassword, 
@@ -11,16 +12,19 @@ export const Signup = () => {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	console.log(auth.currentUser);
+	//console.log(auth?.currentUser?.email);
 
-	const signIn = async () => {
+
+	// this is for new Users setting up new account
+	const signUp = async () => {
 		try {
 		  await createUserWithEmailAndPassword(auth, email, password);
 		} catch (err) {
 		  console.error(err);
 		}
 	  };
-
+	  
+	//signupwith google
 	const signInWithGoogle = async () => {
 		try {
 		  await signInWithPopup(auth, googleProvider);
@@ -54,15 +58,34 @@ export const Signup = () => {
 				<button
 					//type='submit'
 					//value='Sign Up'
-					onClick={ signIn }
-					className='w-full bg-neon-blue text-white p-3 rounded-md cursor-pointer'
+			
+					onClick={ signUp }
+					className='w-half bg-neon-blue text-white p-3 rounded-md cursor-pointer'
 					>
 						Sign Up
 				</button>
-				<button onClick={signIn}> Sign In</button>
+				<button onClick={signUp}> </button>
 
-      			<button onClick={signInWithGoogle}> Sign In With Google</button>
+      			<button onClick={signInWithGoogle}
+				className='w-half bg-neon-blue text-white p-3 rounded-md cursor-pointer'> Sign In With Google</button>
 			</form>
 		</div>
 	);
 };
+
+
+
+ // this is for new Users setting up new account with Googel account
+	//   const logIn = async () => {
+	// 	try {
+	// 		await signInWithEmailAndPassword(auth, email, password)
+	// 		// .then((userCredential) => {
+	// 		// 	const user = userCredential.user;
+	// 		// })
+	// 		.catch((error) => {
+	// 			const errorCode = error.code;
+	// 			const errorMessage = error.message;
+	// 		});
+
+	// 	}
+	//   }

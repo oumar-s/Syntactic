@@ -13,7 +13,7 @@ export const CourseItem = ({ name }) => {
 				<div className='flex items-center'>
 					<div className='course-icon w-12 h-12'>
 						<img src={iconMap[name]} alt={name} className='invert' />
-					</div>
+					</div> 
 					<h1 className='ml-4 text-xl'>{name}</h1>
 				</div>
 			</div>

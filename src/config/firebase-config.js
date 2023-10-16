@@ -5,6 +5,8 @@ import { getAuth, onAuthStateChanged, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyDa-g_B32ymdJhbvJ1kSPHSHjzuzfEv224",
   authDomain: "syntactic-71b1c.firebaseapp.com",
@@ -24,19 +26,4 @@ export const googleProvider = new GoogleAuthProvider();
 
 export const db = getFirestore(app);
 export const storage = getStorage(app);
-export const user = auth.currentUser;
-if(user) {
-  console.log("WORKS")
-} else {
-  console.log("NOPEEE")
-}
 
-// onAuthStateChanged(auth, (user) => {
-//   if(user){
-//     const uid = user.uid;
-//     console.log(uid)
-//     console.log("WORKSS")
-//   } else {
-//     console.log('NOPE')
-//   }
-// })
