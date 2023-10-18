@@ -25,7 +25,7 @@ function App() {
 					</Routes>
 				</div>
 			</Router>
-			<Signup />
+			
 		</div>
 	);
 }

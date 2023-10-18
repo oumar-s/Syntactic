@@ -1,34 +1,46 @@
 import React from 'react';
 import { useState } from "react";
 //import {Signup} from '../../components/Form/Signup/Signup';
-import {auth, googleProvider} from '../../config/firebase-config';
-import { signInWithEmailAndPassword,
-	signInWithPopup,
-	signOut 
+import {auth, googleProvider, githubProvider } from '../../config/firebase-config';
+import { currentUser,
+	signInWithPopup, 
 } from 'firebase/auth';
 
 export const Login = () => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+
+	//not gonna use below since not using createUserWithEmailAndPassword
+	// const [email, setEmail] = useState("");
+	// const [password, setPassword] = useState("");
+	console.log(auth?.currentUser?.email);
 
 	// this is for existing user loggin in to existing account
 	const logIn = async () => {
 		try {
-			await signInWithEmailAndPassword(auth, email, password);
-		} catch (err) {
+			await signInWithPopup(auth, googleProvider);
+		  } catch (err) {
 			console.error(err);
-		}
+		  }
 	};
 
-
-	const logout = async () => {
+	//signupwith google
+	const signInWithGoogle = async () => {
 		try {
-		  await signOut(auth);
+		  await signInWithPopup(auth, googleProvider);
 		} catch (err) {
 		  console.error(err);
 		}
 	  };
-	
+
+	//signupwith google
+	const signInWithGithub = async () => {
+		try {
+		  await signInWithPopup(auth, githubProvider);
+		} catch (err) {
+		  console.error(err);
+		}
+	  };
+
+
 
 	document.title = 'Login';
 	return (
@@ -38,35 +50,45 @@ export const Login = () => {
 				Login to Syntactic
 			</h1>
 
-			<form action='' className='text-lg font-mono font-normal'>
-				<input
-					type='text'
-					name='email'
-					id='email'
-					placeholder='Email'
-					className='w-full p-2 mb-4 rounded-md'
-					required
-				/>
-				<input
-					type='password'
-					name='password'
-					id='password'
-					placeholder='Password'
-					className='w-full p-2 mb-4 rounded-md'
-					required
-				/>
 				<button
 					type='submit'
-					onClick = {logIn}
+					onClick = {signInWithGoogle}
 					value='Login'
 					className='w-full bg-neon-blue text-white p-3 rounded-md cursor-pointer'
-				> Log In
+				> Log In with Google
 				</button>
+
+				<button
+					type='submit'
+					onClick = {signInWithGithub}
+					value='Login'
+					className='w-full bg-neon-blue text-white p-3 rounded-md cursor-pointer'
+				> Log In with Github
+				</button>
+
 				
 				<button className=' border-none text-sm mt-4 bg-transparent text-gray-500'>
 					I forgot my password
 				</button>
-			</form>
 		</div>
 	);
 };
+
+
+// <form action='' className='text-lg font-mono font-normal'>
+// <input
+// 	type='text'
+// 	name='email'
+// 	id='email'
+// 	placeholder='Email'
+// 	className='w-full p-2 mb-4 rounded-md'
+// 	required
+// />
+// <input
+// 	type='password'
+// 	name='password'
+// 	id='password'
+// 	placeholder='Password'
+// 	className='w-full p-2 mb-4 rounded-md'
+// 	required
+// />

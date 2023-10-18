@@ -1,6 +1,8 @@
 // Import dependencies
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
+import {auth} from '../../config/firebase-config';
+import { signOut } from 'firebase/auth';
 
 // Import assets
 import dropdownIcon from '../../assets/icons/drop-down.png';
@@ -15,6 +17,15 @@ export const Nav = () => {
 	const toggleActive = () => {
 		setIsActive(!isActive);
 	};
+
+	const logout = async () => {
+		try {
+		  await signOut(auth);
+		} catch (err) {
+		  console.error(err);
+		}
+	  };
+
 
 	return (
 		<nav className='font-inconsolata text-lg bg-white border-b border-midnight w-full p-6'>
@@ -58,7 +69,7 @@ export const Nav = () => {
 									About
 								</NavLink>
 							</li>{' '}
-							{/* Updated */}
+
 						</ul>
 					</div>
 
@@ -67,6 +78,20 @@ export const Nav = () => {
 							isActive ? 'active' : ''
 						}`}
 					>
+					
+					<button 
+						// type='submit'
+						onClick = {logout}
+						value='Logout'
+						className=' mr-4 text-red-500 font-bold'
+					>	
+					<NavLink to='/' className='mr-4 font-bold'>
+					Log Out
+						</NavLink>
+					
+					</button>
+						
+					
 						<NavLink to='/login' className='mr-4 font-bold'>
 							Log In
 						</NavLink>
@@ -80,3 +105,13 @@ export const Nav = () => {
 		</nav>
 	);
 };
+
+// <button 
+		
+// 		// type='submit'
+// 		onClick = {logout}
+// 		value='Logout'
+// 		className=' mr-4 text-red-500 font-bold'
+// 	>
+// 	Log Out
+// 	</button>
