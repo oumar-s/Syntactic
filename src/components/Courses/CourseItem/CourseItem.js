@@ -59,7 +59,15 @@ export const CourseItem = ({ name }) => {
 
 			{isOpen && (
 				<div className='accordion-content mt-2 bg-opacity-50 bg-white border border-midnight rounded-md px-5 py-10 text-lg'>
-					<h1 className='text-2xl font-bold mb-8'>Syllabus</h1>
+					<div className='syllabus'>
+						<h2 className='font-bold text-2xl mb-7'>Syllabus</h2>
+						{/* <p className='text-gray-600 mb-5'>
+							Our courses come with interactive lessons, real-world projects.
+							Take your first step towards mastering a new skill or advancing in
+							your career. Browse through our extensive catalog and find the
+							course that's just right for you.
+						</p> */}
+					</div>
 
 					<ol className='list-decimal list-inside space-y-7'>
 						{displayedTopics.map((topic, index) => (

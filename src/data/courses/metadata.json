@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"name": "JavaScript",
+		"description": "Learn JavaScript from scratch",
+		"total_chapters": 9
+	},
+	{
+		"id": 2,
+		"name": "Python",
+		"description": "Learn Python from scratch",
+		"total_chapters": 9
+	}
+]
