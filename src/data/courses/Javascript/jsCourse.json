@@ -1,0 +1,64 @@
+[
+	{
+		"chapter_id": 1,
+		"title": "Introduction to JavaScript",
+		"content": "Some text or HTML content",
+		"code_examples": [
+			{
+				"example_id": 1,
+				"description": "A simple Hello, World! program",
+				"code": "console.log('Hello, World!');"
+			}
+		],
+		"practice_problems": [
+			{
+				"problem_id": 1,
+				"description": "Write a function to add two numbers",
+				"solution": "function add(a, b) { return a + b; }"
+			},
+			{
+				"problem_id": 2,
+				"description": "Write a function to multiply two numbers",
+				"solution": "function multiply(a, b) { return a * b; }"
+			}
+		],
+		"test_problems": [
+			{
+				"problem_id": 1,
+				"description": "Write a function to subtract two numbers",
+				"solution": "function subtract(a, b) { return a - b; }"
+			},
+			{
+				"problem_id": 2,
+				"description": "Write a function to divide two numbers",
+				"solution": "function divide(a, b) { return a / b; }"
+			}
+		]
+	},
+	{
+		"chapter_id": 2,
+		"title": "Data Types and Variables",
+		"content": "Some text or HTML content for Chapter 2",
+		"code_examples": [
+			{
+				"example_id": 1,
+				"description": "Declaring variables",
+				"code": "let x = 10; const y = 20;"
+			}
+		],
+		"practice_problems": [
+			{
+				"problem_id": 1,
+				"description": "Write a function to find the type of a variable",
+				"solution": "function findType(a) { return typeof a; }"
+			}
+		],
+		"test_problems": [
+			{
+				"problem_id": 1,
+				"description": "Write a function to check if a number is even",
+				"solution": "function isEven(a) { return a % 2 === 0; }"
+			}
+		]
+	}
+]
