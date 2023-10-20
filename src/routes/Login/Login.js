@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react";
 //import {Signup} from '../../components/Form/Signup/Signup';
-import {auth, googleProvider, githubProvider } from '../../config/firebase-config';
+import {auth, googleProvider, githubProvider } from '../../config/firebaseConfig';
 import { currentUser,
 	signInWithPopup, 
 } from 'firebase/auth';

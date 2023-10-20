@@ -4,18 +4,19 @@ import { getAuth, onAuthStateChanged, GoogleAuthProvider, GithubAuthProvider } f
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-
-
 const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  databaseURL: process.env.databaseURL,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId
+  apiKey: process.env.REACT_APP_ApiKey,
+  authDomain: process.env.REACT_APP_AuthDomain,
+  databaseURL: process.env.REACT_APP_DatabaseURL,
+  projectId: process.env.REACT_APP_ProjectId,
+  storageBucket: process.env.REACT_APP_StorageBucket,
+  messagingSenderId: process.env.REACT_APP_MessagingSenderId,
+  appId: process.env.REACT_APP_AppId,
+  measurementId: process.env.REACT_APP_MeasurementId
 };
+const hello = {hello: process.env.REACT_SECRET_HELLO};
+console.log(hello.hello);
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
