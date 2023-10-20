@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 // Import components
 import { DashboardContent } from "../../components/Dashboard/DashboardContent";
-import { db } from './config/firebase-config';
+import { db } from '../../config/firebaseConfig';
 import { getDocs,
 	collection,
 	addDoc,

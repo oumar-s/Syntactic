@@ -1,7 +1,7 @@
 import React from 'react';
 import gIcon from '../../../assets/icons/icons8-google-30.png';
 import { useState } from "react";
-import { auth, googleProvider, githubProvider } from '../../../config/firebase-config';
+import { auth, googleProvider, githubProvider } from '../../../config/firebaseConfig';
 import {signInWithPopup
 } from 'firebase/auth';
 
@@ -56,8 +56,8 @@ export const Signup = () => {
 				type ='submit'
 				onClick={signInWithGoogle}
 				value='Login'
-				className='w-half bg-neon-blue text-white p-3 rounded-md cursor-pointer'> 
-				Sign In With Google
+				className='w-half bg-neon-blue text-white p-3 my-3 rounded-md cursor-pointer'> 
+				Sign Up With Google
 			</button>
 			<br></br>
 			<button

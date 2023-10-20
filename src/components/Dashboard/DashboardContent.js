@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import courses from "../../data/courses.json"
+import courses from "../../data/courses/metadata.json"
 import { CourseItem } from "../../components/Courses/CourseItem/CourseItem"
 
 export const DashboardContent = () => {

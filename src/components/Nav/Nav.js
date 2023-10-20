@@ -1,7 +1,7 @@
 // Import dependencies
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
-import {auth} from '../../config/firebase-config';
+import {auth} from '../../config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 
 // Import assets
