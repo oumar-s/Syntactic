@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Hero.css';
-import { Signup } from '../../../components/Form/Signup/Signup';
+import { Signup } from '../../Form/Signup/Signup';
 
 export const Hero = () => {
 	return (
