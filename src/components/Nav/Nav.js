@@ -1,6 +1,7 @@
 // Import dependencies
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
+
 import { auth } from '../../config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 
@@ -36,6 +37,7 @@ export const Nav = () => {
 
 	const logout = async () => {
 		try {
+
 			await signOut(auth);
 			setIsDropdownVisible(false); // Reset the dropdown visibility
 		} catch (err) {

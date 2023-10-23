@@ -1,4 +1,5 @@
 import React from 'react';
+
 import googleIcon from '../../../assets/icons/google.png';
 import githubIcon from '../../../assets/icons/github.png';
 import { useState } from 'react';
@@ -9,12 +10,14 @@ import {
 } from '../../../config/firebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
 
+
 export const Signup = () => {
 	console.log(auth?.currentUser?.email);
 
 	//signupwith google
 	const signInWithGoogle = async () => {
 		try {
+
 			await signInWithPopup(auth, googleProvider);
 		} catch (err) {
 			console.error(err);
@@ -24,11 +27,13 @@ export const Signup = () => {
 	//signupwith google
 	const signInWithGithub = async () => {
 		try {
+
 			await signInWithPopup(auth, githubProvider);
 		} catch (err) {
 			console.error(err);
 		}
 	};
+
 
 	return (
 		<div className='form-wrap w-full '>
@@ -58,6 +63,7 @@ export const Signup = () => {
 					value='Sign Up'
 					className='w-full bg-neon-blue text-white p-3 rounded-md cursor-pointer'
 				/>
+
 			</form> */}
 			<div
 				className='signup-google-wrap flex items-center text-lg	 border-2 border-midnight hover:bg-neon-blue hover:text-white transition duration-300 transform hover:scale-105 rounded-xl p-4 cursor-pointer my-4'
@@ -77,6 +83,7 @@ export const Signup = () => {
 				</div>
 				Sign Up with Github
 			</div>
+
 		</div>
 	);
 };
