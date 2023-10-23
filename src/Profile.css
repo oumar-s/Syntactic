@@ -1,0 +1,42 @@
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+}
+
+.change-info {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+}
+
+.change-password{
+    margin-left: 20px;
+}
+
+.change-information{
+    margin-top: 20px;
+    margin-left: 35%;
+    margin-bottom: 0px;
+}
+  .pfp {
+    margin-right: 10px; 
+    overflow: hidden;
+    border-radius: 50%;
+    height: 70px;
+  }
+
+  .user-information{
+    margin-left: 35%;
+    margin-top: 10%;
+  }
+  
+  .username-block,
+  .email-block {
+    margin-right: 10px; 
+  }
+
+  .username, .email{
+    margin-bottom: 3px;
+  }

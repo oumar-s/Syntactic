@@ -1,7 +1,8 @@
 // Import dependencies
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
-import {auth} from '../../config/firebaseConfig';
+
+import { auth } from '../../config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 
 // Import assets
@@ -13,6 +14,22 @@ import './nav.css';
 
 export const Nav = () => {
 	const [isActive, setIsActive] = useState(false);
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			if (user) {
+				setIsUserLoggedIn(true);
+				console.log('displayName from Nav:', user.displayName);
+				setIsDropdownVisible(false); // Reset the dropdown visibility
+			} else {
+				setIsUserLoggedIn(false);
+			}
+		});
+
+		return () => unsubscribe();
+	}, []);
 
 	const toggleActive = () => {
 		setIsActive(!isActive);
@@ -20,11 +37,13 @@ export const Nav = () => {
 
 	const logout = async () => {
 		try {
-		  await signOut(auth);
+
+			await signOut(auth);
+			setIsDropdownVisible(false); // Reset the dropdown visibility
 		} catch (err) {
-		  console.error(err);
+			console.error(err);
 		}
-	  };
+	};
 
 	return (
 		<nav className='font-inconsolata text-lg bg-white border-b border-midnight w-full p-6'>
@@ -77,20 +96,41 @@ export const Nav = () => {
 							isActive ? 'active' : ''
 						}`}
 					>
-						<button 
-							// type='submit'
-							onClick = {logout}
-							value='Logout'
-							className=' mr-4 text-red-500 font-bold'
-						>	
-							<NavLink to='/' className='mr-4 font-bold'>
-								Log Out
+						{isUserLoggedIn ? (
+							<>
+								<div
+									className='user-icon cursor-pointer rounded-full bg-midnight w-12 h-12 flex justify-center items-center text-white font-bold'
+									onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+								>
+									U
+								</div>
+								{isDropdownVisible && (
+									<div className='dropdown-menu absolute w-36 top-20 right-0 bg-white rounded-md shadow-md border border-midnight p-5'>
+										<ul className='dropdown-ul'>
+											<li className='dropdown-li mb-4 transition duration-200 hover:text-neon-blue'>
+												<NavLink
+													to='/profile'
+													className='dropdown-link'
+													activeClassName='active-link'
+												>
+													Profile
+												</NavLink>
+											</li>
+											<hr className='my-3' />
+											<li className='dropdown-li transition duration-200 hover:text-neon-blue'>
+												<NavLink to='/login' onClick={logout}>
+													Log Out
+												</NavLink>
+											</li>
+										</ul>
+									</div>
+								)}
+							</>
+						) : (
+							<NavLink to='/login' className='mr-4 font-bold'>
+								Log In
 							</NavLink>
-						</button>
-
-						<NavLink to='/login' className='mr-4 font-bold'>
-							Log In
-						</NavLink>
+						)}
 					</div>
 				</div>
 
