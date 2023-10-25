@@ -1,11 +1,10 @@
 // Import dependencies
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
 import { auth } from '../../config/firebaseConfig';
 import { signOut } from 'firebase/auth';
 
 // Import assets
-import dropdownIcon from '../../assets/icons/drop-down.png';
 import menu from '../../assets/icons/menu.png';
 
 // Import styles
@@ -15,6 +14,21 @@ export const Nav = () => {
 	const [isActive, setIsActive] = useState(false);
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const userIconRef = useRef(null); // Create a ref
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (isDropdownVisible && event.target !== userIconRef.current) {
+				setIsDropdownVisible(false);
+			}
+		};
+
+		document.addEventListener('click', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, [isDropdownVisible]);
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -59,33 +73,63 @@ export const Nav = () => {
 								isActive ? 'active' : ''
 							}`}
 						>
-							<li>
-								<NavLink
-									to='/'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									Home
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
-							<li className='relative inline-block'>
-								<NavLink
-									to='/courses'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									Courses
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
-							<li>
-								<NavLink
-									to='/about'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									About
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
+							{isUserLoggedIn ? (
+								<>
+									<li>
+										<NavLink
+											to='/dashboard'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Dashboard
+										</NavLink>
+									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/courses'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Courses
+										</NavLink>
+									</li>
+								</>
+							) : (
+								<>
+									<li>
+										<NavLink
+											to='/'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Home
+										</NavLink>
+									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/courses'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Courses
+										</NavLink>
+									</li>
+									<li>
+										<NavLink
+											to='/about'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											About
+										</NavLink>
+									</li>
+								</>
+							)}
 						</ul>
 					</div>
 
@@ -97,6 +141,7 @@ export const Nav = () => {
 						{isUserLoggedIn ? (
 							<>
 								<div
+									ref={userIconRef} // Attach the ref here
 									className='user-icon cursor-pointer rounded-full bg-midnight w-12 h-12 flex justify-center items-center text-white font-bold'
 									onClick={() => setIsDropdownVisible(!isDropdownVisible)}
 								>
