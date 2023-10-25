@@ -19,7 +19,7 @@ export const Login = () => {
 	const signInWithGoogle = async () => {
 		try {
 			await signInWithPopup(auth, googleProvider);
-			navigate('/');
+			navigate('/dashboard');
 			// console.log('CurrentUser: ', auth?.currentUser);
 
 		} catch (err) {
@@ -32,7 +32,7 @@ export const Login = () => {
 	const signInWithGithub = async () => {
 		try {
 			await signInWithPopup(auth, githubProvider);
-			navigate('/');
+			navigate('/dashboard');
 			// console.log('Signed in as: ', auth?.currentUser?.email);
 		} catch (err) {
 			console.error(err);

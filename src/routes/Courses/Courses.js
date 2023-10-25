@@ -1,4 +1,5 @@
 // Import dependencies
+import { CourseIntro } from '../../components/Courses/CourseIntro/CourseIntro';
 import { CourseItem } from '../../components/Courses/CourseItem/CourseItem';
 import { EnrolledCourse } from '../../components/Courses/EnrolledCourse/EnrolledCourse';
 
@@ -28,6 +29,7 @@ export const Courses = () => {
 				<CourseItem key={course.id} id={course.id} name={course.name} />
 			))}
 			{/* <EnrolledCourse /> */}
+			{/* <CourseIntro /> */}
 		</div>
 	);
 };
