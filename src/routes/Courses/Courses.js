@@ -2,6 +2,8 @@
 import { CourseIntro } from '../../components/Courses/CourseIntro/CourseIntro';
 import { CourseItem } from '../../components/Courses/CourseItem/CourseItem';
 import { EnrolledCourse } from '../../components/Courses/EnrolledCourse/EnrolledCourse';
+import { DashboardContent } from '../../components/Dashboard/DashboardContent';
+import Editor from '../../../src/Editor';
 
 // Import data
 import courses from '../../data/courses/metadata.json';
@@ -28,8 +30,10 @@ export const Courses = () => {
 			{courses.map((course) => (
 				<CourseItem key={course.id} id={course.id} name={course.name} />
 			))}
+			{/* <DashboardContent /> */}
 			{/* <EnrolledCourse /> */}
 			{/* <CourseIntro /> */}
+			{/* <Editor /> */}
 		</div>
 	);
 };
