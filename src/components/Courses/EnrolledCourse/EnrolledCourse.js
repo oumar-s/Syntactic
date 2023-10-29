@@ -84,13 +84,13 @@ export const EnrolledCourse = ({ name, syllabus}) => {
 										{topic.dropdown && (
 											<div className='ml-20 mt-2 bg-opacity-50 bg-white rounded-md px-5 text-lg'>
 												<ol className='list-disc space-y-7'>
-                                                    {topic.topics.map((subtopic, index) => (
+                                                    {topic.topics.map((subtopic) => (
                                                         <li className=''>
                                                             <NavLink
-                                                                to='javascript/1'
+                                                                to={`javascript/${subtopic.id}`}
                                                                 className={({ isActive }) => (isActive ? 'active-link' : '')}
                                                             >
-                                                                {subtopic}
+                                                                {subtopic.name}
                                                             </NavLink>
                                                             
                                                         </li>
