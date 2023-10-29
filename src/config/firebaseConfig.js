@@ -16,7 +16,7 @@ const firebaseConfig = {
 };
 const hello = {hello: process.env.REACT_SECRET_HELLO};
 console.log(hello.hello);
-console.log(firebaseConfig);
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -24,5 +24,5 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const githubProvider = new GithubAuthProvider();
-export const db = getFirestore(app);
+export const db = getFirestore(app); console.log(db);
 export const storage = getStorage(app);

@@ -16,6 +16,8 @@ import { Dashboard } from './routes/Dashboard/Dashboard';
 import { Login } from './routes/Login/Login';
 import { Profile } from './components/Profile/Profile';
 
+import JavascriptRoutes from './routes/CourseMaterials/Javascript/JavascriptRoutes';
+
 // Import styles
 import './App.css';
 
@@ -44,7 +46,7 @@ function App() {
 				<Nav />
 				<div className='body-wrap'>
 					<Routes>
-						<Route path='/' element={<Home />} />
+						<Route path='/' element={<Dashboard />} />
 						<Route path='/courses' element={<Courses />} />
 						<Route
 							path='/login'
@@ -71,8 +73,9 @@ function App() {
 							}
 						/>
 					</Routes>
+					<JavascriptRoutes />
 				</div>
-			</Router>
+			</Router> 
 		</div>
 	);
 }

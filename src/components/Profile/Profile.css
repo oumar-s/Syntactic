@@ -1,0 +1,44 @@
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+}
+
+.change-info {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+}
+
+.change-password{
+    margin-left: 20px;
+}
+
+.change-information{
+    margin-top: 20px;
+    margin-left: 35%;
+    margin-bottom: 0px;
+}
+  .pfp {
+    margin-right: 10px; 
+    overflow: hidden;
+    border-radius: 50%;
+    height: 150px;
+  }
+
+  .user-information{
+    margin-left: 30%;
+    margin-top: 10%;
+  }
+  
+  .username-block,
+  .email-block {
+    margin-right: 10px; 
+    margin-left: 30px;
+    margin-top: 0px;
+  }
+
+  .username, .email{
+    margin-bottom: 3px;
+  }
