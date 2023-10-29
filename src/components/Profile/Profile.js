@@ -1,56 +1,57 @@
-import './Profile.css'
-function Profile(){
-    return(
-        <div className="Profile bg-gallery w-full h-full">
-            <p className='user-information text-midnight text-lg font-mono font-normal text-8xl'> User Information</p>
-            <div className="profile-info">
-                <a href="/edit-profile-picture">
-                <img className="pfp" src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt=""></img>
-                <div className="edit-pfp text-midnight text-3xl font-mono font-normal">
-                    <span>Edit PFP</span>
-                 </div>
-                </a>
-                <div className="username-block"> 
-                        <p className="username text-midnight text-4xl font-mono font-normal">
-                            USERNAME:
-                        </p>
-                        <form> 
-                            <input type="text" className="current-username border-2 border-midnight w-60 h-8 text-midnight text-4xl font-mono font-normal" value="username"></input>
-                        </form>
-                </div>
-                <div className="email-block">
-                        <p className="email text-midnight text-4xl font-mono font-normal">
-                            EMAIL:
-                        </p>
-                        <form> 
-                            <input type="text" className="current-username border-2 border-midnight w-60 h-8 text-midnight text-4xl font-mono font-normal" value="email"></input>
-                        </form>
-                </div>
-            </div>
-            <p className='change-information text-midnight text-4xl font-mono font-normal'>Change Your Password Or Email</p>
-            <div className="change-info">
-                <div className="change-email">
-                    <form id="email form" method="post">
-                        <p className="enter-new-email-text text-midnight text-2xl font-mono font-normal">Enter New Email:</p>
-                        <input type="text" className="email-input w-60 border-2 border-midnight"></input>
-                        <p className="enter-new-email-text text-midnight text-2xl font-mono font-normal">Confirm New Email:</p>
-                        <input type="text" className="confirm-email-input w-60 border-2 border-midnight"></input>
-                        <button className="submitButton border-2 border-midnight text-midnight text-2xl font-mono font-normal ml-2" type="submit" class="btn">Submit</button>
-                    </form>
-                </div>
-                <div className="change-password">
-                    <form id="password form" method="post">
-                    <p className="enter-new-password-text text-midnight text-2xl font-mono font-normal">Enter New Password:</p>
-                    <input type="text" className="password-input w-60 border-2 border-midnight"></input>
-                    <p className="enter-new-password-text text-midnight text-2xl font-mono font-normal">Confirm New Password:</p>
-                    <input type="text" className="confirm-password-input w-60 border-2 border-midnight"></input>
-                    <button className="submitButton border-2 border-midnight text-midnight text-2xl font-mono font-normal ml-2" type="submit" class="btn">Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
-    
-}
+export const Profile = () => {
+	return (
+		<div className='profile-wrap w-4/5 sm:w-4/5 md:w-4/5 lg:w-2/4 m-auto mt-14'>
+			<header className='flex items-center justify-between mb-6'>
+				<h1 className='font-bold text-xl'>My Profile</h1>
+				<span className='cursor-pointer border border-midnight py-2 px-4 rounded-md hover:bg-midnight hover:text-white transition-all duration-200 ease-in-out'>
+					Edit Profile
+				</span>
+			</header>
+			<div className='flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4'>
+				<div className='left-container user-avatar rounded-lg p-6 border border-gray-300 w-full md:w-1/3 flex items-center justify-center'>
+					<div className='avatar w-32 h-32 rounded-full bg-gray-200 '></div>
+				</div>
 
-export default Profile;
+				<div className='right-container user-info rounded-lg p-6 border border-gray-300 w-full md:w-2/3'>
+					<div className='mb-4'>
+						<label className='block text-sm font-medium text-gray-600'>
+							Name
+						</label>
+						<input
+							type='text'
+							className='mt-1 p-2 w-full rounded-md border border-gray-300'
+							value='User Name'
+							readOnly
+							disabled
+						/>
+					</div>
+					<div className='mb-4'>
+						<label className='block text-sm font-medium text-gray-600'>
+							Email
+						</label>
+						<input
+							type='email'
+							className='mt-1 p-2 w-full rounded-md border border-gray-300'
+							value='user@example.com'
+							readOnly
+							disabled
+						/>
+					</div>
+					<div className='mb-4'>
+						<label className='block text-sm font-medium text-gray-600'>
+							Phone
+						</label>
+						<input
+							type='tel'
+							className='mt-1 p-2 w-full rounded-md border border-gray-300'
+							value='123-456-7890'
+							readOnly
+							disabled
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
