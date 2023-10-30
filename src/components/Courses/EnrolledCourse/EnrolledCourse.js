@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; // Import NavLink
 
 // Import Icons
 import dropDownIcon from '../../../assets/icons/drop-down.png';
@@ -8,14 +8,9 @@ let allTopics = [];
 export const EnrolledCourse = ({ name, syllabus}) => {
 
     
-    //for each topic in syllabus, add a dropdown property
-    // syllabus.forEach((topic) => {
-    //     allTopics.push(topic.chapter);
-    //     allTopics.push(topic.chapter);
-    //     topic.dropdown = false;
-    // });
-    // console.log(allTopics)
+    const courseName = name.toLowerCase();
     allTopics = syllabus;
+    const numOfChapters = allTopics.length;
 
 
     const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
@@ -86,12 +81,12 @@ export const EnrolledCourse = ({ name, syllabus}) => {
 												<ol className='list-disc space-y-7'>
                                                     {topic.topics.map((subtopic) => (
                                                         <li className=''>
-                                                            <NavLink
-                                                                to={`javascript/${subtopic.id}`}
+                                                            <Link
+                                                                to={`/${courseName}/${subtopic.id}`}
                                                                 className={({ isActive }) => (isActive ? 'active-link' : '')}
                                                             >
                                                                 {subtopic.name}
-                                                            </NavLink>
+                                                            </Link>
                                                             
                                                         </li>
                                                     ))}
@@ -101,6 +96,21 @@ export const EnrolledCourse = ({ name, syllabus}) => {
 									</div>
                             </li>
                         ))}
+                             <li className='flex flex-col'>
+								<div className='flex'>
+									<div className='rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5'>
+										{numOfChapters + 1}
+									</div>
+									<div className='flex items-center'>
+                                        <Link
+                                            to={`/${courseName}/projects`} 
+                                        >
+                                            Projects    
+                                        </Link>
+									</div>
+								</div>
+								
+                            </li>   
                     </ol>
                 </div>
             )}

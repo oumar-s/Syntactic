@@ -46,7 +46,7 @@ function App() {
 				<Nav />
 				<div className='body-wrap'>
 					<Routes>
-						<Route path='/' element={<Dashboard />} />
+						<Route path='/' element={<Home />} />
 						<Route path='/courses' element={<Courses />} />
 						<Route
 							path='/login'

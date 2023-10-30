@@ -1,40 +1,68 @@
 import { useState } from 'react';
+import { auth, db } from '../../../config/firebaseConfig';
+import {
+    setDoc,
+    collection,
+    addDoc,
+    arrayUnion,
+    updateDoc,
+    doc,
+    Firestore,
+    getDoc
+} from 'firebase/firestore';
+import { OpenAI } from "openai";
 
 // Import Icons
 import jsIcon from '../../../assets/icons/js-icon.png';
 import pythonIcon from '../../../assets/icons/python-icon.png';
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 
-export const CourseItem = ({ name }) => {
+const openai = new OpenAI({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+});
+
+
+export const CourseItem = ({ name, syllabus }) => {
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
-	const [showAllTopics, setShowAllTopics] = useState(false); // State to track showing all topics
+	const [showAllChapters, setShowAllChapters] = useState(false); // State to track showing all topics
 
 	const iconMap = {
-		JavaScript: jsIcon,
+		Javascript: jsIcon,
 		Python: pythonIcon,
 	};
 
-	const topics = [
-		'Introduction to JavaScript',
-		'Conditional Statements',
-		'Loops',
-		'Functions',
-		'Arrays and Objects',
-		'Strings',
-		'Object Literals',
-		'ES6 Classes',
-		'Promises',
-	];
+	const chapters = syllabus;
+
 
 	const toggleAccordion = () => {
 		setIsOpen(!isOpen);
 	};
 
 	const toggleShowAllTopics = () => {
-		setShowAllTopics(!showAllTopics);
+		setShowAllChapters(!showAllChapters);
 	};
 
-	const displayedTopics = showAllTopics ? topics : topics.slice(0, 5);
+	const displayedChapters = showAllChapters ? chapters : chapters.slice(0, 5);
+
+	const handleEnroll= async () => {
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const docRef = doc(db, 'enrollment', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    enrollments: arrayUnion({ title: name, syllabus: syllabus })
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    enrollments: [{title: name, syllabus: syllabus}]
+                });
+            }
+
+        };
+    };
 
 	return (
 		<div className='course-item-wrap my-5'>
@@ -61,20 +89,27 @@ export const CourseItem = ({ name }) => {
 				<div className='accordion-content mt-2 bg-opacity-50 bg-white border border-midnight rounded-md px-5 py-10 text-lg'>
 					<div className='syllabus flex justify-between items-center mb-7'>
 						<h2 className='font-bold text-2xl'>Syllabus</h2>
-						<button className='enroll-button bg-our-yellow hover:bg-[#e6b00f] transition duration-300 ease-in-out font-bold rounded-md px-5 py-3'>
+						<button className='enroll-button bg-our-yellow hover:bg-[#e6b00f] transition duration-300 ease-in-out font-bold rounded-md px-5 py-3' onClick={handleEnroll}>
 							Enroll
 						</button>
 					</div>
 
 					<ol className='list-decimal list-inside space-y-7'>
-						{displayedTopics.map((topic, index) => (
+						{displayedChapters.map((chapter, index) => (
 							<li className='flex items-center' key={index}>
 								<div className='rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5'>
 									{index + 1}
 								</div>
-								{topic}
+								{chapter.chapter}
 							</li>
 						))}
+							{showAllChapters && (
+							<li className='flex items-center' key={chapters.length + 1}>
+								<div className='rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5'>
+									{chapters.length + 1}
+								</div>
+								Projects
+							</li> )}
 					</ol>
 
 					<div className='flex justify-center mt-10'>
@@ -82,7 +117,7 @@ export const CourseItem = ({ name }) => {
 							className='btn text-neon-blue font-semibold'
 							onClick={toggleShowAllTopics}
 						>
-							{showAllTopics ? 'Show Less Units' : 'Show All Units'}
+							{showAllChapters ? 'Show Less Chapters' : 'Show All Chapters'}
 						</button>
 					</div>
 				</div>

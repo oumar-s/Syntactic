@@ -31,6 +31,15 @@ console.log(sum, difference, product, quotient);
         practice2: 'Declare two variables, length and width, and assign them values. Then, calculate the area by multiplying length and width. Finally, display the result using console.log.',
 
         practice3: 'Declare multiple variables to represent the prices of different items (e.g., item1Price, item2Price, etc.), and declare a variable totalCost to store the final result. Assign prices to each item. Then, calculate the total cost by adding up the prices of all the items. Display the total cost using console.log.'
+    },
+
+    //probles are in random order for the sake of Interleaving
+    exam : {
+        1: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
+        2: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
+        3: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
+        4: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
+        5: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y."
     }
 }
 

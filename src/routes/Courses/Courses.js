@@ -5,11 +5,40 @@ import { EnrolledCourse } from '../../components/Courses/EnrolledCourse/Enrolled
 import { DashboardContent } from '../../components/Dashboard/DashboardContent';
 import Editor from '../../../src/Editor';
 
+import React, { useState, useEffect } from 'react';
+import { db } from '../../config/firebaseConfig';
+import {
+	getDocs,
+	collection,
+} from 'firebase/firestore';
+
+
 // Import data
 import courses from '../../data/courses/metadata.json';
 
 export const Courses = () => {
 	document.title = 'Explore Courses';
+
+	const [courses, setCourses] = useState([]);
+
+	useEffect(() => {
+		const coursesData = [];
+		// Reference to the user's document in the "enrollments" collection.
+		const fetchData = async () => {
+			try {
+				const querySnapshot = await getDocs(collection(db, "courses"));
+				querySnapshot.forEach((doc) => {
+					coursesData.push(doc.data())
+				});
+				console.log('coursesData:', coursesData);
+				setCourses(coursesData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, []);
+
 
 	return (
 		// <div className='courses-wrap bg-blue-200 sm:bg-green-200 md:bg-yellow-200 lg:bg-red-200 w-4/5 sm:w-4/5 md:w-4/5 lg:w-2/4 m-auto mt-20'>
@@ -28,7 +57,7 @@ export const Courses = () => {
 				just right for you.
 			</p>
 			{courses.map((course) => (
-				<CourseItem key={course.id} id={course.id} name={course.name} />
+				<CourseItem key={course.id} id={course.id} name={course.title} syllabus={course.syllabus} />
 			))}
 			{/* <DashboardContent /> */}
 			{/* <EnrolledCourse /> */}

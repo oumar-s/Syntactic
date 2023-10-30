@@ -15,6 +15,7 @@ export const Nav = () => {
 	const [isActive, setIsActive] = useState(false);
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const [user, setUser] = useState(null);
 	const userIconRef = useRef(null); // Create a ref
 
 	useEffect(() => {
@@ -35,6 +36,7 @@ export const Nav = () => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
 				setIsUserLoggedIn(true);
+				setUser(user);
 				console.log('displayName from Nav:', user.displayName);
 				setIsDropdownVisible(false); // Reset the dropdown visibility
 			} else {
@@ -143,11 +145,16 @@ export const Nav = () => {
 						{isUserLoggedIn ? (
 							<>
 								<div
-									ref={userIconRef} // Attach the ref here
-									className='user-icon cursor-pointer rounded-full bg-midnight w-12 h-12 flex justify-center items-center text-white font-bold'
-									onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+									
+									className='user-icon cursor-pointer rounded-ful w-12 h-12 flex justify-center items-center text-white font-bold'
 								>
-									U
+									<img
+										src={user? user.photoURL : ''}
+										alt='avatar'
+										className='w-full h-full object-cover rounded-full'
+										ref={userIconRef} // Attach the ref here
+										onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+									/>
 								</div>
 								{isDropdownVisible && (
 									<div className='dropdown-menu absolute w-36 top-20 right-0 bg-white rounded-md shadow-md border border-midnight p-5'>
