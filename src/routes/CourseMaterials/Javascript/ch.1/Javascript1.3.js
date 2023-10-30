@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { auth, db } from '../../../../config/firebaseConfig'; 
-import { getDocs,
-	collection,
-	addDoc,
+import { auth, db } from '../../../../config/firebaseConfig';
+import {
+    getDoc,
+    collection,
+    setDoc,
     arrayUnion,
     updateDoc,
-	doc,
+    doc,
     Firestore
- } from 'firebase/firestore';
+} from 'firebase/firestore';
 
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; // Import NavLink
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 
+import Chapter1 from './PracticeAndExamples';
+
 import { OpenAI } from "openai";
-const openai = new OpenAI({ 
+const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
 });
 
 const Examination = () => {
     const [code, setCode] = useState('');
-    const [output, setOutput] = useState('');    
-    
-    const practice = `Write an if statement to check if a number is even or odd. Declare a variable called number and assign it any integer value. Write an if statement that checks whether the number is even or odd. Use console.log() to display a message indicating whether the number is even or odd.`
+    const [output, setOutput] = useState('');
+    const [selectedTab, setSelectedTab] = useState(1);
+    const [practice, setPractice] = useState(Chapter1.exam[1]); 
+
+    const handleTabClick = (tabNumber) => {
+        console.log('practice', practice);
+        setSelectedTab(tabNumber);
+        setPractice(Chapter1.exam[tabNumber]);
+    };
+
 
     function handleEditorChange(value, event) {
         console.log('here is the current model value:', value);
@@ -38,80 +48,149 @@ const Examination = () => {
             messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${code}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
-        });  
+        });
         setOutput(response.choices[0].message.content);
     };
     const handleSubmit = async () => {
+        setOutput('Loading...');
         const response = await openai.chat.completions.create({
-                messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice}` }],
-                model: "gpt-3.5-turbo",
-                max_tokens: 100});
-            
+            messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice}` }],
+            model: "gpt-3.5-turbo",
+            max_tokens: 100
+        });
+
         const feedback = response.choices[0].message.content;
         setOutput(feedback);
 
         //Add feedback to Firebase
-        const currentUser = auth.currentUser;    
+        const currentUser = auth.currentUser;
         if (currentUser) {
-            try {
-                const userFeedbackDocRef = await doc(db, `/course_feedbacks/${currentUser.uid}`);
-                if(userFeedbackDocRef){
-                    updateDoc(userFeedbackDocRef, {
-                        feedbacks: arrayUnion({feedback: feedback, course: 'Javascript'}) 
-                    });
-                }
-                //setEnrolledCourses(enrolledCoursesData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' })
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback}]
+                });
             }
-        
+
         };
-      };
+    };
 
 
     return (
-        <div className='bg-midnight pt-5 pb-5'>
+        <div className='bg-midnight pt-1'>
             <div className='flex justify-center space-x-8 p-5 m-5'>
-                    <NavLink to='/javascript/1.2'>
-                        <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    </NavLink>
-                    <NavLink to='/javascript/2.0'>
-                        <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                    </NavLink>
+                <Link to='/javascript/1.2'>
+                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
+                </Link>
+                <Link to='/javascript/projects'>
+                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
+                </Link>
             </div>
             <div className='flex flex-wrap md:flex-nowrap  font-ubuntu bg-midnight text-white'>
-                <div className='w-1/2 h-screen overflow-auto pl-5 pr-5'>
-                    <h1 className='text-2xl md:text-4xl font-bold my-4'>        
+                <div className='w-1/2 h-fit overflow-auto pl-5 pr-5'>
+                    <h1 className='text-2xl md:text-4xl font-bold bg-slate-700 p-4'>
                         Chapter 1 Exam
                     </h1>
-                    <p className='font-mono my-2'>
+                    <p className='font-mono my-8'>
                         Answer each of the practive questions bellow to the best of your ability. Your performance here will be used to build your specialized review list.
                     </p>
 
-                    <p className='font-mono my-2'>
+                    <p className='font-mono my-8'>
                         Conditional statements are like the traffic signals of your program, guiding the flow of execution based on certain conditions. We'll cover:
                         if Statements: Learn how to use if statements to execute a block of code if a specified condition is true.
                         else Statements: Explore else statements, which allow you to provide an alternative code block to execute if the condition in the if statement is false.
                     </p>
 
-                    <button className=''>
-                       Generate Additional Practice Problems
-                    </button>
+                    <div className="w-fit p-8">
+                        <nav className="bg-slate-900">
+                            <ul className="flex space-x-4">
+                                <li
+                                    className={`cursor-pointer p-4 ${selectedTab === 1 ? 'bg-gray-600' : ''}`}
+                                    onClick={() => handleTabClick(1)}
+                                >
+                                    Practice 1
+                                </li>
+                                <li
+                                    className={`cursor-pointer p-4 ${selectedTab === 2 ? 'bg-gray-600' : ''}`}
+                                    onClick={() => handleTabClick(2)}
+                                >
+                                    Practice 2
+                                </li>
+                                <li
+                                    className={`cursor-pointer p-4 ${selectedTab === 3 ? 'bg-gray-600' : ''}`}
+                                    onClick={() => handleTabClick(3)}
+                                >
+                                    Practice 3
+                                </li>
+                                <li
+                                    className={`cursor-pointer p-4 ${selectedTab === 4 ? 'bg-gray-600' : ''}`}
+                                    onClick={() => handleTabClick(4)}
+                                >
+                                    Practice 4
+                                </li>
+                                <li
+                                    className={`cursor-pointer p-4 ${selectedTab === 5 ? 'bg-gray-600' : ''}`}
+                                    onClick={() => handleTabClick(5)}
+                                >
+                                    Practice 5
+                                </li>
+                            </ul>
+                        </nav>
+                        <div className=" p-4 mt-4">
+                            {selectedTab === 1 && 
+                            <p className='font-mono my-2'>
+                                {practice}
+                            </p>}
 
+                            {selectedTab === 2 && 
+                            <p className='font-mono my-2'>
+                                {practice}
+                            </p>}
+
+                            {selectedTab === 3 && 
+                            <p className='font-mono my-2'>
+                                {practice}
+                            </p>}
+
+                            {selectedTab === 4 && 
+                            <p className='font-mono my-2'>
+                                {practice}
+                            </p>}
+
+                            {selectedTab === 5 && 
+                            <p className='font-mono my-2'>
+                                {practice}
+                            </p>}
+                        </div>
+                    </div>
                     
+                    <div className='buttons-and-info-div flex space-x-2 justify-center pt-30 pb-16 mt-16'>
+                        <button className='hover:bg-gray-600 p-4 text-white font-semibold bg-slate-900'>
+                            More Practice Problems
+                        </button>
+                    </div>
+
+
+
                 </div>
 
                 <div className='w-1/2'>
                     <div className="editor-container border-t-4  border-l-4 border-r-4 border-solid border-slate-800">
                         <Editor
-                            height="60vh"
+                            height="58vh"
                             language="javascript"
                             theme="vs-dark"
                             onChange={handleEditorChange}
                         />
                     </div>
 
-                    <div className='buttons-and-info-div flex space-x-2 justify-center bg-slate-900'>
+                    <div className='buttons-and-info-div flex space-x-2 justify-center bg-slate-900 '>
                         <button className=" hover:bg-gray-600 text-white font-semibold w-20 h-10 flex items-center justify-center" onClick={handleRun}>
                             Run
                         </button>
@@ -121,23 +200,22 @@ const Examination = () => {
                         </button>
                     </div>
 
-                    <div className='bg-black h-64 p-2'>
-                        <pre>{output}</pre>
+                    <div className='bg-black h-52 p-2 border-2 border-solid border-slate-800'>
+                        <pre className='whitespace-pre-line'>{output}</pre>
                     </div>
-                    
+
                 </div>
             </div>
-            <div className='flex justify-center space-x-8 p-5 m-5'>
-                    <NavLink to='/javascript/1.1'>
-                        <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    </NavLink>
-                    <NavLink to='/javascript/1.3'>
-                        <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                    </NavLink>
-            </div>
+            {/* <div className='flex justify-center space-x-8 p-5 m-5'>
+                <Link to='/javascript/1.1'>
+                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
+                </Link>
+                <Link to='/javascript/1.3'>
+                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
+                </Link>
+            </div> */}
         </div>
     );
-};
+}
 
 export default Examination;
-

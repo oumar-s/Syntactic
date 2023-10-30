@@ -1,10 +1,10 @@
 import React, { useState} from 'react';
 import Editor from '@monaco-editor/react';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; // Import NavLink
 import { auth, db } from '../../../../config/firebaseConfig'; 
-import { getDocs,
+import { getDoc,
 	collection,
-	addDoc,
+	setDoc,
     arrayUnion,
     updateDoc,
 	doc,
@@ -102,18 +102,19 @@ const DataTypesAndVariables = () => {
         //Add feedback to Firebase
         const currentUser = auth.currentUser;    
         if (currentUser) {
-            try {
-                const userFeedbackDocRef = await doc(db, `/course_feedbacks/${currentUser.uid}`);
-                if(userFeedbackDocRef){
-                    updateDoc(userFeedbackDocRef, {
-                        feedbacks: arrayUnion({feedback: feedback, course: 'Javascript'}) 
-                    });
-                }
-                //setEnrolledCourses(enrolledCoursesData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' })
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback}]
+                });
             }
-        
+
         };
     };
     const handleSubmit2 = async () => {
@@ -131,18 +132,19 @@ const DataTypesAndVariables = () => {
         //Add feedback to Firebase
         const currentUser = auth.currentUser;    
         if (currentUser) {
-            try {
-                const userFeedbackDocRef = await doc(db, `/course_feedbacks/${currentUser.uid}`);
-                if(userFeedbackDocRef){
-                    updateDoc(userFeedbackDocRef, {
-                        feedbacks: arrayUnion({feedback: feedback, course: 'Javascript'}) 
-                    });
-                }
-                //setEnrolledCourses(enrolledCoursesData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' })
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback}]
+                });
             }
-        
+
         };
     };
     const handleSubmit3 = async () => {
@@ -160,18 +162,19 @@ const DataTypesAndVariables = () => {
         //Add feedback to Firebase
         const currentUser = auth.currentUser;    
         if (currentUser) {
-            try {
-                const userFeedbackDocRef = await doc(db, `/course_feedbacks/${currentUser.uid}`);
-                if(userFeedbackDocRef){
-                    updateDoc(userFeedbackDocRef, {
-                        feedbacks: arrayUnion({feedback: feedback, course: 'Javascript'}) 
-                    });
-                }
-                //setEnrolledCourses(enrolledCoursesData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' })
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback}]
+                });
             }
-        
+
         };
       };
 
@@ -189,12 +192,12 @@ const DataTypesAndVariables = () => {
         <div className='flex flex-col font-ubuntu bg-midnight text-white'>
             <div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
                 <div className='flex justify-center space-x-8 p-5 m-5'>
-                    <NavLink to='/javascript/1.1'>
+                    <Link to='/javascript/1.1'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    </NavLink>
-                    <NavLink to='/javascript/1.3'>
+                    </Link>
+                    <Link to='/javascript/1.3'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                    </NavLink>
+                    </Link>
                 </div>
                 <h1 className='text-2xl md:text-4xl font-bold my-4 bg-slate-700 p-4'>        
                     Data Types and Variables
@@ -258,10 +261,10 @@ const DataTypesAndVariables = () => {
                     {toggle1 && (
                         <div className=''> 
                             <div className='flex space-x-1 border-4 border-solid border-slate-800 bg-slate-800'>
-                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md break-all'>
+                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md'>
                                     <pre className='whitespace-normal'>Output: {output1}</pre>
                                 </div>
-                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md '>
+                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
                                     <pre className='whitespace-pre-line'>Feedback: {feedback1}</pre>
                                 </div> 
                             </div>
@@ -298,10 +301,10 @@ const DataTypesAndVariables = () => {
                     {toggle2 && (
                         <div className=''> 
                             <div className='flex space-x-1 border-4 border-solid border-slate-800 bg-slate-800'>
-                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md break-all'>
+                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md'>
                                     <pre className='whitespace-normal'>Output: {output2}</pre>
                                 </div>
-                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md '>
+                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
                                     <pre className='whitespace-pre-line'>Feedback: {feedback2}</pre>
                                 </div> 
                             </div>
@@ -338,10 +341,10 @@ const DataTypesAndVariables = () => {
                     {toggle3 && (
                         <div className=''> 
                             <div className='flex space-x-1 border-4 border-solid border-slate-800 bg-slate-800'>
-                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md break-all'>
+                                <div className='font-mono bg-neutral-900 h-36 w-1/4 p-2 rounded-md'>
                                     <pre className='whitespace-normal'>Output: {output3}</pre>
                                 </div>
-                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md '>
+                                <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
                                     <pre className='whitespace-pre-line'>Feedback: {feedback3}</pre>
                                 </div> 
                             </div>
@@ -359,12 +362,12 @@ const DataTypesAndVariables = () => {
 
                 </div>
                 <div className='flex justify-center space-x-8 p-5 m-5'>
-                    <NavLink to='/javascript/1.1'>
+                    <Link to='/javascript/1.1'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    </NavLink>
-                    <NavLink to='/javascript/1.3'>
+                    </Link>
+                    <Link to='/javascript/1.3'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                    </NavLink>
+                    </Link>
                 </div>
             </div>
         </div>

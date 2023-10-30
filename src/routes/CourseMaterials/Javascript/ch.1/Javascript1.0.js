@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 
@@ -9,9 +9,9 @@ const Introduction = () => {
             <div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
                 <div className='flex justify-center space-x-8 p-5 m-5'>
                     <img className='bg-slate-600  p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    <NavLink to='/javascript/1.1'>
+                    <Link to='/javascript/1.1'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                    </NavLink>
+                    </Link>
                 </div>
                 <h1 className='text-2xl md:text-4xl font-bold my-4 bg-slate-700 p-4'>        
                     Introduction to JavaScript
