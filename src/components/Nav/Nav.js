@@ -1,9 +1,11 @@
 // Import dependencies
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom'; // Import NavLink
 
+import { auth } from '../../config/firebaseConfig';
+import { signOut } from 'firebase/auth';
+
 // Import assets
-import dropdownIcon from '../../assets/icons/drop-down.png';
 import menu from '../../assets/icons/menu.png';
 
 // Import styles
@@ -11,9 +13,52 @@ import './nav.css';
 
 export const Nav = () => {
 	const [isActive, setIsActive] = useState(false);
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const [user, setUser] = useState(null);
+	const userIconRef = useRef(null); // Create a ref
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (isDropdownVisible && event.target !== userIconRef.current) {
+				setIsDropdownVisible(false);
+			}
+		};
+
+		document.addEventListener('click', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('click', handleClickOutside);
+		};
+	}, [isDropdownVisible]);
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			if (user) {
+				setIsUserLoggedIn(true);
+				setUser(user);
+				console.log('displayName from Nav:', user.displayName);
+				setIsDropdownVisible(false); // Reset the dropdown visibility
+			} else {
+				setIsUserLoggedIn(false);
+			}
+		});
+
+		return () => unsubscribe();
+	}, []);
 
 	const toggleActive = () => {
 		setIsActive(!isActive);
+	};
+
+	const logout = async () => {
+		try {
+
+			await signOut(auth);
+			setIsDropdownVisible(false); // Reset the dropdown visibility
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	return (
@@ -32,33 +77,63 @@ export const Nav = () => {
 								isActive ? 'active' : ''
 							}`}
 						>
-							<li>
-								<NavLink
-									to='/'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									Home
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
-							<li className='relative inline-block'>
-								<NavLink
-									to='/courses'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									Courses
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
-							<li>
-								<NavLink
-									to='/about'
-									className={({ isActive }) => (isActive ? 'active-link' : '')}
-								>
-									About
-								</NavLink>
-							</li>{' '}
-							{/* Updated */}
+							{isUserLoggedIn ? (
+								<>
+									<li>
+										<NavLink
+											to='/dashboard'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Dashboard
+										</NavLink>
+									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/courses'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Courses
+										</NavLink>
+									</li>
+								</>
+							) : (
+								<>
+									<li>
+										<NavLink
+											to='/'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Home
+										</NavLink>
+									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/courses'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Courses
+										</NavLink>
+									</li>
+									<li>
+										<NavLink
+											to='/about'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											About
+										</NavLink>
+									</li>
+								</>
+							)}
 						</ul>
 					</div>
 
@@ -67,9 +142,47 @@ export const Nav = () => {
 							isActive ? 'active' : ''
 						}`}
 					>
-						<NavLink to='/login' className='mr-4 font-bold'>
-							Log In
-						</NavLink>
+						{isUserLoggedIn ? (
+							<>
+								<div
+									
+									className='user-icon cursor-pointer rounded-ful w-12 h-12 flex justify-center items-center text-white font-bold'
+								>
+									<img
+										src={user? user.photoURL : ''}
+										alt='avatar'
+										className='w-full h-full object-cover rounded-full'
+										ref={userIconRef} // Attach the ref here
+										onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+									/>
+								</div>
+								{isDropdownVisible && (
+									<div className='dropdown-menu absolute w-36 top-20 right-0 bg-white rounded-md shadow-md border border-midnight p-5'>
+										<ul className='dropdown-ul'>
+											<li className='dropdown-li mb-4 transition duration-200 hover:text-neon-blue'>
+												<NavLink
+													to='/profile'
+													className='dropdown-link'
+													activeClassName='active-link'
+												>
+													Profile
+												</NavLink>
+											</li>
+											<hr className='my-3' />
+											<li className='dropdown-li transition duration-200 hover:text-neon-blue'>
+												<NavLink to='/login' onClick={logout}>
+													Log Out
+												</NavLink>
+											</li>
+										</ul>
+									</div>
+								)}
+							</>
+						) : (
+							<NavLink to='/login' className='mr-4 font-bold'>
+								Log In
+							</NavLink>
+						)}
 					</div>
 				</div>
 
