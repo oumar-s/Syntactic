@@ -16,7 +16,6 @@ export const DashboardContent = () => {
                     <p class="mt-4"> We've kept a list of all your feedbacks. </p>
                     <div className="flex flex-row place-content-between items-center">
                         <button className="mt-8 bg-yellow-400 hover:bg-amber-500 text-black font-bold py-2 px-4 rounded"> Feedbacks </button>
-                        <a href="a" className="mt-8 text-indigo-500"> Edit </a>  
                     </div>
                 </div>
                 
