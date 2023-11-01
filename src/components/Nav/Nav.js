@@ -149,7 +149,7 @@ export const Nav = () => {
 									className='user-icon cursor-pointer rounded-ful w-12 h-12 flex justify-center items-center text-white font-bold'
 								>
 									<img
-										src={user? user.photoURL : ''}
+										src={user? user.photoURL : menu}
 										alt='avatar'
 										className='w-full h-full object-cover rounded-full'
 										ref={userIconRef} // Attach the ref here
