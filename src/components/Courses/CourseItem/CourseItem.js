@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { auth, db } from '../../../config/firebaseConfig';
 import {
-    setDoc,
-    collection,
-    addDoc,
-    arrayUnion,
-    updateDoc,
-    doc,
-    Firestore,
-    getDoc
+	setDoc,
+	collection,
+	addDoc,
+	arrayUnion,
+	updateDoc,
+	doc,
+	Firestore,
+	getDoc,
 } from 'firebase/firestore';
-import { OpenAI } from "openai";
+import { OpenAI } from 'openai';
 
 // Import Icons
 import jsIcon from '../../../assets/icons/js-icon.png';
@@ -18,10 +19,9 @@ import pythonIcon from '../../../assets/icons/python-icon.png';
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 
 const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
+	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+	dangerouslyAllowBrowser: true,
 });
-
 
 export const CourseItem = ({ name, syllabus }) => {
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
@@ -34,7 +34,6 @@ export const CourseItem = ({ name, syllabus }) => {
 
 	const chapters = syllabus;
 
-
 	const toggleAccordion = () => {
 		setIsOpen(!isOpen);
 	};
@@ -45,24 +44,44 @@ export const CourseItem = ({ name, syllabus }) => {
 
 	const displayedChapters = showAllChapters ? chapters : chapters.slice(0, 5);
 
-	const handleEnroll= async () => {
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            const docRef = doc(db, 'enrollment', `${currentUser.uid}`);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                updateDoc(docRef, {
-                    enrollments: arrayUnion({ title: name, syllabus: syllabus })
-                });
-            } else {
-                // Add a new document in collection "cities"
-                await setDoc(docRef, {
-                    enrollments: [{title: name, syllabus: syllabus}]
-                });
-            }
+	const [isEnrolled, setIsEnrolled] = useState(false);
 
-        };
-    };
+	const handleEnroll = async () => {
+		const currentUser = auth.currentUser;
+		if (currentUser) {
+			const docRef = doc(db, 'enrollment', `${currentUser.uid}`);
+			const docSnap = await getDoc(docRef);
+			if (docSnap.exists()) {
+				updateDoc(docRef, {
+					enrollments: arrayUnion({ title: name, syllabus: syllabus }),
+				});
+			} else {
+				await setDoc(docRef, {
+					enrollments: [{ title: name, syllabus: syllabus }],
+				});
+				setIsEnrolled(true);
+			}
+		}
+	};
+
+	useEffect(() => {
+		const checkEnrollment = async () => {
+			const currentUser = auth.currentUser;
+			if (currentUser) {
+				const docRef = doc(db, 'enrollment', `${currentUser.uid}`);
+				const docSnap = await getDoc(docRef);
+				if (docSnap.exists()) {
+					const data = docSnap.data();
+					const isUserEnrolled = data.enrollments.some(
+						(course) => course.title === name,
+					);
+					setIsEnrolled(isUserEnrolled);
+				}
+			}
+		};
+
+		checkEnrollment();
+	}, [name]);
 
 	return (
 		<div className='course-item-wrap my-5'>
@@ -89,8 +108,15 @@ export const CourseItem = ({ name, syllabus }) => {
 				<div className='accordion-content mt-2 bg-opacity-50 bg-white border border-midnight rounded-md px-5 py-10 text-lg'>
 					<div className='syllabus flex justify-between items-center mb-7'>
 						<h2 className='font-bold text-2xl'>Syllabus</h2>
-						<button className='enroll-button bg-our-yellow hover:bg-[#e6b00f] transition duration-300 ease-in-out font-bold rounded-md px-5 py-3' onClick={handleEnroll}>
-							Enroll
+						<button
+							className='enroll-button bg-our-yellow hover:bg-[#e6b00f] transition duration-300 ease-in-out font-bold rounded-md px-5 py-3'
+							onClick={
+								isEnrolled
+									? () => (window.location.href = '/javascript/1.0')
+									: handleEnroll
+							}
+						>
+							{isEnrolled ? 'Go to Course' : 'Enroll'}
 						</button>
 					</div>
 
@@ -103,13 +129,14 @@ export const CourseItem = ({ name, syllabus }) => {
 								{chapter.chapter}
 							</li>
 						))}
-							{showAllChapters && (
+						{showAllChapters && (
 							<li className='flex items-center' key={chapters.length + 1}>
 								<div className='rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5'>
 									{chapters.length + 1}
 								</div>
 								Projects
-							</li> )}
+							</li>
+						)}
 					</ol>
 
 					<div className='flex justify-center mt-10'>

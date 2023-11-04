@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -21,12 +20,10 @@ export const Login = () => {
 			await signInWithPopup(auth, googleProvider);
 			navigate('/dashboard');
 			// console.log('CurrentUser: ', auth?.currentUser);
-
 		} catch (err) {
 			console.error(err);
 		}
 	};
-
 
 	// sign in with github
 	const signInWithGithub = async () => {
@@ -47,7 +44,6 @@ export const Login = () => {
 				Sign In to Continue
 			</h1>
 
-
 			<div
 				className='signup-google-wrap flex items-center text-lg border-2 border-midnight hover:bg-neon-blue hover:text-white transition duration-300 transform hover:scale-105 rounded-xl p-4 cursor-pointer my-4'
 				onClick={signInWithGoogle}
@@ -66,7 +62,6 @@ export const Login = () => {
 				</div>
 				Sign In with Github
 			</div>
-
 		</div>
 	);
 };

@@ -46,7 +46,13 @@ function App() {
 				<Nav />
 				<div className='body-wrap'>
 					<Routes>
-						<Route path='/' element={<Home />} />
+						<Route
+							path='/'
+							element={
+								isAuthenticated ? <Navigate to='/dashboard' /> : <Home />
+							}
+						/>
+
 						<Route path='/courses' element={<Courses />} />
 						<Route
 							path='/login'
@@ -73,9 +79,10 @@ function App() {
 							}
 						/>
 					</Routes>
+
 					<JavascriptRoutes />
 				</div>
-			</Router> 
+			</Router>
 		</div>
 	);
 }
