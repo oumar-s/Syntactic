@@ -17,6 +17,7 @@ import { Login } from './routes/Login/Login';
 import { Profile } from './components/Profile/Profile';
 
 import JavascriptRoutes from './routes/CourseMaterials/Javascript/JavascriptRoutes';
+import PythonRoutes from './routes/CourseMaterials/Python/PythonRoutes';
 
 // Import styles
 import './App.css';
@@ -74,6 +75,7 @@ function App() {
 						/>
 					</Routes>
 					<JavascriptRoutes />
+					<PythonRoutes />
 				</div>
 			</Router> 
 		</div>
