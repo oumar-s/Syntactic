@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'; // Import NavLink
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition Algorithm
 
 import Chapter1 from './PracticeAndExamples';
 
@@ -25,10 +26,43 @@ const openai = new OpenAI({
 });
 
 const Examination = () => {
+    const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
+
     const [code, setCode] = useState('');
     const [output, setOutput] = useState('');
     const [selectedTab, setSelectedTab] = useState(1);
     const [practice, setPractice] = useState(Chapter1.exam[1]); 
+    //const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
+    const [userUID, setUserUID] = useState(null);
+
+	useEffect(() => {
+		const currentUser = auth.currentUser;
+	
+		if (currentUser) {
+			setUserUID(currentUser.uid);
+			const fetchReviewData = async () => {
+				try {
+					const docRef = doc(db, 'reviews', `${userUID}`);
+					const docSnap = await getDoc(docRef);
+					if (docSnap.exists()) {
+						console.log(
+							'Document Data (review):',
+							docSnap.data(),
+						);
+						leitner.boxes[0] = docSnap.data().Javascript.box1;
+					} else {
+						// doc.data() will be undefined in this case
+						console.log('No such document!');
+					}
+				} catch (error) {
+					console.error('Error fetching data:', error);
+				}
+			};
+
+			fetchReviewData();
+		}
+	}, [userUID]);
+
 
     const handleTabClick = (tabNumber) => {
         console.log('practice', practice);

@@ -4,6 +4,7 @@ import { EnrolledCourse } from '../Courses/EnrolledCourse/EnrolledCourse';
 
 //Import Dependencies
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { auth, db } from '../../config/firebaseConfig';
 import {
 	getDoc,
@@ -16,28 +17,22 @@ import {
 
 export const DashboardContent = () => {
 	const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [nextTopicToReview, setNextTopicToReview] = useState({topic: 'none'});
+
 	const [userUID, setUserUID] = useState(null);
+
 
 	useEffect(() => {
 		const currentUser = auth.currentUser;
-		//console.log('Dashboard:', currentUser)
-		const enrolledCoursesData = [];
-
+	
 		if (currentUser) {
 			console.log('Dashboard USER:', currentUser);
 			// Access the user's UID.
 			setUserUID(currentUser.uid);
 			// Reference to the user's document in the "enrollments" collection.
-			const fetchData = async () => {
+			const fetchEnrollmentData = async () => {
 				try {
-					// const querySnapshot = await getDocs(collection(db, "enrollment"));
-					// querySnapshot.forEach((doc) => {
-					//   if (doc.id === userUID) {
-					//     enrolledCoursesData.push(doc.data())
-					//   }
-					// });
-					// setEnrolledCourses(enrolledCoursesData);
-					const docRef = doc(db, 'enrollment', `${currentUser.uid}`);
+					const docRef = doc(db, 'enrollment', `${userUID}`);
 					const docSnap = await getDoc(docRef);
 					if (docSnap.exists()) {
 						console.log(
@@ -54,8 +49,25 @@ export const DashboardContent = () => {
 					console.error('Error fetching data:', error);
 				}
 			};
+      const fetchNextTopicToReview= async () => {
+        const docRef = doc(db, 'reviews', `${currentUser.uid}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            //get next topic to review
+            console.log('test1')
+            setNextTopicToReview(docSnap.data().Javascript.next);
+        } else {
+            // Add a new document in collection "cities"
+            await setDoc(docRef, {
+                Javascript: {box1: [], box2: [], box3: [], next: {topic: 'none'}}
+            });
+        }
 
-			fetchData();
+			};
+
+
+			fetchEnrollmentData();
+      fetchNextTopicToReview();
 		}
 	}, [userUID]);
 
@@ -67,25 +79,30 @@ export const DashboardContent = () => {
 					<h2 className='text-xl font-bold inline'> Personalized Feedback </h2>
 					<p class='mt-4'> We've kept a list of all your feedbacks. </p>
 					<div className='flex flex-row place-content-between items-center'>
-						<button className='mt-8 bg-yellow-400 hover:bg-amber-500 text-black font-bold py-2 px-4 rounded'>
-							{' '}
-							Feedbacks{' '}
-						</button>
+            <Link to='/feedbacks'>
+              <button className='mt-8 bg-yellow-400 hover:bg-amber-500 text-black font-bold py-2 px-4 rounded'>
+                {' '}
+                Feedbacks{' '}
+              </button>
+            </Link>
 					</div>
 				</div>
 
 				<div className='sm:flex-1 bg-white shadow-sm rounded-md p-4'>
 					<h2 className='text-xl font-bold'> Personalized Review </h2>
-					<p className='mt-4'>
-						<strong>Topic:</strong> Arrow Functions
-					</p>
-					<div className='flex flex-row place-content-between items-center'>
-						<button className='mt-8 bg-yellow-400 hover:bg-amber-500 text-black font-bold py-2 px-4 rounded'>
-							Review
-						</button>
-					</div>
+					{nextTopicToReview.topic === 'none' ? 
+          <p className='mt-4'>You have no topics to review</p> :
+          <>
+            <p className='mt-4'>
+              <strong>Topic:</strong> {nextTopicToReview.topic} </p> 
+            <div className='flex flex-row place-content-between items-center'>
+              <button className='mt-8 bg-yellow-400 hover:bg-amber-500 text-black font-bold py-2 px-4 rounded'>
+                Review
+              </button>
+            </div>
+          </>}
+          </div>
 				</div>
-			</div>
 
 			{/* CourseList component goes here */}
 			<div className='bg-white shadow-sm p-4 rounded-md w-4/5 sm:w-4/5 md:w-4/5 lg:w-3/4 m-auto mt-14'>

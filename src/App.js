@@ -15,6 +15,7 @@ import { Home } from './routes/Home/Home';
 import { Dashboard } from './routes/Dashboard/Dashboard';
 import { Login } from './routes/Login/Login';
 import { Profile } from './components/Profile/Profile';
+import Feedback from './components/Feedback/Feedback';
 
 import JavascriptRoutes from './routes/CourseMaterials/Javascript/JavascriptRoutes';
 
@@ -54,6 +55,7 @@ function App() {
 						/>
 
 						<Route path='/courses' element={<Courses />} />
+						<Route path='/feedbacks' element={<Feedback />} />
 						<Route
 							path='/login'
 							element={

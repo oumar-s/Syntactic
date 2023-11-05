@@ -61,8 +61,8 @@ function FeedbackSort( {feedbackArray} ){
                 </div>
             </div>
             <div>
-                {sortedArray.map((feedback) => (
-                    <UserFeedback course={feedback[0]} feedbackToUser={feedback[1]} feedbackID={feedback[2]}/>
+                {sortedArray.map((feedback, index) => (
+                    <UserFeedback course={feedback[0]} feedbackToUser={feedback[1]} feedbackID={index}/>
                 ))}
             </div>
         </div>
