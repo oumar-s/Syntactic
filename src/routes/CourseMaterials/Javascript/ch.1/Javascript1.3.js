@@ -59,11 +59,11 @@ const Examination = () => {
 	// 					leitner.boxes[0] = docSnap.data().Javascript.box1;
     //                     leitner.boxes[1] = docSnap.data().Javascript.box2;
     //                     leitner.boxes[2] = docSnap.data().Javascript.box2;
-    //                     leitner.addItem(Chapter1.exam[1]);
-    //                     leitner.addItem(Chapter1.exam[2]);
-    //                     leitner.addItem(Chapter1.exam[3]);
-    //                     leitner.addItem(Chapter1.exam[4]);
-    //                     leitner.addItem(Chapter1.exam[5]);
+                        // leitner.addItem(Chapter1.exam[1]);
+                        // leitner.addItem(Chapter1.exam[2]);
+                        // leitner.addItem(Chapter1.exam[3]);
+                        // leitner.addItem(Chapter1.exam[4]);
+                        // leitner.addItem(Chapter1.exam[5]);
 	// 				} else {
 	// 					// doc.data() will be undefined in this case
 	// 					console.log('No such document!');
@@ -128,6 +128,11 @@ const Examination = () => {
         const currentUser = auth.currentUser;
         if (currentUser) {
             if(selectedTab === 5){
+                leitner.addItem(Chapter1.exam[1]);
+                leitner.addItem(Chapter1.exam[2]);
+                leitner.addItem(Chapter1.exam[3]);
+                leitner.addItem(Chapter1.exam[4]);
+                leitner.addItem(Chapter1.exam[5]);
                 //update review in Firebase
                 const docRefReview = doc(db, 'reviews', `${currentUser.uid}`);
                 //const docSnapReview = await getDoc(docRefReview);

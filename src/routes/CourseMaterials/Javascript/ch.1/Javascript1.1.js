@@ -62,7 +62,7 @@ const Logging = () => {
         setToggle1(true);
         setOutput1('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code1}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing. ${code1}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });
@@ -72,7 +72,7 @@ const Logging = () => {
         setToggle2(true);
         setOutput2('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code2}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing. ${code2}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });
@@ -82,7 +82,7 @@ const Logging = () => {
         setToggle3(true);
         setOutput3('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code3}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing. ${code3}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });

@@ -48,7 +48,7 @@ console.log(sum, difference, product, quotient);
         },
 
         3: {
-            practice: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
+            practice: "Declare two variables, num1 and num2, and assign them numerical values 10 and 20 respectively. Use console.log to display the result of adding these two numbers.",
             topic: 'Data Types and Variables',
             id: 3
         },
