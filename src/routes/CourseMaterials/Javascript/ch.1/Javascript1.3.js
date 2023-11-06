@@ -27,6 +27,13 @@ const openai = new OpenAI({
 
 const Examination = () => {
     const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
+    leitner.addItem(Chapter1.exam[1]);
+    leitner.addItem(Chapter1.exam[2]);
+    leitner.addItem(Chapter1.exam[3]);
+    leitner.addItem(Chapter1.exam[4]);
+    leitner.addItem(Chapter1.exam[5]);
+   
+    console.log('leitner current box', leitner.currentBox);
 
     const [code, setCode] = useState('');
     const [output, setOutput] = useState('');
@@ -35,33 +42,40 @@ const Examination = () => {
     //const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
     const [userUID, setUserUID] = useState(null);
 
-	useEffect(() => {
-		const currentUser = auth.currentUser;
+	// useEffect(() => {
+	// 	const currentUser = auth.currentUser;
 	
-		if (currentUser) {
-			setUserUID(currentUser.uid);
-			const fetchReviewData = async () => {
-				try {
-					const docRef = doc(db, 'reviews', `${userUID}`);
-					const docSnap = await getDoc(docRef);
-					if (docSnap.exists()) {
-						console.log(
-							'Document Data (review):',
-							docSnap.data(),
-						);
-						leitner.boxes[0] = docSnap.data().Javascript.box1;
-					} else {
-						// doc.data() will be undefined in this case
-						console.log('No such document!');
-					}
-				} catch (error) {
-					console.error('Error fetching data:', error);
-				}
-			};
+	// 	if (currentUser) {
+	// 		setUserUID(currentUser.uid);
+	// 		const fetchReviewData = async () => {
+	// 			try {
+	// 				const docRef = doc(db, 'reviews', `${userUID}`);
+	// 				const docSnap = await getDoc(docRef);
+	// 				if (docSnap.exists()) {
+	// 					console.log(
+	// 						'Document Data (review):',
+	// 						docSnap.data(),
+	// 					);
+	// 					leitner.boxes[0] = docSnap.data().Javascript.box1;
+    //                     leitner.boxes[1] = docSnap.data().Javascript.box2;
+    //                     leitner.boxes[2] = docSnap.data().Javascript.box2;
+    //                     leitner.addItem(Chapter1.exam[1]);
+    //                     leitner.addItem(Chapter1.exam[2]);
+    //                     leitner.addItem(Chapter1.exam[3]);
+    //                     leitner.addItem(Chapter1.exam[4]);
+    //                     leitner.addItem(Chapter1.exam[5]);
+	// 				} else {
+	// 					// doc.data() will be undefined in this case
+	// 					console.log('No such document!');
+	// 				}
+	// 			} catch (error) {
+	// 				console.error('Error fetching data:', error);
+	// 			}
+	// 		};
 
-			fetchReviewData();
-		}
-	}, [userUID]);
+	// 		fetchReviewData();
+	// 	}
+	// }, [userUID, leitner]);
 
 
     const handleTabClick = (tabNumber) => {
@@ -88,17 +102,42 @@ const Examination = () => {
     const handleSubmit = async () => {
         setOutput('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice}` }],
+            messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice.practice}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });
-
         const feedback = response.choices[0].message.content;
         setOutput(feedback);
 
-        //Add feedback to Firebase
+        //check correctness
+        // const response2 = await openai.chat.completions.create({
+        //     messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. if the code is correct return "Correct" else return "Incorrect". code is ${code}, practice problem is ${practice.practice}` }],
+        //     model: "gpt-3.5-turbo",
+        //     max_tokens: 5
+        // });
+        // const correctness = response2.choices[0].message.content;
+        // console.log('correctness', correctness);
+        // if((correctness.toLowerCase()) === 'correct'){
+        //     //leitner.addItem(practice);
+        //     leitner.moveToNextBox(practice);
+        // }else{  
+        //     //leitner.addItem(practice);
+        //     leitner.moveToFirstBox(practice);
+        // }
+
         const currentUser = auth.currentUser;
         if (currentUser) {
+            if(selectedTab === 5){
+                //update review in Firebase
+                const docRefReview = doc(db, 'reviews', `${currentUser.uid}`);
+                //const docSnapReview = await getDoc(docRefReview);
+                console.log('leitner boxes', leitner.boxes);
+                updateDoc(docRefReview, {
+                    Javascript: {box1: leitner.boxes[0], box2: leitner.boxes[1], box3: leitner.boxes[2], current: leitner.currentBox, next: leitner.getNextItemToReview()}
+                });
+
+            }
+            //Add feedback to Firebase
             const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
@@ -135,11 +174,6 @@ const Examination = () => {
                         Answer each of the practive questions bellow to the best of your ability. Your performance here will be used to build your specialized review list.
                     </p>
 
-                    <p className='font-mono my-8'>
-                        Conditional statements are like the traffic signals of your program, guiding the flow of execution based on certain conditions. We'll cover:
-                        if Statements: Learn how to use if statements to execute a block of code if a specified condition is true.
-                        else Statements: Explore else statements, which allow you to provide an alternative code block to execute if the condition in the if statement is false.
-                    </p>
 
                     <div className="w-fit p-8">
                         <nav className="bg-slate-900">
@@ -179,27 +213,27 @@ const Examination = () => {
                         <div className=" p-4 mt-4">
                             {selectedTab === 1 && 
                             <p className='font-mono my-2'>
-                                {practice}
+                                {practice.practice}
                             </p>}
 
                             {selectedTab === 2 && 
                             <p className='font-mono my-2'>
-                                {practice}
+                                {practice.practice}
                             </p>}
 
                             {selectedTab === 3 && 
                             <p className='font-mono my-2'>
-                                {practice}
+                                {practice.practice}
                             </p>}
 
                             {selectedTab === 4 && 
                             <p className='font-mono my-2'>
-                                {practice}
+                                {practice.practice}
                             </p>}
 
                             {selectedTab === 5 && 
                             <p className='font-mono my-2'>
-                                {practice}
+                                {practice.practice}
                             </p>}
                         </div>
                     </div>

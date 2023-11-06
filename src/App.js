@@ -16,6 +16,7 @@ import { Dashboard } from './routes/Dashboard/Dashboard';
 import { Login } from './routes/Login/Login';
 import { Profile } from './components/Profile/Profile';
 import Feedback from './components/Feedback/Feedback';
+import Review from './routes/Dashboard/Review';
 
 import JavascriptRoutes from './routes/CourseMaterials/Javascript/JavascriptRoutes';
 
@@ -56,6 +57,7 @@ function App() {
 
 						<Route path='/courses' element={<Courses />} />
 						<Route path='/feedbacks' element={<Feedback />} />
+						<Route path='/review/:topicId' element={<Review />} />
 						<Route
 							path='/login'
 							element={

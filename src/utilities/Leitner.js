@@ -11,21 +11,57 @@ class LeitnerSystem {
       this.boxes[0].push(item);
     }
   
-    // Move an item to the next box.
-    moveToNextBox(item) {
-      if (this.currentBox < this.boxes.length - 1) {
-        this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
-        //this.currentBox++;
-        this.boxes[this.currentBox + 1].push(item);
-      }
-    }
+    // // Move an item to the next box.
+    // moveToNextBox(item) {
+    //   if (this.currentBox < this.boxes.length - 1) {
+    //     this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
+    //     console.log("index of item: ", this.boxes[this.currentBox].indexOf(item));
+    //     //this.currentBox++;
+    //     this.boxes[this.currentBox + 1].push(item);
+    //   }
+    // }
   
-    // Move an item back to the first box (box 0).
-    moveToFirstBox(item) {
-      this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
-      this.currentBox = 0;
-      this.boxes[0].push(item);
+    // // Move an item back to the first box (box 0).
+    // moveToFirstBox(item) {
+    //   this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
+    //   console.log("index of item: ", this.boxes[this.currentBox].indexOf(item));
+    //   this.currentBox = 0;
+    //   this.boxes[0].push(item);
+    // }
+
+    // Move an item to the next box.
+moveToNextBox(item) {
+  if (this.currentBox < this.boxes.length - 1) {
+    const itemIndex = this.findItemIndexById(this.boxes[this.currentBox], item.id);
+    console.log("index of item: ", itemIndex);
+    if (itemIndex !== -1) {
+      this.boxes[this.currentBox].splice(itemIndex, 1);
+      this.boxes[this.currentBox + 1].push(item);
     }
+  }
+}
+
+// Move an item back to the first box (box 0).
+moveToFirstBox(item) {
+  const itemIndex = this.findItemIndexById(this.boxes[this.currentBox], item.id);
+  console.log("index of item: ", itemIndex);
+  if (itemIndex !== -1) {
+    this.boxes[this.currentBox].splice(itemIndex, 1);
+    this.currentBox = 0;
+    this.boxes[0].push(item);
+  }
+}
+
+// Helper method to find an item by its unique identifier (e.g., 'id' property).
+findItemIndexById(box, itemId) {
+  for (let i = 0; i < box.length; i++) {
+    if (box[i].id === itemId) {
+      return i;
+    }
+  }
+  return -1; // Item not found
+}
+
   
     // Get the next item to review from the current box.
     getNextItemToReview() {
