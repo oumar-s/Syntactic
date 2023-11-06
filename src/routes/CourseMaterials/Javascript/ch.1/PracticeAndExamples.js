@@ -35,11 +35,35 @@ console.log(sum, difference, product, quotient);
 
     //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
-        2: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
-        3: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
-        4: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
-        5: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y."
+        1: {
+            practice: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
+            topic: 'Data Types and Variables',
+            id: 1
+        },
+
+        2: {
+            practice: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
+            topic: 'Logging Outputs in Javascript',
+            id: 2
+        },
+
+        3: {
+            practice: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
+            topic: 'Data Types and Variables',
+            id: 3
+        },
+
+        4: {
+            practice: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
+            topic: 'Logging Outputs in Javascript',
+            id: 4   
+        },
+
+        5: {
+            practice: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y.",
+            topic: 'Data Types and Variables',
+            id: 5
+        }
     }
 }
 
