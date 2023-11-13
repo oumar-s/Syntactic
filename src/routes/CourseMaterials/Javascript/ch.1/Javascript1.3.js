@@ -19,6 +19,8 @@ import Chatbot from '../../../../components/Chatbot/Chatbot';
 import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition Algorithm
 
 import Chapter1 from './PracticeAndExamples';
+// import css
+import './Javascript1.3.css';
 
 import { OpenAI } from 'openai';
 
@@ -34,6 +36,7 @@ const Examination = () => {
 	const [selectedTab, setSelectedTab] = useState(1);
 	const [practice, setPractice] = useState(Chapter1.exam[1]);
 	const [userUID, setUserUID] = useState(null);
+	const [codeMap, setCodeMap] = useState(new Map());
 
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
 	leitner.addItem(Chapter1.exam[1]);
@@ -42,7 +45,7 @@ const Examination = () => {
 	leitner.addItem(Chapter1.exam[4]);
 	leitner.addItem(Chapter1.exam[5]);
 
-	console.log('leitner current box', leitner.currentBox);
+	// console.log('leitner current box', leitner.currentBox);
 
 	const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
 
@@ -86,24 +89,31 @@ const Examination = () => {
 
 	// Handle tab selection
 	const handleTabClick = (tabNumber) => {
+		setCodeMap(new Map(codeMap.set(selectedTab, code))); // Save current code
+
 		setSelectedTab(tabNumber);
 		setPractice(Chapter1.exam[tabNumber]);
+
+		setCode(codeMap.get(tabNumber) || ''); // Load new code or empty string
 	};
 
 	// Handle code changes in the editor
 	function handleEditorChange(value, event) {
-		console.log('here is the current model value:', value);
+		// console.log('here is the current model value:', value);
 		setCode(value);
+		setCodeMap(new Map(codeMap.set(selectedTab, value))); // Update code in map
 	}
 
 	// Run code using OpenAI
 	const handleRun = async () => {
 		setOutput('Loading...');
+		const currentCode = codeMap.get(selectedTab) || '';
+
 		const response = await openai.chat.completions.create({
 			messages: [
 				{
 					role: 'assistant',
-					content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${code}`,
+					content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${currentCode}`,
 				},
 			],
 			model: 'gpt-3.5-turbo',
@@ -115,12 +125,13 @@ const Examination = () => {
 	// Submit code for feedback
 	const handleSubmit = async () => {
 		setOutput('Loading...');
+		const currentCode = codeMap.get(selectedTab) || '';
 
 		const response = await openai.chat.completions.create({
 			messages: [
 				{
 					role: 'assistant',
-					content: `Evaluate the submitted JavaScript code to determine if it completely and correctly solves the given practice problem. First, check if the code submission is not empty. If no code is submitted, return "Incorrect" with the note "No code submitted". If code is submitted, ensure that it addresses all aspects of the problem. The evaluation should be strict: any partial solution or incorrect implementation should be marked as "Incorrect". When providing feedback for incorrect or incomplete submissions, focus solely on identifying the elements or aspects that are missing or incorrect in the submitted code. Avoid giving direct solutions or hints on how to solve the problem. The goal is to encourage the user to think critically and solve the problem independently. If the code fully solves the problem, mark it as "Correct". After the correctness evaluation, provide constructive feedback aimed at beginners, focusing on code quality and adherence to clean coding principles. If there is no specific feedback, return 'No feedback'. The submitted code is: ${code}. The practice problem is: ${practice.practice}`,
+					content: `Evaluate the submitted JavaScript code to determine if it completely and correctly solves the given practice problem. First, check if the code submission is not empty. If no code is submitted, return "Incorrect" with the note "No code submitted". If code is submitted, ensure that it addresses all aspects of the problem. The evaluation should be strict: any partial solution or incorrect implementation should be marked as "Incorrect". When providing feedback for incorrect or incomplete submissions, focus solely on identifying the elements or aspects that are missing or incorrect in the submitted code. Avoid giving direct solutions or hints on how to solve the problem. The goal is to encourage the user to think critically and solve the problem independently. If the code fully solves the problem, mark it as "Correct". After the correctness evaluation, provide constructive feedback aimed at beginners, focusing on code quality and adherence to clean coding principles. If there is no specific feedback, return 'No feedback'. The submitted code is: ${currentCode}. The practice problem is: ${practice?.practice}`,
 				},
 			],
 			model: 'gpt-3.5-turbo',
@@ -129,6 +140,8 @@ const Examination = () => {
 
 		const feedback = response.choices[0].message.content;
 		setOutput(feedback);
+
+		// console.log('GPT Response: ', response);
 
 		//check correctness
 		/* 
@@ -216,12 +229,12 @@ const Examination = () => {
 				practice: formattedProblem,
 			}));
 
-		console.log('New Practice Problems:', newProblems);
-
 		// Update the state to include these new problems
 		setPracticeProblems([...practiceProblems, ...newProblems]);
 		setTabsCount((prevCount) => prevCount + newProblems.length);
 		setIsLoading(false); // End loading
+		// console.log('New Practice Problems:', newProblems);
+		// console.log('Practice Problems:', practiceProblems);
 	};
 
 	return (
@@ -283,7 +296,9 @@ const Examination = () => {
 
 					<div className='buttons-and-info-div flex space-x-2 justify-center pt-30 pb-16 mt-16'>
 						<button
-							className='hover:bg-gray-600 p-4 text-white font-semibold bg-slate-900'
+							className={`hover:bg-gray-600 p-4 text-white font-semibold bg-slate-900 ${
+								isLoading ? 'loading cursor-not-allowed' : ''
+							}`}
 							onClick={handleMorePractice}
 							disabled={isLoading}
 						>
@@ -295,9 +310,10 @@ const Examination = () => {
 				<div className='w-1/2'>
 					<div className='editor-container border-t-4  border-l-4 border-r-4 border-solid border-slate-800'>
 						<Editor
-							height='58vh'
+							height='65vh'
 							language='javascript'
 							theme='vs-dark'
+							value={codeMap.get(selectedTab) || ''}
 							onChange={handleEditorChange}
 						/>
 					</div>
