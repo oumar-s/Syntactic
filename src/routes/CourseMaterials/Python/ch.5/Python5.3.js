@@ -24,7 +24,7 @@ const openai = new OpenAI({
     dangerouslyAllowBrowser: true
 });
 
-const PythonExamination3 = () => {
+const PythonExamination5 = () => {
     const [code, setCode] = useState('');
     const [output, setOutput] = useState('');
     const [selectedTab, setSelectedTab] = useState(1);
@@ -85,24 +85,24 @@ const PythonExamination3 = () => {
     return (
         <div className='bg-midnight pt-1'>
             <div className='flex justify-center space-x-8 p-5 m-5'>
-                <Link to='/python/3.2'>
+                <Link to='/python/5.2'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
                 </Link>
-                <Link to='/python/4.0'>
+                <Link to='/python/6.0'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                 </Link>
             </div>
             <div className='flex flex-wrap md:flex-nowrap  font-ubuntu bg-midnight text-white'>
                 <div className='w-1/2 h-fit overflow-auto pl-5 pr-5'>
                     <h1 className='text-2xl md:text-4xl font-bold bg-slate-700 p-4'>
-                        Chapter 3 Exam
+                        Chapter 5 Exam
                     </h1>
                     <p className='font-mono my-8'>
                         Answer each of the practice questions below to the best of your ability. Your performance here will be used to build your specialized review list.
                     </p>
 
                     <p className='font-mono my-8'>
-                        In this section, we'll practice string operations and performing mathematical operations with integers and floats in Python. These exercises will help you become more proficient in manipulating strings and numbers.
+                        In this section, we'll practice using if, elif, and else statements in Python to make decisions based on different conditions and scenarios. These exercises will help you become more proficient in controlling the flow of your programs and handling various cases with conditional statements.
                     </p>
 
                     <div className="w-fit p-8">
@@ -216,4 +216,4 @@ const PythonExamination3 = () => {
     );
 }
 
-export default PythonExamination3;
+export default PythonExamination5;

@@ -1,85 +1,54 @@
 const Chapter1 = {
     topic1: {
         example1: 
-`name = "John"`,
-        practice1: 'Write a basic Python script that assigns the variable "language" the value of "Python".',
-
-        example2: 'a, b, c = 1, 2, 3',
-        practice2: 
-`Write a Python script that assigns the value of '10' to 'x', '20' to 'y' and '30' to 'z' using multiple assignment.`,
-        
-        example3: 'x = y = z = 5',
-        practice3: 
-`Write a Python script that assigns the value of '99' to 'd', 'e', and 'f' using chained assignment.`
+`fruits = ["apple", "banana", "cherry"]`,
+        practice1: 'Write a Python program that calculates and prints the sum of all numbers in a given list of integers.',
+        practice2: `Create a Python program that takes two lists and concatenates them into a single list.`,
+        practice3: `Design a Python program that asks the user to enter an element and checks if it exists in a predefined list. Display an appropriate message.`
     },
     topic2: {
         example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
-
-        example2: 
-`# Input: Gather user information
-name = input("Enter your name: ")
-age = int(input("Enter your age: "))  # Convert age to an integer
-height = float(input("Enter your height (in meters): "))  # Convert height to a float
-
-# Output: Display the collected information 
-print("User Information:")
-print("Name:", name)
-print("Age:", age)
-print("Height:", height, "meters")
-`,
-
+`fruits = ["apple", "banana", "cherry"]
+first_fruit = fruits[0]  # Access the first element`,
         practice1: 
-        'Write a Python program that takes the a name as input and greets them with a personalized message.',
+        'Write a Python program that finds and prints the maximum element in a list of numbers.',
 
-        practice2: 'Write a Python program that prompts the user to enter their name, age, and favorite color. After receiving the input, the program should print out the collected information.'    
+        practice2: 'Create a Python program that uses list slicing to extract a sub-list from a given list. Prompt the user to enter the start and end indices for slicing.',
+
+        practice3: `Design a Python program that iterates through a list of names and prints each name in uppercase.`
     },
 
     topic3: {
         example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
+` #fruits = ["apple", "banana", "cherry"]
+fruits[1] = "kiwi"  # Modify the second element`,
 
         example2: 
-`# Define variables of different types
-chef = "Gordon Ramsay"
+`fruits = ["apple", "banana", "cherry"]
+fruits.append("orange")  # Add an element to the end
+fruits.remove("banana")  # Remove an element
+"kiwi" in fruits  # Check if an element exists`,
 
-# Print the type of the 'chef' variable
-print("Variable 'chef' is of type:", type(chef))
-`,
-
-example3: `# Define variables of different data types
-integer_num = 42
-float_num = 3.14
-string_num = "123"
-
-# Convert data types
-float_from_int = float(integer_num)
-int_from_string = int(string_num)
-string_from_float = str(float_num)`,
+example3: `fruits = ["apple", "banana", "cherry"]
+sorted_fruits = sorted(fruits)  # Sort the list
+count = len(fruits)  # Get the length
+copy = fruits.copy()  # Create a copy`,
 
         practice1: 
-        'Define a variable called num1 and set it equal to 5. Define another called num2 and set it equal to 10. Define a third variable called sum and set it to 0. Add num1 and num2 and store the result in the sum variable. Console log the sum variable. The output should equal 15.',
+        'Write a Python program that reverses the order of elements in a list.',
 
-        practice2: 'Write a Python program that defines variables for the following information about a person: name, age, height (in meters), and whether they are married (True or False). Then, print out the type of each variable.',
+        practice2: 'Create a Python program that filters out even numbers from a list and creates a new list containing only the odd numbers.',
 
-        practice3: 'Write a Python program that collects the age as a string input and converts it to an integer for further processing.'
+        practice3: 'Design a Python program that takes a list of names and sorts them in alphabetical order. Display the sorted list.'
     },
 
     //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
-        2: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
-        3: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
-        4: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
-        5: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y."
+        1: "Write a function that takes a 2D matrix (list of lists) as input and returns a transposed version of the matrix, where rows become columns and vice versa.",
+        2: "Create a function that rotates a list to the right by a specified number of positions. For example, rotating [1, 2, 3, 4, 5] by 2 positions would result in [4, 5, 1, 2, 3].",
+        3: "Given a list of strings, write a function that extracts strings with a specified length and returns a new list with those strings.",
+        4: "Given a list of numbers, create a new list that contains only the even numbers from the original list using list comprehension.",
+        5: "Write a function to check if a given list is a palindrome, meaning it reads the same forwards and backwards. For example, [1, 2, 3, 2, 1] is a palindrome."
     }
 }
 

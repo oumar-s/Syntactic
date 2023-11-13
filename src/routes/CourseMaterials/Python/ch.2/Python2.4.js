@@ -98,7 +98,7 @@ const PythonExamination2 = () => {
                         Chapter 2 Exam
                     </h1>
                     <p className='font-mono my-8'>
-                        Answer each of the practive questions bellow to the best of your ability. Your performance here will be used to build your specialized review list.
+                        Answer each of the practice questions below to the best of your ability. Your performance here will be used to build your specialized review list.
                     </p>
 
                     <p className='font-mono my-8'>

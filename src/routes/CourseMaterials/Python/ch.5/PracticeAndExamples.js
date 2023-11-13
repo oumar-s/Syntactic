@@ -1,85 +1,76 @@
 const Chapter1 = {
     topic1: {
         example1: 
-`name = "John"`,
-        practice1: 'Write a basic Python script that assigns the variable "language" the value of "Python".',
+`for item in sequence:
+        # Code to execute for each item
+`,
+        practice1: 'Write a Python program that iterates through a list of animals and prints each animal using a "for" loop.',
 
-        example2: 'a, b, c = 1, 2, 3',
+        example2: 
+`fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+`,
         practice2: 
-`Write a Python script that assigns the value of '10' to 'x', '20' to 'y' and '30' to 'z' using multiple assignment.`,
+`Create a Python program that uses a "for" loop to print numbers from 1 to 10.`,
         
-        example3: 'x = y = z = 5',
+        example3: 
+`for number in range(5):
+        print(number)`,
         practice3: 
-`Write a Python script that assigns the value of '99' to 'd', 'e', and 'f' using chained assignment.`
+`Write a Python program that uses a "for" loop to print numbers from 1 to 5 but stops when it encounters the number 3 using the "break" statement.`,
+        example4: 
+`for number in range(10):
+if number == 5:
+    print("Encountered 5 - breaking out of the loop")
+    break
+elif number == 3:
+    print("Encountered 3 - skipping this iteration")
+    continue
+print(number)
+`
     },
     topic2: {
         example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
+`while condition:
+        # Code to execute as long as the condition is True`,
 
         example2: 
-`# Input: Gather user information
-name = input("Enter your name: ")
-age = int(input("Enter your age: "))  # Convert age to an integer
-height = float(input("Enter your height (in meters): "))  # Convert height to a float
-
-# Output: Display the collected information 
-print("User Information:")
-print("Name:", name)
-print("Age:", age)
-print("Height:", height, "meters")
+`count = 0
+while count < 5:
+    print(count)
+    count += 1
 `,
-
+        example3:
+`count = 0
+while count < 5:
+    if count == 3:
+        print("Encountered 3 - breaking out of the loop")
+        break
+    elif count == 1:
+        print("Encountered 1 - skipping this iteration")
+        count += 1
+        continue
+    print(count)
+    count += 1
+else:
+    print("Loop completed without encountering a 'break'.")`,
+    
         practice1: 
-        'Write a Python program that takes the a name as input and greets them with a personalized message.',
+        'Create a Python program that generates a random number and asks the user to guess it. Use a "while" loop to continue prompting the user until they guess correctly.',
 
-        practice2: 'Write a Python program that prompts the user to enter their name, age, and favorite color. After receiving the input, the program should print out the collected information.'    
-    },
+        practice2: 'Write a Python program that calculates the factorial of a number entered by the user using a "while" loop.',
 
-    topic3: {
-        example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
-
-        example2: 
-`# Define variables of different types
-chef = "Gordon Ramsay"
-
-# Print the type of the 'chef' variable
-print("Variable 'chef' is of type:", type(chef))
-`,
-
-example3: `# Define variables of different data types
-integer_num = 42
-float_num = 3.14
-string_num = "123"
-
-# Convert data types
-float_from_int = float(integer_num)
-int_from_string = int(string_num)
-string_from_float = str(float_num)`,
-
-        practice1: 
-        'Define a variable called num1 and set it equal to 5. Define another called num2 and set it equal to 10. Define a third variable called sum and set it to 0. Add num1 and num2 and store the result in the sum variable. Console log the sum variable. The output should equal 15.',
-
-        practice2: 'Write a Python program that defines variables for the following information about a person: name, age, height (in meters), and whether they are married (True or False). Then, print out the type of each variable.',
-
-        practice3: 'Write a Python program that collects the age as a string input and converts it to an integer for further processing.'
+        practice3: `Design a Python program that asks the user to enter a password. Use a "while" loop to keep asking until the user enters the correct password.`
     },
 
     //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
-        2: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
-        3: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
-        4: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
-        5: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y."
+        1: `Write a "for" loop that calculates the sum of all even numbers from 1 to 50.`,
+        2: `Create a "while" loop that counts down from 10 to 1, displaying each number in the countdown. Once it reaches 1, print "Blast-off!"`,
+        3: `Write a "for" loop that prints the multiplication table for a given number. Prompt the user to enter a number, and then display the multiplication table for that number from 1 to 10.`,
+        4: `Implement a program that asks the user to enter a password. Use a "while" loop to give the user three chances to enter the correct password. If they succeed, print "Access granted," otherwise, print "Access denied" after three failed attempts.`,
+        5: `Write a "for" loop that calculates the factorial of a number. Prompt the user to enter a positive integer and then use a "for" loop to calculate and print the factorial of that number.`
     }
 }
 

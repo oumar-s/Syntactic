@@ -1,85 +1,66 @@
 const Chapter1 = {
     topic1: {
         example1: 
-`name = "John"`,
-        practice1: 'Write a basic Python script that assigns the variable "language" the value of "Python".',
+`def greet(name):
+    print(f"Hello, {name}!")`,
+        practice1: 'Create a function greet_all that takes a list of names and greets each name by calling the greet function. For example, greet_all(["Alice", "Bob"]) should print greetings for both Alice and Bob.',
 
-        example2: 'a, b, c = 1, 2, 3',
-        practice2: 
-`Write a Python script that assigns the value of '10' to 'x', '20' to 'y' and '30' to 'z' using multiple assignment.`,
+        example2: 
+`def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")`,
+
+        practice2: `Write a function is_even that takes an integer as an argument and returns True if the number is even and False if it's odd.`,
         
-        example3: 'x = y = z = 5',
-        practice3: 
-`Write a Python script that assigns the value of '99' to 'd', 'e', and 'f' using chained assignment.`
+        example3: 
+`def square(x):
+    return x ** 2`,
+
+        practice3: `Create a function calculate_area that computes and returns the area of a rectangle. It should take the width and height as parameters.`
     },
     topic2: {
         example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
-
-        example2: 
-`# Input: Gather user information
-name = input("Enter your name: ")
-age = int(input("Enter your age: "))  # Convert age to an integer
-height = float(input("Enter your height (in meters): "))  # Convert height to a float
-
-# Output: Display the collected information 
-print("User Information:")
-print("Name:", name)
-print("Age:", age)
-print("Height:", height, "meters")
+`def double(x):
+    result = x * 2
+    return result
 `,
+        example2: 
+`def greet(name="Guest"):
+    print(f"Hello, {name}!")`,
 
         practice1: 
-        'Write a Python program that takes the a name as input and greets them with a personalized message.',
+        'Create a function compute_average that computes and returns the average of a list of numbers. The function should define the sum and count of numbers within the function.',
 
-        practice2: 'Write a Python program that prompts the user to enter their name, age, and favorite color. After receiving the input, the program should print out the collected information.'    
+        practice2: 'Write a function create_greeting that generates a personalized greeting. It should take a name as a parameter and have a default message for cases where the name is not provided.',
+
+        practice3: `Create a function calculate_power that raises a number to a specified power. The power should have a default value of 2.`
     },
 
     topic3: {
         example1: 
-` # Example 1: Taking user input and displaying output
-name = input("Enter your name: ")
-age = input("Enter your age: ")
-print("Hello, " + name + "!")
-print("You are " + age + " years old.")`,
+`def add_all(*args):
+    total = sum(args)
+    return total`,
 
         example2: 
-`# Define variables of different types
-chef = "Gordon Ramsay"
-
-# Print the type of the 'chef' variable
-print("Variable 'chef' is of type:", type(chef))
-`,
-
-example3: `# Define variables of different data types
-integer_num = 42
-float_num = 3.14
-string_num = "123"
-
-# Convert data types
-float_from_int = float(integer_num)
-int_from_string = int(string_num)
-string_from_float = str(float_num)`,
+`square = lambda x: x ** 2`,
 
         practice1: 
-        'Define a variable called num1 and set it equal to 5. Define another called num2 and set it equal to 10. Define a third variable called sum and set it to 0. Add num1 and num2 and store the result in the sum variable. Console log the sum variable. The output should equal 15.',
+        'Write a function find_max that takes a variable number of integers as arguments and returns the maximum value among them.',
 
-        practice2: 'Write a Python program that defines variables for the following information about a person: name, age, height (in meters), and whether they are married (True or False). Then, print out the type of each variable.',
+        practice2: 'Write a lambda function to find the square of a number.',
 
-        practice3: 'Write a Python program that collects the age as a string input and converts it to an integer for further processing.'
+        practice3: 'Create a lambda function to check if a given number is even.'
     },
 
     //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Declare a variable celsius to store a temperature in degrees Celsius. Convert it to Fahrenheit using the formula (Celsius * 9/5) + 32 and display the result using console.log.",
-        2: "Write a simple JavaScript script to display an error message “Cannot divide by 0”.",
-        3: "Declare two variables, num1 and num2, and assign them numerical values 10 and 5 respectively. Use console.log to display the result of adding these two numbers.",
-        4: "Declare two variables, a and b, and assign them numerical values. Use alert to display the result of subtracting b from a.",
-        5: "Declare a variable x and assign it a numerical value. Declare another variable y and assign it a different numerical value. Use console.log to display the result of multiplying x and y."
+        1: "Write a function that takes three numbers as input and returns the maximum of the three.",
+        2: "Write a function that takes any number of string arguments and concatenates them to create a single string. The function should accept a variable number of input strings and return the concatenated result.",
+        3: "Write a function that takes a list of numbers as input and uses a lambda function to filter and return a new list containing only the even numbers.",
+        4: "Create a function that takes the coefficients of a quadratic equation (a, b, and c) as input and returns the roots of the equation. Use the quadratic formula to calculate the roots.",
+        5: "Write a function that generates the first n numbers of the Fibonacci sequence using a lambda function and returns them as a list."
     }
 }
 
