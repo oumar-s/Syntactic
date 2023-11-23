@@ -16,6 +16,7 @@ import {
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 //Chapter 1 contains the code examples and practice problems for the chapter
 import Chapter1 from './PracticeAndExamples';
@@ -383,6 +384,7 @@ These basic data types are the building blocks for most Python programs. You'll 
                     </Link>
                 </div>
             </div>
+            <Chatbot />
         </div>
     );
 };
