@@ -20,8 +20,6 @@ export const DashboardContent = () => {
 	const [nextTopicToReview, setNextTopicToReview] = useState({ topic: 'none' });
 
 	const [userUID, setUserUID] = useState(null);
-
-
 	useEffect(() => {
 		const currentUser = auth.currentUser;
 

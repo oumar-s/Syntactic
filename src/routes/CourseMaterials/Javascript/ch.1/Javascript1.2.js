@@ -13,6 +13,8 @@ import { getDoc,
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
+
 
 //Chapter 1 contains the code examples and practice problems for the chapter
 import Chapter1 from './PracticeAndExamples';
@@ -370,6 +372,7 @@ const DataTypesAndVariables = () => {
                     </Link>
                 </div>
             </div>
+            <Chatbot />
         </div>
     );
 };

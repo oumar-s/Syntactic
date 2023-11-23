@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+import { OpenAI } from "openai";
+const openai = new OpenAI({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+});
 
 const Chatbot = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState([{id: 1, type: 'bot', message: 'Hello! How can I help you?'}]);
+
+  // Ref for the chat container
+  const chatContainerRef = useRef(null);
+
+  // Effect to scroll to the bottom of the chat on chat history update
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
+
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
@@ -13,13 +30,39 @@ const Chatbot = () => {
     setMessage(event.target.value);
   };
 
-  const handleSendClick = () => {
+  const handleSendClick = async () => {
     if (message.trim() !== '') {
-      setChatHistory([...chatHistory, { type: 'user', text: message }]);
+      setChatHistory((prevChatHistory) => [
+        ...prevChatHistory,
+        { id: prevChatHistory.length + 1, type: 'user', message: message },
+      ]);
+  
+      const msg = message;
       setMessage('');
-      // Add logic for chatbot response here
+  
+      // Logic for chatbot response here
+      const response = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "assistant",
+            content: `You are a helpful assistant for beginner programmers. Based on the user's message, provide a response concise response that will help the user.  User's message: ${msg}, `,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+        max_tokens: 50,
+      });
+  
+      setChatHistory((prevChatHistory) => [
+        ...prevChatHistory,
+        {
+          id: prevChatHistory.length + 1,
+          type: 'bot',
+          message: response.choices[0].message.content,
+        },
+      ]);
     }
   };
+  
 
   return (
     <div className="fixed bottom-5 right-5 z-50">
@@ -38,14 +81,14 @@ const Chatbot = () => {
 
           {/* Chat content */}
           <div className="p-4">
-            <div className="max-h-80 overflow-y-auto mb-4 w-96">
+            <div className="flex flex-col max-h-80 overflow-y-auto mb-4 w-96" ref={chatContainerRef}>
               {/* Display chat history */}
               {chatHistory.map((msg, index) => (
                 <div
                   key={index}
-                  className={`mb-2 p-2 rounded ${msg.type === 'user' ? 'bg-slate-900' : 'bg-blue-100'}`}
+                  className={`mb-8 p-2 rounded w-fit max-w-xs ${msg.type === 'user' ? 'bg-blue-500 self-end' : 'bg-slate-800'}`}
                 >
-                  {msg.text}
+                  {msg.message}
                 </div>
               ))}
             </div>
@@ -55,7 +98,7 @@ const Chatbot = () => {
                 placeholder="Type your message..."
                 value={message}
                 onChange={handleInputChange}
-                className="flex-1 border border-gray-700 font-mono bg-midnight  rounded px-2 py-1"
+                className="flex-1 border border-gray-700 font-mono bg-midnight  rounded px-2 py-1 break-all"
               />
               <button
                 onClick={handleSendClick}
