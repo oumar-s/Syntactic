@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 import Chatbot from '../../../../components/Chatbot/Chatbot';
+
 const Introduction = () => {
     return (
         <div className='flex flex-col p-5 pb-64 font-ubuntu bg-midnight text-white'>
