@@ -334,23 +334,13 @@ const Examination = () => {
 						</button>
 					</div>
 
-<<<<<<< HEAD
-                    <div className='bg-black h-52 p-2 border-2 border-solid border-slate-800'>
-                        <pre className='whitespace-pre-line'>{output}</pre>
-                    </div>
-
-                </div>
-            </div>
-            <Chatbot />
-            {/* <div className='flex justify-center space-x-8 p-5 m-5'>
-=======
 					<div className='bg-black h-52 p-2 border-2 border-solid border-slate-800'>
 						<pre className='whitespace-pre-line'>{output}</pre>
 					</div>
 				</div>
 			</div>
+			<Chatbot />
 			{/* <div className='flex justify-center space-x-8 p-5 m-5'>
->>>>>>> 334f0b2 (Get more JS practice problems)
                 <Link to='/javascript/1.1'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
                 </Link>
