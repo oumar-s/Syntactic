@@ -49,50 +49,13 @@ const Examination = () => {
 
 	const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
 
-	/*
-    
-	useEffect(() => {
-		const currentUser = auth.currentUser;
-
-		if (currentUser) {
-			setUserUID(currentUser.uid);
-			const fetchReviewData = async () => {
-				try {
-					const docRef = doc(db, 'reviews', `${userUID}`);
-					const docSnap = await getDoc(docRef);
-					if (docSnap.exists()) {
-						console.log(
-							'Document Data (review):',
-							docSnap.data(),
-						);
-						leitner.boxes[0] = docSnap.data().Javascript.box1;
-	                    leitner.boxes[1] = docSnap.data().Javascript.box2;
-	                    leitner.boxes[2] = docSnap.data().Javascript.box2;
-	leitner.addItem(Chapter1.exam[1]);
-	leitner.addItem(Chapter1.exam[2]);
-	leitner.addItem(Chapter1.exam[3]);
-	leitner.addItem(Chapter1.exam[4]);
-	leitner.addItem(Chapter1.exam[5]);
-					} else {
-						// doc.data() will be undefined in this case
-						console.log('No such document!');
-					}
-				} catch (error) {
-					console.error('Error fetching data:', error);
-				}
-			};
-
-			fetchReviewData();
-		}
-	}, [userUID, leitner]);
-    */
-
 	// Handle tab selection
 	const handleTabClick = (tabNumber) => {
 		setCodeMap(new Map(codeMap.set(selectedTab, code))); // Save current code
 
 		setSelectedTab(tabNumber);
-		setPractice(Chapter1.exam[tabNumber]);
+		// setPractice(Chapter1.exam[tabNumber]);
+		setPractice(practiceProblems[tabNumber - 1]); // Assuming tabNumber starts from 1
 
 		setCode(codeMap.get(tabNumber) || ''); // Load new code or empty string
 	};
@@ -126,6 +89,7 @@ const Examination = () => {
 	const handleSubmit = async () => {
 		setOutput('Loading...');
 		const currentCode = codeMap.get(selectedTab) || '';
+		const currentPracticeProblem = practice?.practice; // Get the current practice problem
 
 		const response = await openai.chat.completions.create({
 			messages: [
@@ -140,26 +104,6 @@ const Examination = () => {
 
 		const feedback = response.choices[0].message.content;
 		setOutput(feedback);
-
-		// console.log('GPT Response: ', response);
-
-		//check correctness
-		/* 
-		const response2 = await openai.chat.completions.create({
-		    messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. if the code is correct return "Correct" else return "Incorrect". code is ${code}, practice problem is ${practice.practice}` }],
-		    model: "gpt-3.5-turbo",
-		    max_tokens: 5
-		});
-		const correctness = response2.choices[0].message.content;
-		console.log('correctness', correctness);
-		if((correctness.toLowerCase()) === 'correct'){
-		    //leitner.addItem(practice);
-		    leitner.moveToNextBox(practice);
-		}else{
-		    //leitner.addItem(practice);
-		    leitner.moveToFirstBox(practice);
-		}
-        */
 
 		const currentUser = auth.currentUser;
 		if (currentUser) {
@@ -188,12 +132,21 @@ const Examination = () => {
 			const docSnap = await getDoc(docRef);
 			if (docSnap.exists()) {
 				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
+					feedbacks: arrayUnion({
+						feedback: feedback,
+						course: 'Javascript',
+						practiceProblem: currentPracticeProblem,
+					}),
 				});
 			} else {
-				// Add a new document in collection "cities"
 				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
+					feedbacks: [
+						{
+							course: 'Javascript',
+							feedback: feedback,
+							practiceProblem: currentPracticeProblem, // Include practice problem
+						},
+					],
 				});
 			}
 		}
@@ -230,7 +183,13 @@ const Examination = () => {
 			}));
 
 		// Update the state to include these new problems
-		setPracticeProblems([...practiceProblems, ...newProblems]);
+		// setPracticeProblems([...currentPracticeProblem, ...newProblems]);
+		setPracticeProblems((prevProblems) => [...prevProblems, ...newProblems]);
+		// Optionally, set the practice state to the first new problem
+		if (newProblems.length > 0) {
+			setPractice(newProblems[0]);
+		}
+
 		setTabsCount((prevCount) => prevCount + newProblems.length);
 		setIsLoading(false); // End loading
 		// console.log('New Practice Problems:', newProblems);
@@ -340,14 +299,6 @@ const Examination = () => {
 				</div>
 			</div>
 			<Chatbot />
-			{/* <div className='flex justify-center space-x-8 p-5 m-5'>
-                <Link to='/javascript/1.1'>
-                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                </Link>
-                <Link to='/javascript/1.3'>
-                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                </Link>
-            </div> */}
 		</div>
 	);
 };
