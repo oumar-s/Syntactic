@@ -1,5 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
+import { auth, db } from '../../../config/firebaseConfig';
+import {
+    setDoc,
+    collection,
+    addDoc,
+    arrayUnion,
+    updateDoc,
+    doc,
+    Firestore,
+    getDoc
+} from 'firebase/firestore';
+
 
 // Import Icons
 import dropDownIcon from '../../../assets/icons/drop-down.png';
@@ -12,6 +24,7 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
 	const [topics, setTopics] = useState(allTopics);
+	const [progress, setProgress] = useState({});
 
 	const toggleAccordion = () => {
 		setIsOpen(!isOpen);
@@ -23,6 +36,32 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 		setTopics(newTopics);
 	};
 
+	//useeffect
+	useEffect(() => {
+		const fetchData = async () => {
+			const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
+			const progressSnap = await getDoc(progressRef);
+			if (progressSnap.exists()) {
+				//console.log('Document data:', progressSnap.data());
+				setProgress(progressSnap.data());
+			} else {
+				// Add a new document in collection "cities"
+				await setDoc(progressRef, {
+					Javascript: {
+					},
+					Python: {
+
+					}
+				});
+			}
+			
+		};
+		fetchData();
+	}, []);
+
+	
+	
+
 	return (
 		<div className='enrolled-courses-wrap my-5'>
 			<div
@@ -32,9 +71,9 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 				<div className='flex items-center'>
 					<div className='flex flex-col items-start'>
 						<h1 className='text-xl font-bold'>{name}</h1>
-						{/* <span className='enrolled-date font-mono text-gray-500 mt-1'>
-							Oct 18 2023
-						</span> */}
+						<span className='enrolled-progress font-mono text-gray-500 mt-1'>
+							5% Completed
+						</span>
 					</div>
 					<div className='ml-auto'>
 						<img
@@ -78,7 +117,7 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 										<div className='ml-20 mt-2 bg-opacity-50 bg-white rounded-md px-5 text-lg'>
 											<ol className='list-disc space-y-7'>
 												{topic.topics.map((subtopic) => (
-													<li className='transition-transform duration-300 ease-in-out hover:translate-x-2'>
+													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[name][subtopic.id] === 'true'? 'text-lime-500' : console.log('here: ', progress[name][subtopic.id])} ` }>
 														<Link
 															to={`/${courseName}/${subtopic.id}`}
 															className={({ isActive }) =>

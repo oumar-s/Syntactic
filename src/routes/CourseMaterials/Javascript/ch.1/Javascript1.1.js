@@ -46,6 +46,8 @@ const Logging = () => {
     const [toggle2, setToggle2] = useState(false);
     const [toggle3, setToggle3] = useState(false);
 
+    const [performance, setPerformance] = useState({p1: false, p2: false, p3: false});
+
     function handleEditorChange1(value) {
         console.log('here is the current model value:', value);
         setCode1(value)
@@ -118,7 +120,44 @@ const Logging = () => {
                 });
             }
 
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance({...performance, p1: true});
+            }
+
+            //check if all performance is true
+            if (performance.p1 && performance.p2 && performance.p3) {
+                //update progress
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const progressSnap = await getDoc(progressRef);
+                if (progressSnap.exists()) {
+                    updateDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // Add a new document in collection "cities"
+                    await setDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
         };
+
     };
     const handleSubmit2 = async () => {
         setToggle2(true);
@@ -146,6 +185,42 @@ const Logging = () => {
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback}]
                 });
+            }
+
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance({...performance, p2: true});
+            }
+
+            //check if all performance is true
+            if (performance.p1 && performance.p2 && performance.p3) {
+                //update progress
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const progressSnap = await getDoc(progressRef);
+                if (progressSnap.exists()) {
+                    updateDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // Add a new document in collection "cities"
+                    await setDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                }
             }
 
         };
@@ -176,6 +251,42 @@ const Logging = () => {
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback}]
                 });
+            }
+
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance({...performance, p3: true});
+            }
+
+            //check if all performance is true
+            if (performance.p1 && performance.p2 && performance.p3) {
+                //update progress
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const progressSnap = await getDoc(progressRef);
+                if (progressSnap.exists()) {
+                    updateDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // Add a new document in collection "cities"
+                    await setDoc(progressRef, {
+                        Javascript: {
+                            chapter1: {
+                                topic1: {
+                                    complete: true
+                                }
+                            }
+                        }
+                    });
+                }
             }
 
         };
