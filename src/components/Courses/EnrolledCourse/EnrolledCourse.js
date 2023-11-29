@@ -17,14 +17,16 @@ import {
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 
 let allTopics = [];
-export const EnrolledCourse = ({ name, syllabus }) => {
+export const EnrolledCourse = ({ name, syllabus, progress }) => {
+	console.log('percent: ', progress.percent);
 	const courseName = name.toLowerCase();
 	allTopics = syllabus;
 	const numOfChapters = allTopics.length;
 
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
 	const [topics, setTopics] = useState(allTopics);
-	const [progress, setProgress] = useState({});
+	//const [progress, setProgress] = useState({});
+	//const [user, setUser] = useState(auth.currentUser);
 
 	const toggleAccordion = () => {
 		setIsOpen(!isOpen);
@@ -37,27 +39,32 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 	};
 
 	//useeffect
-	useEffect(() => {
-		const fetchData = async () => {
-			const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
-			const progressSnap = await getDoc(progressRef);
-			if (progressSnap.exists()) {
-				//console.log('Document data:', progressSnap.data());
-				setProgress(progressSnap.data());
-			} else {
-				// Add a new document in collection "cities"
-				await setDoc(progressRef, {
-					Javascript: {
-					},
-					Python: {
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		if (user) {
+	// 			const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
+	// 			const progressSnap = await getDoc(progressRef);
+	// 			let courseProgress = {};
+	// 			if (progressSnap.exists()) {
+	// 				//console.log('Document data:', progressSnap.data());
+	// 				courseProgress = progressSnap.data();
+	// 				setProgress(courseProgress[name]);
+	// 			} else {
+	// 				// Add a new document in collection "cities"
+	// 				await setDoc(progressRef, {
+	// 					Javascript: {
 
-					}
-				});
-			}
+	// 					},
+	// 					Python : {
+
+	// 					}
+	// 				});
+	// 			}
+	// 		}
 			
-		};
-		fetchData();
-	}, []);
+	// 	};
+	// 	fetchData();
+	// }, [user]);
 
 	
 	
@@ -71,9 +78,15 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 				<div className='flex items-center'>
 					<div className='flex flex-col items-start'>
 						<h1 className='text-xl font-bold'>{name}</h1>
-						<span className='enrolled-progress font-mono text-gray-500 mt-1'>
-							5% Completed
-						</span>
+						{/* <span className='enrolled-progress font-mono text-gray-500 mt-1'>
+							{ `${progress.percent}% Completed` } 
+						</span> */}
+						<div className='flex w-64 bg-white  border border-black text-end'>
+							
+							<div className= 'enrolled-progress font-mon font-bold bg-green-500' style={{width : `${progress.percent}%`}}>
+								{ `${progress.percent}%` } 
+							</div>
+						</div>
 					</div>
 					<div className='ml-auto'>
 						<img
@@ -95,7 +108,7 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 						{allTopics.map((topic, index) => (
 							<li className='flex flex-col' key={index}>
 								<div className='flex'>
-									<div className='rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5'>
+									<div className={`rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${progress[index + 1] === 'completed' ? 'bg-green-500' : ''}`}>
 										{index + 1}
 									</div>
 									<div
@@ -117,7 +130,7 @@ export const EnrolledCourse = ({ name, syllabus }) => {
 										<div className='ml-20 mt-2 bg-opacity-50 bg-white rounded-md px-5 text-lg'>
 											<ol className='list-disc space-y-7'>
 												{topic.topics.map((subtopic) => (
-													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[name][subtopic.id] === 'true'? 'text-lime-500' : console.log('here: ', progress[name][subtopic.id])} ` }>
+													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[subtopic.id] === 'completed' ? 'text-green-500' : console.log('here: ', progress[subtopic.id])} ` }>
 														<Link
 															to={`/${courseName}/${subtopic.id}`}
 															className={({ isActive }) =>

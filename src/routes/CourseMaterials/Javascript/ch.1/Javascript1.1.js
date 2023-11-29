@@ -135,10 +135,8 @@ const Logging = () => {
                 if (progressSnap.exists()) {
                     updateDoc(progressRef, {
                         Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
+                            '1.1' : {
+                                complete: true
                             }
                         }
                     });
@@ -202,10 +200,8 @@ const Logging = () => {
                 if (progressSnap.exists()) {
                     updateDoc(progressRef, {
                         Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
+                            '1.1' : {
+                                complete: true
                             }
                         }
                     });
@@ -213,10 +209,8 @@ const Logging = () => {
                     // Add a new document in collection "cities"
                     await setDoc(progressRef, {
                         Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
+                            '1.1' : {
+                                complete: true
                             }
                         }
                     });
@@ -268,10 +262,8 @@ const Logging = () => {
                 if (progressSnap.exists()) {
                     updateDoc(progressRef, {
                         Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
+                            1.1 : {
+                                complete: true
                             }
                         }
                     });
@@ -279,10 +271,8 @@ const Logging = () => {
                     // Add a new document in collection "cities"
                     await setDoc(progressRef, {
                         Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
+                            '1.1' : {
+                                complete: true
                             }
                         }
                     });
