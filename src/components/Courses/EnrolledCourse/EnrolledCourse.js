@@ -1,17 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
-import { auth, db } from '../../../config/firebaseConfig';
-import {
-    setDoc,
-    collection,
-    addDoc,
-    arrayUnion,
-    updateDoc,
-    doc,
-    Firestore,
-    getDoc
-} from 'firebase/firestore';
-
 
 // Import Icons
 import dropDownIcon from '../../../assets/icons/drop-down.png';
@@ -38,37 +26,6 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 		setTopics(newTopics);
 	};
 
-	//useeffect
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		if (user) {
-	// 			const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
-	// 			const progressSnap = await getDoc(progressRef);
-	// 			let courseProgress = {};
-	// 			if (progressSnap.exists()) {
-	// 				//console.log('Document data:', progressSnap.data());
-	// 				courseProgress = progressSnap.data();
-	// 				setProgress(courseProgress[name]);
-	// 			} else {
-	// 				// Add a new document in collection "cities"
-	// 				await setDoc(progressRef, {
-	// 					Javascript: {
-
-	// 					},
-	// 					Python : {
-
-	// 					}
-	// 				});
-	// 			}
-	// 		}
-			
-	// 	};
-	// 	fetchData();
-	// }, [user]);
-
-	
-	
-
 	return (
 		<div className='enrolled-courses-wrap my-5'>
 			<div
@@ -78,13 +35,13 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 				<div className='flex items-center'>
 					<div className='flex flex-col items-start'>
 						<h1 className='text-xl font-bold'>{name}</h1>
-						{/* <span className='enrolled-progress font-mono text-gray-500 mt-1'>
-							{ `${progress.percent}% Completed` } 
-						</span> */}
-						<div className='flex w-64 bg-white  border border-black text-end'>
+						<span className='enrolled-progress mt-2 font-mono text-gray-500'>
+							Percent Completed
+						</span>
+						<div className='flex w-64 mt-2 bg-white  border border-black text-end'>
 							
 							<div className= 'enrolled-progress font-mon font-bold bg-green-500' style={{width : `${progress.percent}%`}}>
-								{ `${progress.percent}%` } 
+								{ `${Math.floor(progress.percent)}%` } 
 							</div>
 						</div>
 					</div>
@@ -108,7 +65,7 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 						{allTopics.map((topic, index) => (
 							<li className='flex flex-col' key={index}>
 								<div className='flex'>
-									<div className={`rounded-full bg-midnight text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${progress[index + 1] === 'completed' ? 'bg-green-500' : ''}`}>
+									<div className={`rounded-full  text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${progress[index + 1] === 'complete' ? 'bg-green-600' : 'bg-midnight'}`}>
 										{index + 1}
 									</div>
 									<div
@@ -130,7 +87,7 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 										<div className='ml-20 mt-2 bg-opacity-50 bg-white rounded-md px-5 text-lg'>
 											<ol className='list-disc space-y-7'>
 												{topic.topics.map((subtopic) => (
-													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[subtopic.id] === 'completed' ? 'text-green-500' : console.log('here: ', progress[subtopic.id])} ` }>
+													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[subtopic.pid] === 'complete' ? 'text-green-600' : console.log('here: ', progress[subtopic.pid])} ` }>
 														<Link
 															to={`/${courseName}/${subtopic.id}`}
 															className={({ isActive }) =>
@@ -163,62 +120,3 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 		</div>
 	);
 };
-// return (
-// 	<div className='enrolled-courses-wrap my-5'>
-// 		<div className='enrolled-courses-item cursor-pointer bg-gallery border-2 border-black rounded-md p-5'>
-// 			<div className='flex flex-col items-start'>
-// 				<h1 className='text-xl font-bold'>Course Name</h1>
-// 				<span className='enrolled-date font-mono text-gray-500 mt-1'>
-// 					Oct 18 2023
-// 				</span>
-// 			</div>
-// 		</div>
-// 	</div>
-// );
-
-// [
-//     {
-//         name: 'Introduction to JavaScript',
-//         content: 'This topic covers the basics of JavaScript programming language.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Conditional Statements',
-//         content: 'This topic covers conditional statements in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Loops',
-//         content: 'This topic covers loops in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Functions',
-//         content: 'This topic covers functions in JavaScript.',
-//     },
-//     {
-//         name: 'Arrays and Objects',
-//         content: 'This topic covers arrays and objects in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Strings',
-//         content: 'This topic covers strings in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Object Literals',
-//         content: 'This topic covers object literals in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'ES6 Classes',
-//         content: 'This topic covers ES6 classes in JavaScript.',
-//         dropdown: false
-//     },
-//     {
-//         name: 'Promises',
-//         content: 'This topic covers promises in JavaScript.',
-//         dropdown: false
-//     },
-// ];

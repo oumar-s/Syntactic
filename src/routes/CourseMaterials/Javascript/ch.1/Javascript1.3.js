@@ -5,6 +5,7 @@ import {
     getDoc,
     collection,
     setDoc,
+    increment,
     arrayUnion,
     updateDoc,
     doc,
@@ -40,44 +41,10 @@ const Examination = () => {
     const [output, setOutput] = useState('');
     const [selectedTab, setSelectedTab] = useState(1);
     const [practice, setPractice] = useState(Chapter1.exam[1]); 
-    //const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
-    const [userUID, setUserUID] = useState(null);
+    const [performance, setPerformance] = useState([false, false, false, false, false]);
 
-	// useEffect(() => {
-	// 	const currentUser = auth.currentUser;
+
 	
-	// 	if (currentUser) {
-	// 		setUserUID(currentUser.uid);
-	// 		const fetchReviewData = async () => {
-	// 			try {
-	// 				const docRef = doc(db, 'reviews', `${userUID}`);
-	// 				const docSnap = await getDoc(docRef);
-	// 				if (docSnap.exists()) {
-	// 					console.log(
-	// 						'Document Data (review):',
-	// 						docSnap.data(),
-	// 					);
-	// 					leitner.boxes[0] = docSnap.data().Javascript.box1;
-    //                     leitner.boxes[1] = docSnap.data().Javascript.box2;
-    //                     leitner.boxes[2] = docSnap.data().Javascript.box2;
-                        // leitner.addItem(Chapter1.exam[1]);
-                        // leitner.addItem(Chapter1.exam[2]);
-                        // leitner.addItem(Chapter1.exam[3]);
-                        // leitner.addItem(Chapter1.exam[4]);
-                        // leitner.addItem(Chapter1.exam[5]);
-	// 				} else {
-	// 					// doc.data() will be undefined in this case
-	// 					console.log('No such document!');
-	// 				}
-	// 			} catch (error) {
-	// 				console.error('Error fetching data:', error);
-	// 			}
-	// 		};
-
-	// 		fetchReviewData();
-	// 	}
-	// }, [userUID, leitner]);
-
 
     const handleTabClick = (tabNumber) => {
         console.log('practice', practice);
@@ -110,22 +77,6 @@ const Examination = () => {
         const feedback = response.choices[0].message.content;
         setOutput(feedback);
 
-        //check correctness
-        // const response2 = await openai.chat.completions.create({
-        //     messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. if the code is correct return "Correct" else return "Incorrect". code is ${code}, practice problem is ${practice.practice}` }],
-        //     model: "gpt-3.5-turbo",
-        //     max_tokens: 5
-        // });
-        // const correctness = response2.choices[0].message.content;
-        // console.log('correctness', correctness);
-        // if((correctness.toLowerCase()) === 'correct'){
-        //     //leitner.addItem(practice);
-        //     leitner.moveToNextBox(practice);
-        // }else{  
-        //     //leitner.addItem(practice);
-        //     leitner.moveToFirstBox(practice);
-        // }
-
         const currentUser = auth.currentUser;
         if (currentUser) {
             if(selectedTab === 5){
@@ -157,6 +108,29 @@ const Examination = () => {
                 });
             }
 
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, [selectedTab - 1]: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance[0] && updatedPerformance[1] && updatedPerformance[2] && updatedPerformance[3] && updatedPerformance[4]) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:3" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });
+                    }
+                
+                    return updatedPerformance;
+                });  
+                
+                
+            }
+
         };
     };
 
@@ -185,31 +159,31 @@ const Examination = () => {
                         <nav className="bg-slate-900">
                             <ul className="flex space-x-4">
                                 <li
-                                    className={`cursor-pointer p-4 ${selectedTab === 1 ? 'bg-gray-600' : ''}`}
+                                    className={`cursor-pointer p-4 ${selectedTab === 1 ? 'bg-gray-600' : ''} ${performance[0] ? 'bg-green-600' : ''}`}
                                     onClick={() => handleTabClick(1)}
                                 >
                                     Practice 1
                                 </li>
                                 <li
-                                    className={`cursor-pointer p-4 ${selectedTab === 2 ? 'bg-gray-600' : ''}`}
+                                    className={`cursor-pointer p-4 ${selectedTab === 2 ? 'bg-gray-600' : ''} ${performance[1] ? 'bg-green-600' : ''}`}
                                     onClick={() => handleTabClick(2)}
                                 >
                                     Practice 2
                                 </li>
                                 <li
-                                    className={`cursor-pointer p-4 ${selectedTab === 3 ? 'bg-gray-600' : ''}`}
+                                    className={`cursor-pointer p-4 ${selectedTab === 3 ? 'bg-gray-600' : ''} ${performance[2] ? 'bg-green-600' : ''}`}
                                     onClick={() => handleTabClick(3)}
                                 >
                                     Practice 3
                                 </li>
                                 <li
-                                    className={`cursor-pointer p-4 ${selectedTab === 4 ? 'bg-gray-600' : ''}`}
+                                    className={`cursor-pointer p-4 ${selectedTab === 4 ? 'bg-gray-600' : ''} ${performance[3] ? 'bg-green-600' : ''}`}
                                     onClick={() => handleTabClick(4)}
                                 >
                                     Practice 4
                                 </li>
                                 <li
-                                    className={`cursor-pointer p-4 ${selectedTab === 5 ? 'bg-gray-600' : ''}`}
+                                    className={`cursor-pointer p-4 ${selectedTab === 5 ? 'bg-gray-600' : ''} ${performance[4] ? 'bg-green-600' : ''}`}
                                     onClick={() => handleTabClick(5)}
                                 >
                                     Practice 5

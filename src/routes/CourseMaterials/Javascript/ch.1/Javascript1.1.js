@@ -6,6 +6,7 @@ import {
     setDoc,
     collection,
     addDoc,
+    increment,
     arrayUnion,
     updateDoc,
     doc,
@@ -124,34 +125,20 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
-                setPerformance({...performance, p1: true});
-            }
-
-            //check if all performance is true
-            if (performance.p1 && performance.p2 && performance.p3) {
-                //update progress
-                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const progressSnap = await getDoc(progressRef);
-                if (progressSnap.exists()) {
-                    updateDoc(progressRef, {
-                        Javascript: {
-                            '1.1' : {
-                                complete: true
-                            }
-                        }
-                    });
-                } else {
-                    // Add a new document in collection "cities"
-                    await setDoc(progressRef, {
-                        Javascript: {
-                            chapter1: {
-                                topic1: {
-                                    complete: true
-                                }
-                            }
-                        }
-                    });
-                }
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p1: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:1" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
             }
 
         };
@@ -189,32 +176,20 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
-                setPerformance({...performance, p2: true});
-            }
-
-            //check if all performance is true
-            if (performance.p1 && performance.p2 && performance.p3) {
-                //update progress
-                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const progressSnap = await getDoc(progressRef);
-                if (progressSnap.exists()) {
-                    updateDoc(progressRef, {
-                        Javascript: {
-                            '1.1' : {
-                                complete: true
-                            }
-                        }
-                    });
-                } else {
-                    // Add a new document in collection "cities"
-                    await setDoc(progressRef, {
-                        Javascript: {
-                            '1.1' : {
-                                complete: true
-                            }
-                        }
-                    });
-                }
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p2: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:1" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
             }
 
         };
@@ -251,33 +226,22 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
-                setPerformance({...performance, p3: true});
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p3: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:1" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
             }
 
-            //check if all performance is true
-            if (performance.p1 && performance.p2 && performance.p3) {
-                //update progress
-                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const progressSnap = await getDoc(progressRef);
-                if (progressSnap.exists()) {
-                    updateDoc(progressRef, {
-                        Javascript: {
-                            1.1 : {
-                                complete: true
-                            }
-                        }
-                    });
-                } else {
-                    // Add a new document in collection "cities"
-                    await setDoc(progressRef, {
-                        Javascript: {
-                            '1.1' : {
-                                complete: true
-                            }
-                        }
-                    });
-                }
-            }
 
         };
     };

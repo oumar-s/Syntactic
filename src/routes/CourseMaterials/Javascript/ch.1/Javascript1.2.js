@@ -6,6 +6,7 @@ import { getDoc,
 	collection,
 	setDoc,
     arrayUnion,
+    increment,
     updateDoc,
 	doc,
     Firestore
@@ -43,6 +44,8 @@ const DataTypesAndVariables = () => {
     const [toggle1, setToggle1] = useState(false);
     const [toggle2, setToggle2] = useState(false);
     const [toggle3, setToggle3] = useState(false);
+
+    const [performance, setPerformance] = useState({p1: false, p2: false, p3: false});
 
     
     function handleEditorChange1(value) {
@@ -117,6 +120,25 @@ const DataTypesAndVariables = () => {
                 });
             }
 
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p1: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:2" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
+            }
         };
     };
     const handleSubmit2 = async () => {
@@ -147,6 +169,26 @@ const DataTypesAndVariables = () => {
                 });
             }
 
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p2: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:2" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
+            }
+
         };
     };
     const handleSubmit3 = async () => {
@@ -175,6 +217,26 @@ const DataTypesAndVariables = () => {
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback}]
                 });
+            }
+
+            //make feedback lowwer case
+            const lowerCaseFeedback = feedback.toLowerCase();
+            //check if feedback contains the the string 'correct'
+            if (lowerCaseFeedback.includes('correct')) {
+                setPerformance(prevPerformance => {
+                    const updatedPerformance = {...prevPerformance, p3: true};
+                
+                    //check if all performance is true
+                    if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
+                        //update progress
+                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                        updateDoc(progressRef, {
+                            "Javascript.1:2" : "complete",
+                            "Javascript.percent" : increment(2.4)
+                        });   
+                    }             
+                    return updatedPerformance;
+                });                
             }
 
         };
