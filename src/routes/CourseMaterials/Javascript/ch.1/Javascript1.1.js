@@ -125,20 +125,27 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const data = docSnap.data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p1: true};
-                
+
                     //check if all performance is true
                     if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
                         //update progress
-                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
                         updateDoc(progressRef, {
                             "Javascript.1:1" : "complete",
                             "Javascript.percent" : increment(2.4)
                         });   
                     }             
                     return updatedPerformance;
-                });                
+                });
+
+                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
+                    await updateDoc(progressRef, {
+                        "Javascript.1" : 'complete'
+                    });
+                }
             }
 
         };
@@ -176,20 +183,27 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const data = docSnap.data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p2: true};
-                
+
                     //check if all performance is true
                     if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
                         //update progress
-                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
                         updateDoc(progressRef, {
                             "Javascript.1:1" : "complete",
                             "Javascript.percent" : increment(2.4)
                         });   
                     }             
                     return updatedPerformance;
-                });                
+                });
+
+                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
+                    await updateDoc(progressRef, {
+                        "Javascript.1" : 'complete'
+                    });
+                }
             }
 
         };
@@ -226,20 +240,27 @@ const Logging = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const data = docSnap.data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p3: true};
-                
+
                     //check if all performance is true
                     if (updatedPerformance.p1 && updatedPerformance.p2 && updatedPerformance.p3) {
                         //update progress
-                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
                         updateDoc(progressRef, {
                             "Javascript.1:1" : "complete",
                             "Javascript.percent" : increment(2.4)
                         });   
                     }             
                     return updatedPerformance;
-                });                
+                });
+
+                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
+                    await updateDoc(progressRef, {
+                        "Javascript.1" : 'complete'
+                    });
+                }
             }
 
 

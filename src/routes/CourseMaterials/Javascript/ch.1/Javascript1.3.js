@@ -112,6 +112,8 @@ const Examination = () => {
             const lowerCaseFeedback = feedback.toLowerCase();
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
+                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+                const data = docSnap.data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, [selectedTab - 1]: true};
                 
@@ -126,9 +128,13 @@ const Examination = () => {
                     }
                 
                     return updatedPerformance;
-                });  
-                
-                
+                });
+
+                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
+                    await updateDoc(progressRef, {
+                        "Javascript.1" : 'complete'
+                    });
+                }  
             }
 
         };
