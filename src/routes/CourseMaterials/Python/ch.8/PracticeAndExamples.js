@@ -74,13 +74,36 @@ person1 = Person("Alice", 30)
         practice3: 'Define a class Product with attributes name, price, and quantity. Implement a method to calculate the total cost of a certain quantity of the product. Create an instance and test the method with different product details.'
     },
 
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Design a class called School to model a school system. Create subclasses for Student and Teacher, each with their specific attributes and methods. The School class should have methods to enroll students, hire teachers, and check student and teacher information.",
-        2: "Create a class called PetAdoptionCenter to represent a pet adoption center. Implement subclasses for different types of animals (e.g., cats, dogs, rabbits) with specific attributes for each animal type. The PetAdoptionCenter class should have methods for adding animals to the center and checking the available animal categories.",
-        3: "Create a class called Menu to represent a restaurant's menu. Include methods for adding and removing menu items, displaying the menu, and checking the availability of specific items.",
-        4: "Design a class called Library that models a library catalog. Implement methods for adding, removing, and searching for books in the library's collection.",
-        5: "Create a class called UserProfile to represent a user's profile on a social media platform. Include attributes such as username, full name, and bio. Implement methods for updating the user's information and displaying the user's profile."
+        1: {
+            practice: "Design a class called School to model a school system. Create subclasses for Student and Teacher, each with their specific attributes and methods. The School class should have methods to enroll students, hire teachers, and check student and teacher information.",
+            topic: 'Class Methods and Inheritance',
+            id: 1
+        },
+
+        2: {
+            practice: "Create a class called PetAdoptionCenter to represent a pet adoption center. Implement subclasses for different types of animals (e.g., cats, dogs, rabbits) with specific attributes for each animal type. The PetAdoptionCenter class should have methods for adding animals to the center and checking the available animal categories.",
+            topic: 'Encapsulation and Practical Applications',
+            id: 2
+        },
+
+        3: {
+            practice: "Create a class called Menu to represent a restaurant's menu. Include methods for adding and removing menu items, displaying the menu, and checking the availability of specific items.",
+            topic: 'Class Methods and Inheritance',
+            id: 3
+        },
+
+        4: {
+            practice: "Design a class called Library that models a library catalog. Implement methods for adding, removing, and searching for books in the library's collection.",
+            topic: 'Class Methods and Inheritance',
+            id: 4   
+        },
+
+        5: {
+            practice: "Create a class called UserProfile to represent a user's profile on a social media platform. Include attributes such as username, full name, and bio.",
+            topic: 'Basics of Classes and Object Creation in Python',
+            id: 5
+        }
     }
 }
 

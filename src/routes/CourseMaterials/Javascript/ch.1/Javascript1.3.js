@@ -166,7 +166,7 @@ const Examination = () => {
                 <Link to='/javascript/1.2'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
                 </Link>
-                <Link to='/javascript/projects'>
+                <Link to='/javascript/2.0'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                 </Link>
             </div>
@@ -176,7 +176,7 @@ const Examination = () => {
                         Chapter 1 Exam
                     </h1>
                     <p className='font-mono my-8'>
-                        Answer each of the practive questions bellow to the best of your ability. Your performance here will be used to build your specialized review list.
+                        Answer each of the practice questions below to the best of your ability. Your performance here will be used to build your specialized review list.
                     </p>
 
 

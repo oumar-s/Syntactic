@@ -72,16 +72,36 @@ If income is less than $50,000, tax is 10%.
 If income is between $50,000 and $100,000, tax is 20%.
 If income is greater than $100,000, tax is 30%.`
     },
-
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Write a Python program that takes a single letter as input and determines if it's a vowel (a, e, i, o, u) or a consonant. Prompt the user to enter a letter and print the result.",
-        2: "Create a Python program that prompts the user to enter a number from 1 to 7, where 1 represents Sunday, 2 represents Monday, and so on. The program should then print the corresponding day of the week.",
-        3: 
-`Write a Python program that calculates the shipping cost for an online store based on the weight of a package and the distance it needs to be shipped. Prompt the user to enter the weight (in kilograms) and the distance (in kilometers) and then calculate and display the shipping cost using the following rules: Weight < 2 kg: $5 per kilometer, 2 kg ≤ Weight < 10 kg: $10 per kilometer, Weight ≥ 10 kg: $20 per kilometer`,
-        4: 
-`Create a Python program that checks the strength of a password entered by the user. The program should evaluate the password based on the following criteria and provide feedback: At least 8 characters long, Contains at least one uppercase letter, Contains at least one lowercase letter, Contains at least one digit, Contains at least one special character (e.g., !, @, #)`,
-        5: "Write a Python program that allows the user to play a simple game of Rock, Paper, Scissors against the computer. The computer randomly selects one of the three options, and the user inputs their choice. Determine the winner and display the result."
+        1: {
+            practice: "Write a Python program that takes a single letter as input and determines if it's a vowel (a, e, i, o, u) or a consonant. Prompt the user to enter a letter and print the result.",
+            topic: 'Else Statements in Python',
+            id: 1
+        },
+
+        2: {
+            practice: "Create a Python program that prompts the user to enter a number from 1 to 7, where 1 represents Sunday, 2 represents Monday, and so on. The program should then print the corresponding day of the week.",
+            topic: 'Elif Statements in Python',
+            id: 2
+        },
+
+        3: {
+            practice: `Write a Python program that calculates the shipping cost for an online store based on the weight of a package and the distance it needs to be shipped. Prompt the user to enter the weight (in kilograms) and the distance (in kilometers) and then calculate and display the shipping cost using the following rules: Weight < 2 kg: $5 per kilometer, 2 kg ≤ Weight < 10 kg: $10 per kilometer, Weight ≥ 10 kg: $20 per kilometer`,
+            topic: 'Elif Statements in Python',
+            id: 3
+        },
+
+        4: {
+            practice: `Create a Python program that checks the strength of a password entered by the user. The program should evaluate the password based on the following criteria and provide feedback: At least 8 characters long, Contains at least one uppercase letter, Contains at least one lowercase letter, Contains at least one digit, Contains at least one special character (e.g., !, @, #)`,
+            topic: 'If Statements in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: "Write a Python program that allows the user to play a simple game of Rock, Paper, Scissors against the computer. The computer randomly selects one of the three options, and the user inputs their choice. Determine the winner and display the result.",
+            topic: 'Elif Statements in Python',
+            id: 5
+        }
     }
 }
 

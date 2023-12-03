@@ -73,13 +73,36 @@ string_from_float = str(float_num)`,
         practice3: 'Write a Python program that collects the age as a string input and converts it to an integer for further processing.'
     },
 
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: `Declare two variables, 'distance' and 'time', and assign values to them (e.g., 150 and 2.5). Calculate the speed by dividing distance by time and print the result.`,
-        2: `Create a variable 'message' with a string value containing a short message of your choice. Print the message to the console.`,
-        3: `Write a Python program that prompts the user to enter their age. Then, calculate and print the year in which they will turn 100 years old.`,
-        4: `Design a program that takes two numbers as input, adds them together, and prints the result with an appropriate message.`,
-        5: `Declare a variable 'price' as a float and assign a price value with decimal places (e.g., 19.99). Convert it to an integer and print the result.`
+        1: {
+            practice: `Declare two variables, 'distance' and 'time', and assign values to them (e.g., 150 and 2.5). Calculate the speed by dividing distance by time and print the result.`,
+            topic: 'Variables in Python',
+            id: 1
+        },
+
+        2: {
+            practice: "Create a variable 'message' with a string value containing a short message of your choice. Print the message to the console.",
+            topic: 'Variables in Python',
+            id: 2
+        },
+
+        3: {
+            practice: "Write a Python program that prints a decimal number with a few decimal places (e.g., 3.14159) to the console.",
+            topic: 'Data Types in Python',
+            id: 3
+        },
+
+        4: {
+            practice: `Write a Python program that prompts the user to enter their age. Then, calculate and print the year in which they will turn 100 years old.`,
+            topic: 'Input and Output in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: `Declare a variable 'price' as a float and assign a price value with decimal places (e.g., 19.99). Convert it to an integer and print the result.`,
+            topic: 'Data Types in Python',
+            id: 5
+        }
     }
 }
 

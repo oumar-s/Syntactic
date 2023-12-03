@@ -103,13 +103,36 @@ new_text = text.replace("Python", "World")  # new_text is "Hello, World!"`,
         practice3: `Write a Python program that collects a user's name, age, and city. Use string formatting to create a personal introduction message and display it.`
     },
 
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: `Prompt the user to input their first name and last name. Use string concatenation to create a full name and print it to the console.`,
-        2: `Ask the user to enter a word, and then print the word in reverse order. For example, if the user inputs "Python," the program should print "nohtyP."`,
-        3: `Request a sentence from the user and count the number of vowels (a, e, i, o, u) in the sentence. Print the count.`,
-        4:`Create a basic calculator program that asks the user for two numbers and an operation (addition, subtraction, multiplication, or division). Perform the chosen operation and display the result.`,
-        5: `Prompt the user to enter the radius of a circle. Calculate and print the area of the circle using the formula: Area = π * (radius^2). Use math.pi from the math library for the value of π.`
+        1: {
+            practice: `Prompt the user to input their first name and last name. Use string concatenation to create a full name and print it to the console.`,
+            topic: 'String Operations in Python',
+            id: 1
+        },
+
+        2: {
+            practice: `Ask the user to enter a word, and then print the word in reverse order. For example, if the user inputs "Python," the program should print "nohtyP."`,
+            topic: 'String Operations in Python',
+            id: 2
+        },
+
+        3: {
+            practice: `Request a sentence from the user and count the number of vowels (a, e, i, o, u) in the sentence. Print the count.`,
+            topic: 'String Operations in Python',
+            id: 3
+        },
+
+        4: {
+            practice: `Create a basic calculator program that asks the user for two numbers and an operation (addition, subtraction, multiplication, or division). Perform the chosen operation and display the result.`,
+            topic: 'Integer and Float Operations in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: `Prompt the user to enter the radius of a circle. Calculate and print the area of the circle using the formula: Area = π * (radius^2). Use math.pi from the math library for the value of π.`,
+            topic: 'Integer and Float Operations in Python',
+            id: 5
+        }
     }
 }
 

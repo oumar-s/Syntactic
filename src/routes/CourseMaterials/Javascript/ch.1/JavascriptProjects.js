@@ -8,11 +8,8 @@ const Introduction = () => {
         <div className='flex flex-col p-5 pb-64 font-ubuntu bg-midnight text-white'>
             <div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
                 <div className='flex justify-center space-x-8 p-5 m-5'>
-                    <Link to='/javascript/1.3'>
+                    <Link to='/javascript/9.3'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                    </Link>
-                    <Link to='/javascript/2.0'>
-                        <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                     </Link>
                 </div>
                 <h1 className='text-xl md:text-2xl font-bold my-4 bg-slate-700 p-4'>        
