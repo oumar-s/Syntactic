@@ -156,7 +156,7 @@ export const Nav = () => {
 											{/* <hr className='my-3' /> */}
 											<li className='dropdown-li transition duration-200 hover:text-neon-blue'>
 												<NavLink to='/login' onClick={logout}>
-													Log Out
+													Logout
 												</NavLink>
 											</li>
 										</ul>

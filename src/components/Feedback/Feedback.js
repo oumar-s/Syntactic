@@ -13,6 +13,8 @@ import {
 } from 'firebase/firestore';
 
 function Feedback() {
+	document.title = 'My Feedbacks';
+
 	const [feedbacks, setFeedbacks] = useState([]);
 	const [userUID, setUserUID] = useState(null);
 

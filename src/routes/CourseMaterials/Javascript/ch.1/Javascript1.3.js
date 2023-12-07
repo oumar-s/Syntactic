@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
-    getDoc,
-    collection,
-    setDoc,
-    increment,
-    arrayUnion,
-    updateDoc,
-    doc,
-    Firestore
+	getDoc,
+	collection,
+	setDoc,
+	increment,
+	arrayUnion,
+	updateDoc,
+	doc,
+	Firestore,
 } from 'firebase/firestore';
 
 import { Link } from 'react-router-dom'; // Import NavLink
@@ -38,8 +38,13 @@ const Examination = () => {
 	const [practice, setPractice] = useState(Chapter1.exam[1]);
 	const [userUID, setUserUID] = useState(null);
 	const [codeMap, setCodeMap] = useState(new Map());
-  const [performance, setPerformance] = useState([false, false, false, false, false]);
-
+	const [performance, setPerformance] = useState([
+		false,
+		false,
+		false,
+		false,
+		false,
+	]);
 
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
 	leitner.addItem(Chapter1.exam[1]);
@@ -152,34 +157,48 @@ const Examination = () => {
 					],
 				});
 			}
-      //make feedback lowwer case
-            const lowerCaseFeedback = feedback.toLowerCase();
-            //check if feedback contains the the string 'correct'
-            if (lowerCaseFeedback.includes('correct')) {
-                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
-                setPerformance(prevPerformance => {
-                    const updatedPerformance = {...prevPerformance, [selectedTab - 1]: true};
-                
-                    //check if all performance is true
-                    if (updatedPerformance[0] && updatedPerformance[1] && updatedPerformance[2] && updatedPerformance[3] && updatedPerformance[4]) {
-                        //update progress
-                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                        updateDoc(progressRef, {
-                            "Javascript.1:3" : "complete",
-                            "Javascript.percent" : increment(2.4)
-                        });
-                    }
-                
-                    return updatedPerformance;
-                });
+			//make feedback lowwer case
+			const lowerCaseFeedback = feedback.toLowerCase();
+			//check if feedback contains the the string 'correct'
+			if (lowerCaseFeedback.includes('correct')) {
+				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+				const data = docSnap.data();
+				setPerformance((prevPerformance) => {
+					const updatedPerformance = {
+						...prevPerformance,
+						[selectedTab - 1]: true,
+					};
 
-                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
-                    await updateDoc(progressRef, {
-                        "Javascript.1" : 'complete'
-                    });
-                }  
-            }
+					//check if all performance is true
+					if (
+						updatedPerformance[0] &&
+						updatedPerformance[1] &&
+						updatedPerformance[2] &&
+						updatedPerformance[3] &&
+						updatedPerformance[4]
+					) {
+						//update progress
+						const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+						updateDoc(progressRef, {
+							'Javascript.1:3': 'complete',
+							'Javascript.percent': increment(2.4),
+						});
+					}
+
+					return updatedPerformance;
+				});
+
+				if (
+					data.Javascript['1:0'] === 'complete' &&
+					data.Javascript['1:1'] === 'complete' &&
+					data.Javascript['1:2'] === 'complete' &&
+					data.Javascript['1:3'] === 'complete'
+				) {
+					await updateDoc(progressRef, {
+						'Javascript.1': 'complete',
+					});
+				}
+			}
 		}
 	};
 
@@ -265,7 +284,9 @@ const Examination = () => {
 								{practiceProblems.map((_, index) => (
 									<li
 										key={index + 1}
-										className={`cursor-pointer p-4 ${selectedTab === index + 1 ? 'bg-gray-600' : ''} ${performance[0] ? 'bg-green-600' : ''}`}
+										className={`cursor-pointer p-4 ${
+											selectedTab === index + 1 ? 'bg-gray-600' : ''
+										} ${performance[0] ? 'bg-green-600' : ''}`}
 										onClick={() => handleTabClick(index + 1)}
 									>
 										Practice {index + 1}

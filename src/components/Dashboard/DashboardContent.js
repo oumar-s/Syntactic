@@ -16,6 +16,8 @@ import {
 } from 'firebase/firestore';
 
 export const DashboardContent = () => {
+	document.title = 'Dashboard';
+
 	const [enrolledCourses, setEnrolledCourses] = useState([]);
 	const [nextTopicToReview, setNextTopicToReview] = useState({ topic: 'none' });
 	const [progress, setProgress] = useState({});
@@ -53,15 +55,20 @@ export const DashboardContent = () => {
 				const docSnap = await getDoc(docRef);
 				if (docSnap.exists()) {
 					//get next topic to review
-					console.log('test1')
+					console.log('test1');
 					setNextTopicToReview(docSnap.data().Javascript.next);
 				} else {
 					// Add a new document in collection "cities"
 					await setDoc(docRef, {
-						Javascript: { box1: [], box2: [], box3: [], current: 0, next: { topic: 'none' } }
+						Javascript: {
+							box1: [],
+							box2: [],
+							box3: [],
+							current: 0,
+							next: { topic: 'none' },
+						},
 					});
 				}
-
 			};
 
 			const fetchData = async () => {
@@ -73,23 +80,17 @@ export const DashboardContent = () => {
 				} else {
 					// Add a new document in collection "cities"
 					await setDoc(progressRef, {
-						Javascript: {
-
-						},
-						Python : {
-
-						}
+						Javascript: {},
+						Python: {},
 					});
 				}
 			};
-			
+
 			fetchData();
 			fetchEnrollmentData();
 			fetchNextTopicToReview();
 		}
 	}, [userUID]);
-
-
 
 	return (
 		// Review and feedback
@@ -110,14 +111,15 @@ export const DashboardContent = () => {
 
 				<div className='sm:flex-1 bg-white shadow-sm rounded-md p-4'>
 					<h2 className='text-xl font-bold'> Personalized Review </h2>
-					{nextTopicToReview.topic === 'none' ?
-						<p className='mt-4'>You have no topics to review</p> :
+					{nextTopicToReview.topic === 'none' ? (
+						<p className='mt-4'>You have no topics to review</p>
+					) : (
 						<>
 							<p className='mt-4'>
-								<strong>Topic:</strong> {nextTopicToReview.topic} 
+								<strong>Topic:</strong> {nextTopicToReview.topic}
 							</p>
 							<div className='mt-4 h-24 overflow-hidden '>
-								<strong>Problem:</strong> {nextTopicToReview.practice} 
+								<strong>Problem:</strong> {nextTopicToReview.practice}
 							</div>
 							<div className='flex flex-row place-content-between items-center'>
 								<Link to={'/review/' + nextTopicToReview.id}>
@@ -126,7 +128,8 @@ export const DashboardContent = () => {
 									</button>
 								</Link>
 							</div>
-						</>}
+						</>
+					)}
 				</div>
 			</div>
 

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../../config/firebaseConfig'; 
+import { auth } from '../../config/firebaseConfig';
 import icon from '../../assets/icons/user.png';
 
 export const Profile = () => {
+	document.title = 'Profile';
+
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-		if (currentUser) {
-			setUser(currentUser);
-		} else {
-			setUser(null); // User is not logged in
-		}
+			if (currentUser) {
+				setUser(currentUser);
+			} else {
+				setUser(null); // User is not logged in
+			}
 		});
 
 		return () => unsubscribe();
@@ -21,9 +23,9 @@ export const Profile = () => {
 		<div className='profile-wrap w-4/5 sm:w-4/5 md:w-4/5 lg:w-2/4 m-auto mt-14'>
 			<header className='flex items-center justify-between mb-6'>
 				<h1 className='font-bold text-xl'>My Profile</h1>
-				<span className='cursor-pointer border border-midnight py-2 px-4 rounded-md hover:bg-midnight hover:text-white transition-all duration-200 ease-in-out'>
+				{/* <span className='cursor-pointer border border-midnight py-2 px-4 rounded-md hover:bg-midnight hover:text-white transition-all duration-200 ease-in-out'>
 					Edit Profile
-				</span>
+				</span> */}
 			</header>
 			<div className='flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4'>
 				<div className='left-container user-avatar rounded-lg p-6 border border-gray-300 w-full md:w-1/3 flex items-center justify-center'>
@@ -78,4 +80,3 @@ export const Profile = () => {
 		</div>
 	);
 };
-
