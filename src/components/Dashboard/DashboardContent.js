@@ -18,6 +18,7 @@ import {
 export const DashboardContent = () => {
 	const [enrolledCourses, setEnrolledCourses] = useState([]);
 	const [nextTopicToReview, setNextTopicToReview] = useState({ topic: 'none' });
+	const [progress, setProgress] = useState({});
 
 	const [userUID, setUserUID] = useState(null);
 	useEffect(() => {
@@ -63,7 +64,26 @@ export const DashboardContent = () => {
 
 			};
 
+			const fetchData = async () => {
+				const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
+				const progressSnap = await getDoc(progressRef);
+				if (progressSnap.exists()) {
+					//console.log('Document data:', progressSnap.data());
+					setProgress(progressSnap.data());
+				} else {
+					// Add a new document in collection "cities"
+					await setDoc(progressRef, {
+						Javascript: {
 
+						},
+						Python : {
+
+						}
+					});
+				}
+			};
+			
+			fetchData();
 			fetchEnrollmentData();
 			fetchNextTopicToReview();
 		}
@@ -120,6 +140,7 @@ export const DashboardContent = () => {
 							id={userUID}
 							name={course.title}
 							syllabus={course.syllabus}
+							progress={progress[course.title]}
 						/>
 					))
 				) : (
