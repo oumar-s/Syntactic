@@ -120,16 +120,6 @@ export const Nav = () => {
 											Courses
 										</NavLink>
 									</li>
-									<li>
-										<NavLink
-											to='/about'
-											className={({ isActive }) =>
-												isActive ? 'active-link' : ''
-											}
-										>
-											About
-										</NavLink>
-									</li>
 								</>
 							)}
 						</ul>
