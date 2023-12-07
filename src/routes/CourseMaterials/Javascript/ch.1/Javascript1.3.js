@@ -214,7 +214,7 @@ const Examination = () => {
 		const newProblems = await generatePracticeProblems(
 			'variables and logging outputs',
 			practiceProblems,
-			setIsLoading, // Pass setIsLoading here
+			setIsLoading,
 		);
 		setPracticeProblems((prevProblems) => [...prevProblems, ...newProblems]);
 		setTabsCount((prevCount) => prevCount + newProblems.length);
