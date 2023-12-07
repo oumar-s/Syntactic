@@ -1,5 +1,5 @@
-import FeedbackSort from "./FeedbackComponent/FeedbackSort";
-import TempFeedback from "./FeedbackComponent/TempFeedback";
+import FeedbackSort from './FeedbackComponent/FeedbackSort';
+import TempFeedback from './FeedbackComponent/TempFeedback';
 //Import Dependencies
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../config/firebaseConfig';
@@ -12,10 +12,8 @@ import {
 	doc,
 } from 'firebase/firestore';
 
-
-
-function Feedback(){
-    const [feedbacks, setFeedbacks] = useState([]);
+function Feedback() {
+	const [feedbacks, setFeedbacks] = useState([]);
 	const [userUID, setUserUID] = useState(null);
 
 	useEffect(() => {
@@ -46,29 +44,29 @@ function Feedback(){
 		}
 	}, [userUID]);
 
-    //let userFeedbackArray = [['JavaScript','Random1', 1], ['Python','Random2', 2], ['JavaScript','Random3', 3], ['JavaScript','Random4', 4], ['Python','Random5',5]];
-    return(
-        <>
-        
-            {feedbacks.length > 0 ? (
-            <div className='flex flex-col p-5 pb-64 font-ubuntu bg-midnight text-white'>
-                <div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
-                <h1 className='text-2xl md:text-4xl font-bold my-4 mb-10 bg-slate-700 p-4'>        
-                    Feedbacks
-                </h1>
-                    {feedbacks.map((feedback) => (
-                        <TempFeedback feedback={feedback}/>
-                    ))}
-                </div>
-            </div>) : (
-                <div className="mt-28 font-ubuntu bg-gallery">
-                    <div className="flex justify-center">
-                        <h1 className="text-5xl font-bold">No Feedbacks</h1>
-                    </div>
-                </div>
-            )}
-        </>
-    );
+	//let userFeedbackArray = [['JavaScript','Random1', 1], ['Python','Random2', 2], ['JavaScript','Random3', 3], ['JavaScript','Random4', 4], ['Python','Random5',5]];
+	return (
+		<>
+			{feedbacks.length > 0 ? (
+				<div className='flex flex-col p-5 pb-64 font-ubuntu bg-midnight text-white'>
+					<div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
+						<h1 className='text-2xl md:text-4xl font-bold my-4 mb-5 p-4'>
+							Feedbacks
+						</h1>
+						{feedbacks.map((feedback) => (
+							<TempFeedback feedback={feedback} />
+						))}
+					</div>
+				</div>
+			) : (
+				<div className='mt-28 font-ubuntu bg-gallery'>
+					<div className='flex justify-center'>
+						<h1 className='text-5xl font-bold'>No Feedbacks</h1>
+					</div>
+				</div>
+			)}
+		</>
+	);
 }
 
 export default Feedback;
