@@ -41,14 +41,36 @@ copy = fruits.copy()  # Create a copy`,
 
         practice3: 'Design a Python program that takes a list of names and sorts them in alphabetical order. Display the sorted list.'
     },
-
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Write a function that takes a 2D matrix (list of lists) as input and returns a transposed version of the matrix, where rows become columns and vice versa.",
-        2: "Create a function that rotates a list to the right by a specified number of positions. For example, rotating [1, 2, 3, 4, 5] by 2 positions would result in [4, 5, 1, 2, 3].",
-        3: "Given a list of strings, write a function that extracts strings with a specified length and returns a new list with those strings.",
-        4: "Given a list of numbers, create a new list that contains only the even numbers from the original list using list comprehension.",
-        5: "Write a function to check if a given list is a palindrome, meaning it reads the same forwards and backwards. For example, [1, 2, 3, 2, 1] is a palindrome."
+        1: {
+            practice: "Write a function that takes a 2D matrix (list of lists) as input and returns a transposed version of the matrix, where rows become columns and vice versa.",
+            topic: 'Modifying Lists, List Operations, and List Functions in Python',
+            id: 1
+        },
+
+        2: {
+            practice: "Create a function that rotates a list to the right by a specified number of positions. For example, rotating [1, 2, 3, 4, 5] by 2 positions would result in [4, 5, 1, 2, 3].",
+            topic: 'Modifying Lists, List Operations, and List Functions in Python',
+            id: 2
+        },
+
+        3: {
+            practice: "Given a list of strings, write a function that extracts strings with a specified length and returns a new list with those strings.",
+            topic: 'Modifying Lists, List Operations, and List Functions in Python',
+            id: 3
+        },
+
+        4: {
+            practice: "Given a list of numbers, create a new list that contains only the even numbers from the original list using list comprehension.",
+            topic: 'Creating Lists in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: "Write a function to check if a given list is a palindrome, meaning it reads the same forwards and backwards. For example, [1, 2, 3, 2, 1] is a palindrome.",
+            topic: 'Accessing Lists in Python',
+            id: 5
+        }
     }
 }
 

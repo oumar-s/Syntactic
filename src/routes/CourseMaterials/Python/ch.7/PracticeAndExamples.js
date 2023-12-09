@@ -53,14 +53,36 @@ greet("Alice")`,
 
         practice3: 'Create a lambda function to check if a given number is even.'
     },
-
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: "Write a function that takes three numbers as input and returns the maximum of the three.",
-        2: "Write a function that takes any number of string arguments and concatenates them to create a single string. The function should accept a variable number of input strings and return the concatenated result.",
-        3: "Write a function that takes a list of numbers as input and uses a lambda function to filter and return a new list containing only the even numbers.",
-        4: "Create a function that takes the coefficients of a quadratic equation (a, b, and c) as input and returns the roots of the equation. Use the quadratic formula to calculate the roots.",
-        5: "Write a function that generates the first n numbers of the Fibonacci sequence using a lambda function and returns them as a list."
+        1: {
+            practice: "Write a function that takes three numbers as input and returns the maximum of the three.",
+            topic: 'Basics of Functions, Calling, and Returning Functions in Python',
+            id: 1
+        },
+
+        2: {
+            practice: "Write a function that takes any number of string arguments and concatenates them to create a single string. The function should accept a variable number of input strings and return the concatenated result.",
+            topic: 'Variable-Length Arguments and Lambda Functions in Python',
+            id: 2
+        },
+
+        3: {
+            practice: "Write a function that takes a list of numbers as input and uses a lambda function to filter and return a new list containing only the even numbers.",
+            topic: 'Variable-Length Arguments and Lambda Functions in Python',
+            id: 3
+        },
+
+        4: {
+            practice: "Create a function that takes the coefficients of a quadratic equation (a, b, and c) as input and returns the roots of the equation. Use the quadratic formula to calculate the roots.",
+            topic: 'Basics of Functions, Calling, and Returning Functions in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: "Write a function that generates the first n numbers of the Fibonacci sequence using a lambda function and returns them as a list.",
+            topic: 'Variable-Length Arguments and Lambda Functions in Python',
+            id: 5
+        }
     }
 }
 
