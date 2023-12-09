@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition Algorithm
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 import Chapter1 from './PracticeAndExamples';
 
@@ -279,6 +280,7 @@ const PythonExamination2 = () => {
 
                 </div>
             </div>
+            <Chatbot />
             {/* <div className='flex justify-center space-x-8 p-5 m-5'>
                 <Link to='/javascript/1.1'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
