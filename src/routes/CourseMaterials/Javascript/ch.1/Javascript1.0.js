@@ -22,8 +22,7 @@ const Introduction = () => {
         const currentUser = auth.currentUser;
         if (currentUser) {
             const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-            const progressSnap = await getDoc(progressRef);
-            const data = progressSnap.data();
+            const data = (await getDoc(progressRef)).data();
             if (!data.Javascript['1:0']) {
                 await updateDoc(progressRef, {
                     "Javascript.1:0" : "complete",

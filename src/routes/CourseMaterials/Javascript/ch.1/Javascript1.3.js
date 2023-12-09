@@ -98,7 +98,7 @@ const Examination = () => {
 			messages: [
 				{
 					role: 'assistant',
-					content: `Evaluate the submitted JavaScript code to determine if it completely and correctly solves the given practice problem. First, check if the code submission is not empty. If no code is submitted, return "Incorrect" with the note "No code submitted". If code is submitted, ensure that it addresses all aspects of the problem. The evaluation should be strict: any partial solution or incorrect implementation should be marked as "Incorrect". When providing feedback for incorrect or incomplete submissions, focus solely on identifying the elements or aspects that are missing or incorrect in the submitted code. Avoid giving direct solutions or hints on how to solve the problem. The goal is to encourage the user to think critically and solve the problem independently. If the code fully solves the problem, mark it as "Correct". After the correctness evaluation, provide constructive feedback aimed at beginners, focusing on code quality and adherence to clean coding principles. If there is no specific feedback, return 'No feedback'. The submitted code is: ${currentCode}. The practice problem is: ${practice?.practice}`,
+					content: `Evaluate the submitted JavaScript code to determine if it completely and correctly solves the given practice problem. First, check if the code submission is not empty. If no code is submitted, return "Incorrect" with the note "No code submitted". If code is submitted, ensure that it addresses all aspects of the problem. The evaluation should be strict: any partial solution or incorrect implementation should be marked as "Incorrect". When providing feedback for incorrect or incomplete submissions, focus solely on identifying the elements or aspects that are missing or incorrect in the submitted code. Avoid giving direct solutions or hints on how to solve the problem. The goal is to encourage the user to think critically and solve the problem independently. If the code fully solves the problem, mark it as "Correct". After the correctness evaluation, provide constructive feedback aimed at beginners, focusing on best practices, code quality and adherence to clean coding principles. If there is no specific feedback, return 'No feedback'. The submitted code is: ${currentCode}. The practice problem is: ${practice?.practice}`,
 				},
 			],
 			model: 'gpt-3.5-turbo',
@@ -152,12 +152,15 @@ const Examination = () => {
 					],
 				});
 			}
-      //make feedback lowwer case
-            const lowerCaseFeedback = feedback.toLowerCase();
+            //make feedback lowwer case
+            const feedbackWords = (feedback.toLowerCase()).split(' ');
             //check if feedback contains the the string 'correct'
-            if (lowerCaseFeedback.includes('correct')) {
+            console.log('practice Problem: ', practice?.practice);
+
+            if (feedbackWords.includes('correct')) {
+                console.log(feedbackWords, 'correct has run in Javascript1.3.js');
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, [selectedTab - 1]: true};
                 
@@ -265,7 +268,7 @@ const Examination = () => {
 								{practiceProblems.map((_, index) => (
 									<li
 										key={index + 1}
-										className={`cursor-pointer p-4 ${selectedTab === index + 1 ? 'bg-gray-600' : ''} ${performance[0] ? 'bg-green-600' : ''}`}
+										className={`cursor-pointer p-4 ${selectedTab === index + 1 ? 'bg-gray-600' : ''} ${performance[index] === true ? 'bg-green-600' : ''}`}
 										onClick={() => handleTabClick(index + 1)}
 									>
 										Practice {index + 1}

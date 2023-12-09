@@ -126,7 +126,7 @@ const Logging = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p1: true};
 
@@ -184,7 +184,7 @@ const Logging = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p2: true};
 
@@ -241,7 +241,7 @@ const Logging = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p3: true};
 
