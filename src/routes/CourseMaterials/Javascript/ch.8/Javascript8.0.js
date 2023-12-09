@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 const ES6Classes = () => {
     return (
@@ -27,6 +28,7 @@ const ES6Classes = () => {
                     In many other languages, classes, or constructors, are clearly distinguished from objects, or instances. In JavaScript, classes are mainly an abstraction over the existing prototypical inheritance mechanism — all patterns are convertible to prototype-based inheritance. Classes themselves are normal JavaScript values as well, and have their own prototype chains. In fact, most plain JavaScript functions can be used as constructors — you use the new operator with a constructor function to create a new object.
                 </p>
             </div>
+            <Chatbot />
         </div>
     );
 };

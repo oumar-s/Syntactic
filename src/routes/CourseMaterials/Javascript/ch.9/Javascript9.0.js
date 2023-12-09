@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 const Promises = () => {
     return (
@@ -32,6 +33,7 @@ const Promises = () => {
                     In this guide, we'll dive deep into the world of JavaScript Promises. We'll explore what promises are, how they work, and how to use them effectively to write clean, maintainable, and error-handling asynchronous code. Whether you're a beginner looking to grasp the basics or an experienced developer aiming to improve your async code, this guide will help you harness the power of JavaScript Promises to build robust and efficient web applications.
                 </p>
             </div>
+            <Chatbot />
         </div>
     );
 };

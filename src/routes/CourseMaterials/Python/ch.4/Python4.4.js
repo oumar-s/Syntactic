@@ -20,6 +20,7 @@ import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition A
 import Chapter1 from './PracticeAndExamples';
 
 import { OpenAI } from "openai";
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
@@ -287,6 +288,7 @@ const PythonExamination4 = () => {
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                 </Link>
             </div> */}
+            <Chatbot />
         </div>
     );
 }

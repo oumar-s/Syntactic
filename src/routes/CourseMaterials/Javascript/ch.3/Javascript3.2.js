@@ -21,6 +21,7 @@ import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 import Chapter1 from './PracticeAndExamples';
 
 import { OpenAI } from "openai";
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 const openai = new OpenAI({
     apiKey: process.env.REACT_APP_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true
@@ -361,6 +362,7 @@ const LoopControlStatements = () => {
                     </Link>
                 </div>
             </div>
+            <Chatbot />
         </div>
     );
 };
