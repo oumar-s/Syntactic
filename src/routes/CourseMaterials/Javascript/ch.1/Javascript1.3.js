@@ -220,7 +220,7 @@ const Examination = () => {
 						alt='Left arrow Icon'
 					/>
 				</Link>
-				<Link to='/javascript/projects'>
+				<Link to='/javascript/2.0'>
 					<img
 						className='bg-slate-400 hover:bg-gray-300 p-2'
 						src={rightArrowIcon}

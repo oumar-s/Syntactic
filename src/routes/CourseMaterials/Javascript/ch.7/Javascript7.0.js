@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 const ObjectLiterals = () => {
     return (
@@ -27,6 +28,7 @@ const ObjectLiterals = () => {
                     An object is a collection of related data and/or functionality. These usually consist of several variables and functions (which are called properties and methods when they are inside objects).
                 </p>
             </div>
+            <Chatbot />
         </div>
     );
 };

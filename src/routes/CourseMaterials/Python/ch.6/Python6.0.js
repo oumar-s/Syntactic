@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
+import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 const PythonLists = () => {
     return (
@@ -23,6 +24,7 @@ const PythonLists = () => {
                 </p>
 
             </div>
+            <Chatbot />
         </div>
     );
 };
