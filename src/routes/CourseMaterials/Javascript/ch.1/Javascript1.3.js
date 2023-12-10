@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
-    getDoc,
-    collection,
-    setDoc,
-    increment,
-    arrayUnion,
-    updateDoc,
-    doc,
-    Firestore
+	getDoc,
+	collection,
+	setDoc,
+	increment,
+	arrayUnion,
+	updateDoc,
+	doc,
+	Firestore,
 } from 'firebase/firestore';
 
 import { Link } from 'react-router-dom'; // Import NavLink
@@ -25,6 +25,8 @@ import './Javascript1.3.css';
 
 import { OpenAI } from 'openai';
 
+import { generatePracticeProblems } from '../../../../utilities/generatePracticeProblems';
+
 // Initialize OpenAI
 const openai = new OpenAI({
 	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
@@ -36,10 +38,15 @@ const Examination = () => {
 	const [output, setOutput] = useState('');
 	const [selectedTab, setSelectedTab] = useState(1);
 	const [practice, setPractice] = useState(Chapter1.exam[1]);
-	const [userUID, setUserUID] = useState(null);
 	const [codeMap, setCodeMap] = useState(new Map());
-  const [performance, setPerformance] = useState([false, false, false, false, false]);
-
+	const [performance, setPerformance] = useState([
+		false,
+		false,
+		false,
+		false,
+		false,
+	]);
+	// const [userUID, setUserUID] = useState(null);
 
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
 	leitner.addItem(Chapter1.exam[1]);
@@ -152,6 +159,7 @@ const Examination = () => {
 					],
 				});
 			}
+
             //make feedback lowwer case
             const feedbackWords = (feedback.toLowerCase()).split(' ');
             //check if feedback contains the the string 'correct'
@@ -193,41 +201,13 @@ const Examination = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleMorePractice = async () => {
-		setIsLoading(true); // Start loading
-
-		// Request new practice problems from OpenAI
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Generate 5 new JavaScript practice problems for beginners, focusing on variables and logging outputs. Each problem should be presented as a standalone statement without any preceding numbers or labels. Avoid labeling with numbers or alphabets. The problems should be unique, testing different aspects of working with variables and outputting data in JavaScript.`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 500, // Adjust token limit based on need
-		});
-
-		// Extract the generated problems
-		const newProblems = response.choices[0].message.content
-			.split('\n\n')
-			.map((problem) => problem.replace(/^\d+\.\s*/, '')) // Remove any leading numbers and labels
-			.map((formattedProblem, index) => ({
-				id: practiceProblems.length + index + 1,
-				practice: formattedProblem,
-			}));
-
-		// Update the state to include these new problems
-		// setPracticeProblems([...currentPracticeProblem, ...newProblems]);
+		const newProblems = await generatePracticeProblems(
+			'variables and logging outputs',
+			practiceProblems,
+			setIsLoading,
+		);
 		setPracticeProblems((prevProblems) => [...prevProblems, ...newProblems]);
-		// Optionally, set the practice state to the first new problem
-		if (newProblems.length > 0) {
-			setPractice(newProblems[0]);
-		}
-
 		setTabsCount((prevCount) => prevCount + newProblems.length);
-		setIsLoading(false); // End loading
-		// console.log('New Practice Problems:', newProblems);
-		// console.log('Practice Problems:', practiceProblems);
 	};
 
 	return (
@@ -268,6 +248,7 @@ const Examination = () => {
 								{practiceProblems.map((_, index) => (
 									<li
 										key={index + 1}
+
 										className={`cursor-pointer p-4 ${selectedTab === index + 1 ? 'bg-gray-600' : ''} ${performance[index] === true ? 'bg-green-600' : ''}`}
 										onClick={() => handleTabClick(index + 1)}
 									>
