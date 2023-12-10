@@ -65,7 +65,7 @@ const DataTypesAndVariables = () => {
         setToggle1(true);
         setOutput1('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code1}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code1}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });  
@@ -75,7 +75,7 @@ const DataTypesAndVariables = () => {
         setToggle2(true);
         setOutput2('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code2}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code2}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });  
@@ -85,7 +85,7 @@ const DataTypesAndVariables = () => {
         setToggle3(true);
         setOutput3('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code3}` }],
+            messages: [{ role: "assistant", content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code3}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });  
@@ -96,7 +96,7 @@ const DataTypesAndVariables = () => {
         setToggle1(true);
         setFeedback1('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code1}, practice problem is ${Chapter1.topic2.practice1}` }],
+            messages: [{ role: "assistant", content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code1}, practice problem is ${Chapter1.topic2.practice1}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });  
@@ -125,7 +125,7 @@ const DataTypesAndVariables = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p1: true};
 
@@ -152,7 +152,7 @@ const DataTypesAndVariables = () => {
     setToggle2(true);
     setFeedback2('Loading...');
     const response = await openai.chat.completions.create({
-        messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code2}, practice problem is ${Chapter1.topic2.practice2}` }],
+        messages: [{ role: "assistant", content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code2}, practice problem is ${Chapter1.topic2.practice2}` }],
         model: "gpt-3.5-turbo",
         max_tokens: 100
     });  
@@ -181,7 +181,7 @@ const DataTypesAndVariables = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p2: true};
 
@@ -209,7 +209,7 @@ const DataTypesAndVariables = () => {
         setToggle3(true);
         setFeedback3('Loading...');
         const response = await openai.chat.completions.create({
-            messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code3}, practice problem is ${Chapter1.topic2.practice3}` }],
+            messages: [{ role: "assistant", content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code3}, practice problem is ${Chapter1.topic2.practice3}` }],
             model: "gpt-3.5-turbo",
             max_tokens: 100
         });  
@@ -238,7 +238,7 @@ const DataTypesAndVariables = () => {
             //check if feedback contains the the string 'correct'
             if (lowerCaseFeedback.includes('correct')) {
                 const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = docSnap.data();
+                const data = (await getDoc(progressRef)).data();
                 setPerformance(prevPerformance => {
                     const updatedPerformance = {...prevPerformance, p3: true};
 

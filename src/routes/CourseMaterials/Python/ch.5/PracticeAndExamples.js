@@ -63,14 +63,36 @@ else:
 
         practice3: `Design a Python program that asks the user to enter a password. Use a "while" loop to keep asking until the user enters the correct password.`
     },
-
-    //probles are in random order for the sake of Interleaving
     exam : {
-        1: `Write a "for" loop that calculates the sum of all even numbers from 1 to 50.`,
-        2: `Create a "while" loop that counts down from 10 to 1, displaying each number in the countdown. Once it reaches 1, print "Blast-off!"`,
-        3: `Write a "for" loop that prints the multiplication table for a given number. Prompt the user to enter a number, and then display the multiplication table for that number from 1 to 10.`,
-        4: `Implement a program that asks the user to enter a password. Use a "while" loop to give the user three chances to enter the correct password. If they succeed, print "Access granted," otherwise, print "Access denied" after three failed attempts.`,
-        5: `Write a "for" loop that calculates the factorial of a number. Prompt the user to enter a positive integer and then use a "for" loop to calculate and print the factorial of that number.`
+        1: {
+            practice: `Write a "for" loop that calculates the sum of all even numbers from 1 to 50.`,
+            topic: 'For Loops in Python',
+            id: 1
+        },
+
+        2: {
+            practice: `Create a "while" loop that counts down from 10 to 1, displaying each number in the countdown. Once it reaches 1, print "Blast-off!"`,
+            topic: 'While Loops in Python',
+            id: 2
+        },
+
+        3: {
+            practice: `Write a "for" loop that prints the multiplication table for a given number. Prompt the user to enter a number, and then display the multiplication table for that number from 1 to 10.`,
+            topic: 'For Loops in Python',
+            id: 3
+        },
+
+        4: {
+            practice: `Implement a program that asks the user to enter a password. Use a "while" loop to give the user three chances to enter the correct password. If they succeed, print "Access granted," otherwise, print "Access denied" after three failed attempts.`,
+            topic: 'While Loops in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: `Write a "for" loop that calculates the factorial of a number. Prompt the user to enter a positive integer and then use a "for" loop to calculate and print the factorial of that number.`,
+            topic: 'For Loops in Python',
+            id: 5
+        }
     }
 }
 

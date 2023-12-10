@@ -11,11 +11,35 @@ const Chapter1 = {
     },
     
     exam : {
-        1: `Write a Python program that prints any single character (e.g., "X") to the console.`,
-        2: "Write a Python program that prints any whole number (e.g., 42) to the console.",
-        3: "Write a Python program that prints a decimal number with a few decimal places (e.g., 3.14159) to the console.",
-        4: `Write a Python program that prints a single word (e.g., "Python") to the console.`,
-        5: `Write a Python program that prints a a simple sentence (e.g., "Hello, Python!") to the console.`
+        1: {
+            practice: `Write a Python program that prints any single character (e.g., "X") to the console.`,
+            topic: 'Printing Outputs in Python',
+            id: 1
+        },
+
+        2: {
+            practice: "Write a Python program that prints any whole number (e.g., 42) to the console.",
+            topic: 'Printing Outputs in Python',
+            id: 2
+        },
+
+        3: {
+            practice: "Write a Python program that prints a decimal number with a few decimal places (e.g., 3.14159) to the console.",
+            topic: 'Printing Outputs in Python',
+            id: 3
+        },
+
+        4: {
+            practice: `Write a Python program that prints a single word (e.g., "Python") to the console.`,
+            topic: 'Printing Outputs in Python',
+            id: 4   
+        },
+
+        5: {
+            practice: `Write a Python program that prints a a simple sentence (e.g., "Hello, Python!") to the console.`,
+            topic: 'Printing Outputs in Python',
+            id: 5
+        }
     }
 }
 
