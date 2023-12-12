@@ -4,12 +4,10 @@ import { Link } from 'react-router-dom'; // Import NavLink
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
     setDoc,
-    collection,
-    addDoc,
     arrayUnion,
     updateDoc,
+    increment,
     doc,
-    Firestore,
     getDoc
 } from 'firebase/firestore';
 
@@ -190,7 +188,43 @@ const SettingPropertyInObject = () => {
         }
     };
 
+    const setProgress = async () => {
+		const currentUser = auth.currentUser;
+		if (currentUser) {
+			const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+			const data = (await getDoc(progressRef)).data();
+			if (!data.Javascript['7:2']) {
+				await updateDoc(progressRef, {
+					'Javascript.7:2': 'complete',
+					'Javascript.percent': increment(2.4),
+				});
+			}
 
+			//check if all topics are complete
+			// const allTopics = data.Javascript;
+			// let allComplete = true;
+			// for (const topic in allTopics) {
+			//     if (allTopics[topic] !== 'complete') {
+			//         allComplete = false;
+			//     }
+			// }
+
+			if (
+				data.Javascript['7:0'] === 'complete' &&
+				data.Javascript['7:1'] === 'complete' &&
+				data.Javascript['7:2'] === 'complete' &&
+				data.Javascript['7:3'] === 'complete' &&
+				data.Javascript['7:4'] === 'complete' &&
+				data.Javascript['7:5'] === 'complete' &&
+				data.Javascript['7:6'] === 'complete'
+			) {
+				await updateDoc(progressRef, {
+					'Javascript.7': 'complete',
+				});
+			}
+		}
+	};
+    
     return (
         <div className='flex flex-col font-ubuntu bg-midnight text-white'>
             <div className='justify-items-center ml-20 mr-20 pl-20 pr-20'>
@@ -198,7 +232,7 @@ const SettingPropertyInObject = () => {
                     <Link to='/javascript/7.1'>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
                     </Link>
-                    <Link to='/javascript/7.3'>
+                    <Link to='/javascript/7.3' onClick={setProgress}>
                         <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                     </Link>
                 </div>

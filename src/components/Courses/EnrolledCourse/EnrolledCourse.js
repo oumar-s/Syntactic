@@ -6,7 +6,7 @@ import dropDownIcon from '../../../assets/icons/drop-down.png';
 
 let allTopics = [];
 export const EnrolledCourse = ({ name, syllabus, progress }) => {
-	console.log('percent: ', progress.percent);
+	console.log('progress percent: ', progress);
 	const courseName = name.toLowerCase();
 	allTopics = syllabus;
 	const numOfChapters = allTopics.length;
@@ -38,10 +38,12 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 						<span className='enrolled-progress mt-2 font-mono text-gray-500'>
 							Percent Completed
 						</span>
-						<div className='flex w-64 mt-2 bg-white  border border-black text-end'>
-							
-							<div className= 'enrolled-progress font-mon font-bold bg-green-500' style={{width : `${progress.percent}%`}}>
-								{ `${Math.floor(progress.percent)}%` } 
+						<div className='flex w-64 mt-2 bg-white  border border-gray-500 rounded-sm text-end'>
+							<div
+								className='enrolled-progress font-mon font-bold bg-green-500'
+								style={{ width: `${progress.percent}%` }}
+							>
+								{`${Math.floor(progress.percent)}%`}
 							</div>
 						</div>
 					</div>
@@ -65,7 +67,13 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 						{allTopics.map((topic, index) => (
 							<li className='flex flex-col' key={index}>
 								<div className='flex'>
-									<div className={`rounded-full  text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${progress[index + 1] === 'complete' ? 'bg-green-600' : 'bg-midnight'}`}>
+									<div
+										className={`rounded-full  text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${
+											progress[index + 1] === 'complete'
+												? 'bg-green-600'
+												: 'bg-midnight'
+										}`}
+									>
 										{index + 1}
 									</div>
 									<div
@@ -87,7 +95,13 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 										<div className='ml-20 mt-2 bg-opacity-50 bg-white rounded-md px-5 text-lg'>
 											<ol className='list-disc space-y-7'>
 												{topic.topics.map((subtopic) => (
-													<li className = {`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[subtopic.pid] === 'complete' ? 'text-green-600' : console.log('here: ', progress[subtopic.pid])} ` }>
+													<li
+														className={`transition-transform duration-300 ease-in-out hover:translate-x-2 ${
+															progress[subtopic.pid] === 'complete'
+																? 'text-green-600'
+																: console.log('here: ', progress[subtopic.pid])
+														} `}
+													>
 														<Link
 															to={`/${courseName}/${subtopic.id}`}
 															className={({ isActive }) =>

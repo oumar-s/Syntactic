@@ -7,6 +7,7 @@ import {
 	setDoc,
 	arrayUnion,
 	updateDoc,
+	increment,
 	doc,
 	Firestore,
 } from 'firebase/firestore';
@@ -189,6 +190,21 @@ const PythonExamination2 = () => {
 		setTabsCount((prevCount) => prevCount + newProblems.length);
 	};
 
+	const setProgress = async () => {
+		const currentUser = auth.currentUser;
+		if (currentUser) {
+			const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+			const progressSnap = await getDoc(progressRef);
+			const data = progressSnap.data();
+			if (!data.Python['2:4']) {
+				await updateDoc(progressRef, {
+					'Python.2:4': 'complete',
+					'Python.percent': increment(2.71),
+				});
+			}
+		}
+	};
+
 	return (
 		<div className='bg-midnight pt-1'>
 			<div className='flex justify-center space-x-8 p-5 m-5'>
@@ -199,7 +215,7 @@ const PythonExamination2 = () => {
 						alt='Left arrow Icon'
 					/>
 				</Link>
-				<Link to='/python/3.0'>
+				<Link to='/python/3.0' onClick={setProgress}>
 					<img
 						className='bg-slate-400 hover:bg-gray-300 p-2'
 						src={rightArrowIcon}

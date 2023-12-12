@@ -7,6 +7,7 @@ import {
 	setDoc,
 	arrayUnion,
 	updateDoc,
+	increment,
 	doc,
 	Firestore,
 } from 'firebase/firestore';
@@ -192,6 +193,40 @@ const Examination2 = () => {
 		setTabsCount((prevCount) => prevCount + newProblems.length);
 	};
 
+	const setProgress = async () => {
+		const currentUser = auth.currentUser;
+		if (currentUser) {
+			const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+			const data = (await getDoc(progressRef)).data();
+			if (!data.Javascript['2:3']) {
+				await updateDoc(progressRef, {
+					'Javascript.2:3': 'complete',
+					'Javascript.percent': increment(2.4),
+				});
+			}
+
+			//check if all topics are complete
+			// const allTopics = data.Javascript;
+			// let allComplete = true;
+			// for (const topic in allTopics) {
+			//     if (allTopics[topic] !== 'complete') {
+			//         allComplete = false;
+			//     }
+			// }
+
+			if (
+				data.Javascript['2:0'] === 'complete' &&
+				data.Javascript['2:1'] === 'complete' &&
+				data.Javascript['2:2'] === 'complete' &&
+				data.Javascript['2:3'] === 'complete'
+			) {
+				await updateDoc(progressRef, {
+					'Javascript.2': 'complete',
+				});
+			}
+		}
+	};
+
 	return (
 		<div className='bg-midnight pt-1'>
 			<div className='flex justify-center space-x-8 p-5 m-5'>
@@ -202,7 +237,7 @@ const Examination2 = () => {
 						alt='Left arrow Icon'
 					/>
 				</Link>
-				<Link to='/javascript/3.0'>
+				<Link to='/javascript/3.0' onClick={setProgress}>
 					<img
 						className='bg-slate-400 hover:bg-gray-300 p-2'
 						src={rightArrowIcon}
