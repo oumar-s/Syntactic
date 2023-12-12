@@ -160,44 +160,58 @@ const Examination = () => {
 				});
 			}
 
-            //make feedback lowwer case
-            const feedbackWords = (feedback.toLowerCase()).split(' ');
-            //check if feedback contains the the string 'correct'
-            console.log('practice Problem: ', practice?.practice);
+			//make feedback lowwer case
+			const feedbackWords = feedback.toLowerCase().split(' ');
+			//check if feedback contains the the string 'correct'
+			console.log('practice Problem: ', practice?.practice);
 
-            if (feedbackWords.includes('correct')) {
-                console.log(feedbackWords, 'correct has run in Javascript1.3.js');
-                const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                const data = (await getDoc(progressRef)).data();
-                setPerformance(prevPerformance => {
-                    const updatedPerformance = {...prevPerformance, [selectedTab - 1]: true};
-                
-                    //check if all performance is true
-                    if (updatedPerformance[0] && updatedPerformance[1] && updatedPerformance[2] && updatedPerformance[3] && updatedPerformance[4]) {
-                        //update progress
-                        const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-                        updateDoc(progressRef, {
-                            "Javascript.1:3" : "complete",
-                            "Javascript.percent" : increment(2.4)
-                        });
-                    }
-                
-                    return updatedPerformance;
-                });
+			if (feedbackWords.includes('correct')) {
+				console.log(feedbackWords, 'correct has run in Javascript1.3.js');
+				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+				const data = (await getDoc(progressRef)).data();
+				setPerformance((prevPerformance) => {
+					const updatedPerformance = {
+						...prevPerformance,
+						[selectedTab - 1]: true,
+					};
 
-                if(data.Javascript['1:0'] === 'complete' && data.Javascript['1:1'] === 'complete' && data.Javascript['1:2'] === 'complete' && data.Javascript['1:3'] === 'complete') {
-                    await updateDoc(progressRef, {
-                        "Javascript.1" : 'complete'
-                    });
-                }  
-            }
+					//check if all performance is true
+					if (
+						updatedPerformance[0] &&
+						updatedPerformance[1] &&
+						updatedPerformance[2] &&
+						updatedPerformance[3] &&
+						updatedPerformance[4]
+					) {
+						//update progress
+						const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+						updateDoc(progressRef, {
+							'Javascript.1:3': 'complete',
+							'Javascript.percent': increment(2.4),
+						});
+					}
+
+					return updatedPerformance;
+				});
+
+				if (
+					data.Javascript['1:0'] === 'complete' &&
+					data.Javascript['1:1'] === 'complete' &&
+					data.Javascript['1:2'] === 'complete' &&
+					data.Javascript['1:3'] === 'complete'
+				) {
+					await updateDoc(progressRef, {
+						'Javascript.1': 'complete',
+					});
+				}
+			}
 		}
 	};
 
 	// Convert Chapter1.exam from an object to an array for the initial state
+	const [tabsCount, setTabsCount] = useState(5);
 	const initialProblems = Object.values(Chapter1.exam);
 	const [practiceProblems, setPracticeProblems] = useState(initialProblems);
-	const [tabsCount, setTabsCount] = useState(5);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const handleMorePractice = async () => {
@@ -210,6 +224,40 @@ const Examination = () => {
 		setTabsCount((prevCount) => prevCount + newProblems.length);
 	};
 
+	const setProgress = async () => {
+		const currentUser = auth.currentUser;
+		if (currentUser) {
+			const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+			const data = (await getDoc(progressRef)).data();
+			if (!data.Javascript['1:3']) {
+				await updateDoc(progressRef, {
+					'Javascript.1:3': 'complete',
+					'Javascript.percent': increment(2.4),
+				});
+			}
+
+			//check if all topics are complete
+			// const allTopics = data.Javascript;
+			// let allComplete = true;
+			// for (const topic in allTopics) {
+			//     if (allTopics[topic] !== 'complete') {
+			//         allComplete = false;
+			//     }
+			// }
+
+			if (
+				data.Javascript['1:0'] === 'complete' &&
+				data.Javascript['1:1'] === 'complete' &&
+				data.Javascript['1:2'] === 'complete' &&
+				data.Javascript['1:3'] === 'complete'
+			) {
+				await updateDoc(progressRef, {
+					'Javascript.1': 'complete',
+				});
+			}
+		}
+	};
+
 	return (
 		<div className='bg-midnight pt-1'>
 			<div className='flex justify-center space-x-8 p-5 m-5'>
@@ -220,7 +268,7 @@ const Examination = () => {
 						alt='Left arrow Icon'
 					/>
 				</Link>
-				<Link to='/javascript/2.0'>
+				<Link to='/javascript/2.0' onClick={setProgress}>
 					<img
 						className='bg-slate-400 hover:bg-gray-300 p-2'
 						src={rightArrowIcon}
@@ -248,8 +296,9 @@ const Examination = () => {
 								{practiceProblems.map((_, index) => (
 									<li
 										key={index + 1}
-
-										className={`cursor-pointer p-4 ${selectedTab === index + 1 ? 'bg-gray-600' : ''} ${performance[index] === true ? 'bg-green-600' : ''}`}
+										className={`cursor-pointer p-4 ${
+											selectedTab === index + 1 ? 'bg-gray-600' : ''
+										} ${performance[index] === true ? 'bg-green-600' : ''}`}
 										onClick={() => handleTabClick(index + 1)}
 									>
 										Practice {index + 1}
@@ -317,4 +366,3 @@ const Examination = () => {
 };
 
 export default Examination;
-
