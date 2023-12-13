@@ -349,7 +349,7 @@ const DataTypesAndVariables = () => {
                                     <pre className='whitespace-normal'>Output: {output1}</pre>
                                 </div>
                                 <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
-                                    <pre className='whitespace-pre-line'>Feedback: {feedback1}</pre>
+                                    <pre className='whitespace-pre-line'>Feedback/Hint: {feedback1}</pre>
                                 </div> 
                             </div>
                         </div>
@@ -389,7 +389,7 @@ const DataTypesAndVariables = () => {
                                     <pre className='whitespace-normal'>Output: {output2}</pre>
                                 </div>
                                 <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
-                                    <pre className='whitespace-pre-line'>Feedback: {feedback2}</pre>
+                                    <pre className='whitespace-pre-line'>Feedback/Hint: {feedback2}</pre>
                                 </div> 
                             </div>
                         </div>
@@ -429,7 +429,7 @@ const DataTypesAndVariables = () => {
                                     <pre className='whitespace-normal'>Output: {output3}</pre>
                                 </div>
                                 <div className='font-mono bg-neutral-900 h-36 w-3/4 p-2 rounded-md'>
-                                    <pre className='whitespace-pre-line'>Feedback: {feedback3}</pre>
+                                    <pre className='whitespace-pre-line'>Feedback/Hint: {feedback3}</pre>
                                 </div> 
                             </div>
                         </div>
