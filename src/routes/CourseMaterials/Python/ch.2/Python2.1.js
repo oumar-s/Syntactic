@@ -21,11 +21,7 @@ import Chatbot from '../../../../components/Chatbot/Chatbot';
 //Chapter 1 contains the code examples and practice problems for the chapter
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from "openai";
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
 
 
 

@@ -20,11 +20,7 @@ import Chatbot from '../../../../components/Chatbot/Chatbot';
 
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from "openai";
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
 
 const PythonExamination2 = () => {
     const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes

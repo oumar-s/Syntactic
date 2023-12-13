@@ -20,12 +20,11 @@ import rightArrowIcon from '../../../../assets/icons/angle-right.png';
 //Chapter 1 contains the code examples and practice problems for the chapter
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from "openai";
+
 import Chatbot from '../../../../components/Chatbot/Chatbot';
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
+    
+    
 
 
 

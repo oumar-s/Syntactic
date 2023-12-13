@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 
-import { OpenAI } from "openai";
-const openai = new OpenAI({ 
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
+ 
+    
+    
 
 const JavaScript1 = () => {
     const [code, setCode] = useState('console.log("Hello, world!");');
@@ -29,17 +28,14 @@ const JavaScript1 = () => {
         setOutput(value)
     }
     const handleSubmit = async () => {
-        const openai = new OpenAI({ 
-            apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-            dangerouslyAllowBrowser: true
-        });
-    
-        const response = await openai.chat.completions.create({
-                messages: [{ role: "assistant", content: `Based on bellow code and practice problem, return a json object with the following properties: {evaluation: "Correct" or "Incorrect", Feedback: "a uselful feedback based on code quality and clean code"}: code is ${code}, practice problem is ${practice}` }],
-                model: "gpt-3.5-turbo",
-                max_tokens: 100});
+         
+       
+        // const response = await openai.chat.completions.create({
+        //         messages: [{ role: "assistant", content: `Based on bellow code and practice problem, return a json object with the following properties: {evaluation: "Correct" or "Incorrect", Feedback: "a uselful feedback based on code quality and clean code"}: code is ${code}, practice problem is ${practice}` }],
+        //         model: "gpt-3.5-turbo",
+        //         max_tokens: 100});
             
-        setResponse(response.choices[0].message.content);
+        // setResponse(response.choices[0].message.content);
       };
 
 
@@ -175,7 +171,7 @@ const JavaScript1 = () => {
 export default JavaScript1;
 
 // import React, { useState, useEffect } from "react";
-// import { OpenAI } from "openai";
+// 
 
 
 // const App = () => {
@@ -183,8 +179,8 @@ export default JavaScript1;
   
 
 //   const generatePoem = async () => {
-//     const openai = new OpenAI({ 
-//         apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+//      
+//         
 //         dangerouslyAllowBrowser: true
 //     });
 

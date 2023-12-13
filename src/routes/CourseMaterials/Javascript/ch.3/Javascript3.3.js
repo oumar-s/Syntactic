@@ -19,12 +19,11 @@ import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition A
 
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from "openai";
+
 import Chatbot from '../../../../components/Chatbot/Chatbot';
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
+    
+    
 
 const Examination3 = () => {
     const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes

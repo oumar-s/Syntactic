@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { OpenAI } from "openai";
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
+
 
 const Chatbot = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
