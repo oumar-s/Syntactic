@@ -93,7 +93,7 @@ const Examination4 = () => {
 	const handleRun = async () => {
 		setOutput('Loading...');
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/runcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const Examination4 = () => {
 
 		let feedback = '';
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/submitcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

@@ -58,7 +58,7 @@ const FunctionsBasics = () => {
         setOutput1('Loading...');
         setFeedback1('');
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/runcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const FunctionsBasics = () => {
         setOutput2('Loading...');
         setFeedback2('');
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/runcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const FunctionsBasics = () => {
         setOutput3('Loading...');
         setFeedback2('');
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/runcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const FunctionsBasics = () => {
         setOutput1('Loading...');
         let feedback = '';
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/submitcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -177,7 +177,7 @@ const FunctionsBasics = () => {
         setOutput2('Loading...');
         let feedback = '';
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/submitcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ const FunctionsBasics = () => {
         setOutput3('Loading...');
         let feedback = '';
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/submitcode', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

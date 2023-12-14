@@ -35,7 +35,7 @@ const Chatbot = () => {
       setMessage('');
 
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/chat', {
+        const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
