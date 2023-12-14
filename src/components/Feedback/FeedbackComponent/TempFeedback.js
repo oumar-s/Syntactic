@@ -9,7 +9,7 @@ function TempFeedback({ feedback }) {
 					<div className='px-4 pt-4 my-4 rounded-md'>
 						<h4 className='text-sm md:text-lg mb-2 font-normal'>Problem:</h4>
 						<p className='font-mono text-sm md:text-base text-gray-200'>
-							{feedback?.practiceProblem}
+							{feedback?.problem}
 						</p>
 					</div>
 					<div className='py-0 px-4 ml-4 border-l-2 border-slate-900'>

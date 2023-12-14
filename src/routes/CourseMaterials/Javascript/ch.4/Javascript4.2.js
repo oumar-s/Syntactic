@@ -231,7 +231,7 @@ const Examination4 = () => {
 				data.Javascript['4:2'] === 'complete'
 			) {
 				await updateDoc(progressRef, {
-					'Javascript.3': 'complete',
+					'Javascript.4': 'complete',
 				});
 			}
 		}

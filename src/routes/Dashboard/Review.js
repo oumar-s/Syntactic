@@ -197,11 +197,11 @@ const Review = () => {
                         
                     </div>
                     
-                    <div className='buttons-and-info-div flex space-x-2 justify-center pt-30 pb-16 mt-16'>
+                    {/* <div className='buttons-and-info-div flex space-x-2 justify-center pt-30 pb-16 mt-16'>
                         <button className='hover:bg-gray-600 p-4 text-white font-semibold bg-slate-900'>
                             More Practice Problems
                         </button>
-                    </div>
+                    </div> */}
 
 
 

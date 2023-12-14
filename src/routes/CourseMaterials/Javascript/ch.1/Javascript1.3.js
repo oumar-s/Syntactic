@@ -171,12 +171,9 @@ const Examination = () => {
 
 
 			//make feedback lowwer case
-			const feedbackWords = feedback.toLowerCase().split(' ');
-			//check if feedback contains the the string 'correct'
 			console.log('practice Problem: ', practice?.practice);
-
-			if (feedbackWords.includes('correct')) {
-				console.log(feedbackWords, 'correct has run in Javascript1.3.js');
+			if (feedback.includes('correct')) {
+				console.log(feedback, 'correct has run in Javascript1.3.js');
 				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
 				const data = (await getDoc(progressRef)).data();
 				setPerformance((prevPerformance) => {
