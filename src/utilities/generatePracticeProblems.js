@@ -6,7 +6,7 @@ export const generatePracticeProblems = async (
 	setIsLoading(true); // start loading (for the button)
 
 	try {
-		const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+		const response = await fetch('http://127.0.0.1:5000/api/generate', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
