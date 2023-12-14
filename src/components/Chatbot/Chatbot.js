@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { OpenAI } from "openai";
-const openai = new OpenAI({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true
-});
-
 const Chatbot = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
@@ -37,29 +31,36 @@ const Chatbot = () => {
         { id: prevChatHistory.length + 1, type: 'user', message: message },
       ]);
   
-      const msg = message;
+      const question = message;
       setMessage('');
-  
-      // Logic for chatbot response here
-      const response = await openai.chat.completions.create({
-        messages: [
-          {
-            role: "assistant",
-            content: `You are a helpful assistant for beginner programmers. Based on the user's message, provide a response concise response that will help the user.  User's message: ${msg}, `,
+
+      try {
+        const response = await fetch('http://127.0.0.1:5000/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        ],
-        model: "gpt-3.5-turbo",
-        max_tokens: 50,
-      });
+          body: JSON.stringify({ question: question }),
+        });
   
-      setChatHistory((prevChatHistory) => [
-        ...prevChatHistory,
-        {
-          id: prevChatHistory.length + 1,
-          type: 'bot',
-          message: response.choices[0].message.content,
-        },
-      ]);
+        if (!response.ok) {
+          throw new Error('Failed to fetch');
+        }
+  
+        const result = await response.json();
+        console.log(result);
+        setChatHistory((prevChatHistory) => [
+          ...prevChatHistory,
+          {
+            id: prevChatHistory.length + 1,
+            type: 'bot',
+            message: result,
+          },
+        ]);
+      } catch (error) {
+          console.error('Error:', error.message);
+      }
+  
     }
   };
   

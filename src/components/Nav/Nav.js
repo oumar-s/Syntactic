@@ -97,6 +97,16 @@ export const Nav = () => {
 											Courses
 										</NavLink>
 									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/playground'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Playground
+										</NavLink>
+									</li>
 								</>
 							) : (
 								<>
@@ -118,6 +128,16 @@ export const Nav = () => {
 											}
 										>
 											Courses
+										</NavLink>
+									</li>
+									<li className='relative inline-block'>
+										<NavLink
+											to='/playground'
+											className={({ isActive }) =>
+												isActive ? 'active-link' : ''
+											}
+										>
+											Playground
 										</NavLink>
 									</li>
 								</>
