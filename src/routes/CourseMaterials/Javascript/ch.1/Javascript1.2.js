@@ -20,12 +20,6 @@ import Chatbot from '../../../../components/Chatbot/Chatbot';
 //Chapter 1 contains the code examples and practice problems for the chapter
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from 'openai';
-const openai = new OpenAI({
-	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
-
 const DataTypesAndVariables = () => {
 	const [code1, setCode1] = useState('');
 	const [code2, setCode2] = useState('');
@@ -43,12 +37,6 @@ const DataTypesAndVariables = () => {
 	const [toggle2, setToggle2] = useState(false);
 	const [toggle3, setToggle3] = useState(false);
 
-	const [performance, setPerformance] = useState({
-		p1: false,
-		p2: false,
-		p3: false,
-	});
-
 	function handleEditorChange1(value) {
 		console.log('here is the current model value:', value);
 		setCode1(value);
@@ -62,262 +50,216 @@ const DataTypesAndVariables = () => {
 		setCode3(value);
 	}
 
-	const handleRun1 = async () => {
-		setToggle1(true);
-		setOutput1('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code1}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput1(response.choices[0].message.content);
-	};
-	const handleRun2 = async () => {
-		setToggle2(true);
-		setOutput2('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code2}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput2(response.choices[0].message.content);
-	};
-	const handleRun3 = async () => {
-		setToggle3(true);
-		setOutput3('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code below and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. ${code3}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput3(response.choices[0].message.content);
-	};
+	
+    const handleRun1 = async () => {
+        setToggle1(true);
+        setOutput1('Loading...');
+        setFeedback1('');
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code1 }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            setOutput1(result);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+    const handleRun2 = async () => {
+        setToggle2(true);
+        setOutput2('Loading...');
+        setFeedback2('');
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code2 }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            setOutput2(result);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+    const handleRun3 = async () => {
+        setToggle3(true);
+        setOutput3('Loading...');
+        setFeedback2('');
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code3 }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            setOutput3(result);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
 
-	const handleSubmit1 = async () => {
-		setToggle1(true);
-		setFeedback1('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code1}, practice problem is ${Chapter1.topic2.practice1}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
+    const handleSubmit1 = async () => {
+        setToggle1(true);
+        setFeedback1('Loading...');
+        setOutput1('Loading...');
+        let feedback = '';
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code1, practice: Chapter1.topic2.practice1 }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            const resultJson = JSON.parse(result);
+            feedback = resultJson.feedback;
+            setFeedback1(resultJson.feedback);
+            setOutput1(resultJson.evaluation);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+        //Add feedback to Firebase
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice1})
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice1}]
+                });
+            }
+        };
 
-		const feedback = response.choices[0].message.content;
-		setFeedback1(feedback);
+    };
+    const handleSubmit2 = async () => {
+        setToggle2(true);
+        setFeedback2('Loading...');
+        setOutput2('Loading...');
+        let feedback = '';
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code2, practice: Chapter1.topic2.practice2 }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            const resultJson = JSON.parse(result);
+            feedback = resultJson.feedback;
+            setFeedback2(resultJson.feedback);
+            setOutput2(resultJson.evaluation);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+        //Add feedback to Firebase
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice2})
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice2}]
+                });
+            }
 
-		//Add feedback to Firebase
-		const currentUser = auth.currentUser;
-		if (currentUser) {
-			const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.exists()) {
-				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
-				});
-			} else {
-				// Add a new document in collection "cities"
-				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
-				});
-			}
+        };
+    };
+    const handleSubmit3 = async () => {
+        setToggle3(true);
+        setFeedback3('Loading...');
+        setOutput3('Loading...');
+        let feedback = '';
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code1, practice: Chapter1.topic2.practice3}),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            const resultJson = JSON.parse(result);
+            feedback = resultJson.feedback;
+            setFeedback3(resultJson.feedback);
+            setOutput3(resultJson.evaluation);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+        //Add feedback to Firebase
+        const currentUser = auth.currentUser;
+        if (currentUser) {
+            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                updateDoc(docRef, {
+                    feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice3})
+                });
+            } else {
+                // Add a new document in collection "cities"
+                await setDoc(docRef, {
+                    feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice3}]
+                });
+            }
 
-			//make feedback lowwer case
-			const lowerCaseFeedback = feedback.toLowerCase();
-			//check if feedback contains the the string 'correct'
-			if (lowerCaseFeedback.includes('correct')) {
-				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-				const data = (await getDoc(progressRef)).data();
-				setPerformance((prevPerformance) => {
-					const updatedPerformance = { ...prevPerformance, p1: true };
 
-					//check if all performance is true
-					if (
-						updatedPerformance.p1 &&
-						updatedPerformance.p2 &&
-						updatedPerformance.p3
-					) {
-						//update progress
-						updateDoc(progressRef, {
-							'Javascript.1:1': 'complete',
-							'Javascript.percent': increment(2.4),
-						});
-					}
-					return updatedPerformance;
-				});
-
-				if (
-					data.Javascript['1:0'] === 'complete' &&
-					data.Javascript['1:1'] === 'complete' &&
-					data.Javascript['1:2'] === 'complete' &&
-					data.Javascript['1:3'] === 'complete'
-				) {
-					await updateDoc(progressRef, {
-						'Javascript.1': 'complete',
-					});
-				}
-			}
-		}
-	};
-	const handleSubmit2 = async () => {
-		setToggle2(true);
-		setFeedback2('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code2}, practice problem is ${Chapter1.topic2.practice2}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-
-		const feedback = response.choices[0].message.content;
-		setFeedback2(feedback);
-
-		//Add feedback to Firebase
-		const currentUser = auth.currentUser;
-		if (currentUser) {
-			const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.exists()) {
-				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
-				});
-			} else {
-				// Add a new document in collection "cities"
-				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
-				});
-			}
-
-			//make feedback lowwer case
-			const lowerCaseFeedback = feedback.toLowerCase();
-			//check if feedback contains the the string 'correct'
-			if (lowerCaseFeedback.includes('correct')) {
-				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-				const data = (await getDoc(progressRef)).data();
-				setPerformance((prevPerformance) => {
-					const updatedPerformance = { ...prevPerformance, p2: true };
-
-					//check if all performance is true
-					if (
-						updatedPerformance.p1 &&
-						updatedPerformance.p2 &&
-						updatedPerformance.p3
-					) {
-						//update progress
-						updateDoc(progressRef, {
-							'Javascript.1:1': 'complete',
-							'Javascript.percent': increment(2.4),
-						});
-					}
-					return updatedPerformance;
-				});
-
-				if (
-					data.Javascript['1:0'] === 'complete' &&
-					data.Javascript['1:1'] === 'complete' &&
-					data.Javascript['1:2'] === 'complete' &&
-					data.Javascript['1:3'] === 'complete'
-				) {
-					await updateDoc(progressRef, {
-						'Javascript.1': 'complete',
-					});
-				}
-			}
-		}
-	};
-	const handleSubmit3 = async () => {
-		setToggle3(true);
-		setFeedback3('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `The code below is an attempt to solve the given practice problem below. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on common coding standards and clean code. if there is no constructive feedback return 'no feedback'. code is ${code3}, practice problem is ${Chapter1.topic2.practice3}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-
-		const feedback = response.choices[0].message.content;
-		setFeedback3(feedback);
-
-		//Add feedback to Firebase
-		const currentUser = auth.currentUser;
-		if (currentUser) {
-			const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.exists()) {
-				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
-				});
-			} else {
-				// Add a new document in collection "cities"
-				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
-				});
-			}
-
-			//make feedback lowwer case
-			const lowerCaseFeedback = feedback.toLowerCase();
-			//check if feedback contains the the string 'correct'
-			if (lowerCaseFeedback.includes('correct')) {
-				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-				const data = (await getDoc(progressRef)).data();
-				setPerformance((prevPerformance) => {
-					const updatedPerformance = { ...prevPerformance, p3: true };
-
-					//check if all performance is true
-					if (
-						updatedPerformance.p1 &&
-						updatedPerformance.p2 &&
-						updatedPerformance.p3
-					) {
-						//update progress
-						updateDoc(progressRef, {
-							'Javascript.1:1': 'complete',
-							'Javascript.percent': increment(2.4),
-						});
-					}
-					return updatedPerformance;
-				});
-
-				if (
-					data.Javascript['1:0'] === 'complete' &&
-					data.Javascript['1:1'] === 'complete' &&
-					data.Javascript['1:2'] === 'complete' &&
-					data.Javascript['1:3'] === 'complete'
-				) {
-					await updateDoc(progressRef, {
-						'Javascript.1': 'complete',
-					});
-				}
-			}
-		}
-	};
+        };
+    };
 
 	// Define editor options, including 'readOnly'
 	const editorOptions = {
@@ -339,15 +281,6 @@ const DataTypesAndVariables = () => {
 					'Javascript.percent': increment(2.4),
 				});
 			}
-
-			//check if all topics are complete
-			// const allTopics = data.Javascript;
-			// let allComplete = true;
-			// for (const topic in allTopics) {
-			//     if (allTopics[topic] !== 'complete') {
-			//         allComplete = false;
-			//     }
-			// }
 
 			if (
 				data.Javascript['1:0'] === 'complete' &&

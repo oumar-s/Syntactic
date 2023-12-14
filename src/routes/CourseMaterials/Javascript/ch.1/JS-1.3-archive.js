@@ -19,11 +19,6 @@ import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition A
 
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from 'openai';
-const openai = new OpenAI({
-	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
 
 const Examination = () => {
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
@@ -89,33 +84,33 @@ const Examination = () => {
 	}
 
 	const handleRun = async () => {
-		setOutput('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${code}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput(response.choices[0].message.content);
+		// setOutput('Loading...');
+		// const response = await openai.chat.completions.create({
+		// 	messages: [
+		// 		{
+		// 			role: 'assistant',
+		// 			content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${code}`,
+		// 		},
+		// 	],
+		// 	model: 'gpt-3.5-turbo',
+		// 	max_tokens: 100,
+		// });
+		// setOutput(response.choices[0].message.content);
 	};
 	const handleSubmit = async () => {
-		setOutput('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice.practice}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		const feedback = response.choices[0].message.content;
-		setOutput(feedback);
+		// setOutput('Loading...');
+		// const response = await openai.chat.completions.create({
+		// 	messages: [
+		// 		{
+		// 			role: 'assistant',
+		// 			content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice.practice}`,
+		// 		},
+		// 	],
+		// 	model: 'gpt-3.5-turbo',
+		// 	max_tokens: 100,
+		// });
+		// const feedback = response.choices[0].message.content;
+		// setOutput(feedback);
 
 		//check correctness
 		// const response2 = await openai.chat.completions.create({
@@ -156,18 +151,18 @@ const Examination = () => {
 				});
 			}
 			//Add feedback to Firebase
-			const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
-			const docSnap = await getDoc(docRef);
-			if (docSnap.exists()) {
-				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
-				});
-			} else {
-				// Add a new document in collection "cities"
-				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
-				});
-			}
+			// const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
+			// const docSnap = await getDoc(docRef);
+			// if (docSnap.exists()) {
+			// 	updateDoc(docRef, {
+			// 		feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
+			// 	});
+			// } else {
+			// 	// Add a new document in collection "cities"
+			// 	await setDoc(docRef, {
+			// 		feedbacks: [{ course: 'Javascript', feedback: feedback }],
+			// 	});
+			// }
 		}
 	};
 

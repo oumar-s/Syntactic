@@ -20,15 +20,11 @@ import LeitnerSystem from '../../../../utilities/Leitner'; //Spaced Repetition A
 
 import Chapter1 from './PracticeAndExamples';
 
-import { OpenAI } from 'openai';
 
 import { generatePracticeProblems } from '../../../../utilities/generatePracticeProblems';
 
 import Chatbot from '../../../../components/Chatbot/Chatbot';
-const openai = new OpenAI({
-	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
+
 
 const PythonExamination6 = () => {
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
@@ -61,9 +57,9 @@ const PythonExamination6 = () => {
 	// 						'Document Data (review):',
 	// 						docSnap.data(),
 	// 					);
-	// 					leitner.boxes[0] = docSnap.data().Javascript.box1;
-	//                     leitner.boxes[1] = docSnap.data().Javascript.box2;
-	//                     leitner.boxes[2] = docSnap.data().Javascript.box2;
+	// 					leitner.boxes[0] = docSnap.data().Python.box1;
+	//                     leitner.boxes[1] = docSnap.data().Python.box2;
+	//                     leitner.boxes[2] = docSnap.data().Python.box2;
 	// leitner.addItem(Chapter1.exam[1]);
 	// leitner.addItem(Chapter1.exam[2]);
 	// leitner.addItem(Chapter1.exam[3]);
@@ -95,48 +91,55 @@ const PythonExamination6 = () => {
 
 	const handleRun = async () => {
 		setOutput('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${code}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput(response.choices[0].message.content);
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            setOutput(result);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
 	};
+
+	// Submit code for feedback
 	const handleSubmit = async () => {
 		setOutput('Loading...');
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. The output should look like this: First state if the code is "Correct" or "Incorrect". Then give "a constructive feedback that a beginner will find useful based on code quality and clean code. if there is no constructive feedback return 'no feedback'. code is ${code}, practice problem is ${practice.practice}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		const feedback = response.choices[0].message.content;
-		setOutput(feedback);
+		const currentPracticeProblem = practice?.practice; // Get the current practice problem
 
-		//check correctness
-		// const response2 = await openai.chat.completions.create({
-		//     messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. if the code is correct return "Correct" else return "Incorrect". code is ${code}, practice problem is ${practice.practice}` }],
-		//     model: "gpt-3.5-turbo",
-		//     max_tokens: 5
-		// });
-		// const correctness = response2.choices[0].message.content;
-		// console.log('correctness', correctness);
-		// if((correctness.toLowerCase()) === 'correct'){
-		//     //leitner.addItem(practice);
-		//     leitner.moveToNextBox(practice);
-		// }else{
-		//     //leitner.addItem(practice);
-		//     leitner.moveToFirstBox(practice);
-		// }
+		let feedback = '';
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: code, practice: practice?.practice }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            const resultJson = JSON.parse(result);
+            feedback = resultJson.feedback;
+            setOutput(resultJson.evaluation);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+
 
 		const currentUser = auth.currentUser;
 		if (currentUser) {
@@ -151,7 +154,7 @@ const PythonExamination6 = () => {
 				//const docSnapReview = await getDoc(docRefReview);
 				console.log('leitner boxes', leitner.boxes);
 				updateDoc(docRefReview, {
-					Javascript: {
+					Python: {
 						box1: leitner.boxes[0],
 						box2: leitner.boxes[1],
 						box3: leitner.boxes[2],
@@ -165,12 +168,21 @@ const PythonExamination6 = () => {
 			const docSnap = await getDoc(docRef);
 			if (docSnap.exists()) {
 				updateDoc(docRef, {
-					feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
+					feedbacks: arrayUnion({
+						feedback: feedback,
+						course: 'Python',
+						problem: currentPracticeProblem,
+					}),
 				});
 			} else {
-				// Add a new document in collection "cities"
 				await setDoc(docRef, {
-					feedbacks: [{ course: 'Javascript', feedback: feedback }],
+					feedbacks: [
+						{
+							course: 'Python',
+							feedback: feedback,
+							problem: currentPracticeProblem, // Include practice problem
+						},
+					],
 				});
 			}
 		}
@@ -280,7 +292,7 @@ const PythonExamination6 = () => {
 					<div className='editor-container border-t-4  border-l-4 border-r-4 border-solid border-slate-800'>
 						<Editor
 							height='58vh'
-							language='javascript'
+							language='Python'
 							theme='vs-dark'
 							onChange={handleEditorChange}
 						/>
@@ -308,10 +320,10 @@ const PythonExamination6 = () => {
 				</div>
 			</div>
 			{/* <div className='flex justify-center space-x-8 p-5 m-5'>
-                <Link to='/javascript/1.1'>
+                <Link to='/Python/1.1'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
                 </Link>
-                <Link to='/javascript/1.3'>
+                <Link to='/Python/1.3'>
                     <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
                 </Link>
             </div> */}

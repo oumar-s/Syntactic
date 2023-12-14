@@ -23,15 +23,7 @@ import Chapter1 from './PracticeAndExamples';
 // import css
 import './Javascript1.3.css';
 
-import { OpenAI } from 'openai';
-
 import { generatePracticeProblems } from '../../../../utilities/generatePracticeProblems';
-
-// Initialize OpenAI
-const openai = new OpenAI({
-	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
 
 const Examination = () => {
 	const [code, setCode] = useState('');
@@ -81,18 +73,25 @@ const Examination = () => {
 	const handleRun = async () => {
 		setOutput('Loading...');
 		const currentCode = codeMap.get(selectedTab) || '';
-
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the javascript code bellow and return only the output. If there a syntax error, return "Syntax error." If there is no valid output, return nothing, If there is no valid output, return nothing. The code is: ${currentCode}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
-		setOutput(response.choices[0].message.content);
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/runcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: currentCode }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            setOutput(result);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
 	};
 
 	// Submit code for feedback
@@ -101,19 +100,29 @@ const Examination = () => {
 		const currentCode = codeMap.get(selectedTab) || '';
 		const currentPracticeProblem = practice?.practice; // Get the current practice problem
 
-		const response = await openai.chat.completions.create({
-			messages: [
-				{
-					role: 'assistant',
-					content: `Evaluate the submitted JavaScript code to determine if it completely and correctly solves the given practice problem. First, check if the code submission is not empty. If no code is submitted, return "Incorrect" with the note "No code submitted". If code is submitted, ensure that it addresses all aspects of the problem. The evaluation should be strict: any partial solution or incorrect implementation should be marked as "Incorrect". When providing feedback for incorrect or incomplete submissions, focus solely on identifying the elements or aspects that are missing or incorrect in the submitted code. Avoid giving direct solutions or hints on how to solve the problem. The goal is to encourage the user to think critically and solve the problem independently. If the code fully solves the problem, mark it as "Correct". After the correctness evaluation, provide constructive feedback aimed at beginners, focusing on best practices, code quality and adherence to clean coding principles. If there is no specific feedback, return 'No feedback'. The submitted code is: ${currentCode}. The practice problem is: ${practice?.practice}`,
-				},
-			],
-			model: 'gpt-3.5-turbo',
-			max_tokens: 100,
-		});
+		let feedback = '';
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/submitcode', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ code: currentCode, practice: practice?.practice }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+      
+            const result = await response.json();
+            console.log(result);
+            const resultJson = JSON.parse(result);
+            feedback = resultJson.feedback;
+            setOutput(resultJson.evaluation);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
 
-		const feedback = response.choices[0].message.content;
-		setOutput(feedback);
 
 		const currentUser = auth.currentUser;
 		if (currentUser) {
@@ -145,7 +154,7 @@ const Examination = () => {
 					feedbacks: arrayUnion({
 						feedback: feedback,
 						course: 'Javascript',
-						practiceProblem: currentPracticeProblem,
+						problem: currentPracticeProblem,
 					}),
 				});
 			} else {
@@ -154,11 +163,12 @@ const Examination = () => {
 						{
 							course: 'Javascript',
 							feedback: feedback,
-							practiceProblem: currentPracticeProblem, // Include practice problem
+							problem: currentPracticeProblem, // Include practice problem
 						},
 					],
 				});
 			}
+
 
 			//make feedback lowwer case
 			const feedbackWords = feedback.toLowerCase().split(' ');
@@ -175,35 +185,35 @@ const Examination = () => {
 						[selectedTab - 1]: true,
 					};
 
-					//check if all performance is true
-					if (
-						updatedPerformance[0] &&
-						updatedPerformance[1] &&
-						updatedPerformance[2] &&
-						updatedPerformance[3] &&
-						updatedPerformance[4]
-					) {
-						//update progress
-						const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-						updateDoc(progressRef, {
-							'Javascript.1:3': 'complete',
-							'Javascript.percent': increment(2.4),
-						});
-					}
+					// //check if all performance is true
+					// if (
+					// 	updatedPerformance[0] &&
+					// 	updatedPerformance[1] &&
+					// 	updatedPerformance[2] &&
+					// 	updatedPerformance[3] &&
+					// 	updatedPerformance[4]
+					// ) {
+					// 	//update progress
+					// 	const progressRef = doc(db, 'progress', `${currentUser.uid}`);
+					// 	updateDoc(progressRef, {
+					// 		'Javascript.1:3': 'complete',
+					// 		'Javascript.percent': increment(2.4),
+					// 	});
+					// }
 
 					return updatedPerformance;
 				});
 
-				if (
-					data.Javascript['1:0'] === 'complete' &&
-					data.Javascript['1:1'] === 'complete' &&
-					data.Javascript['1:2'] === 'complete' &&
-					data.Javascript['1:3'] === 'complete'
-				) {
-					await updateDoc(progressRef, {
-						'Javascript.1': 'complete',
-					});
-				}
+				// if (
+				// 	data.Javascript['1:0'] === 'complete' &&
+				// 	data.Javascript['1:1'] === 'complete' &&
+				// 	data.Javascript['1:2'] === 'complete' &&
+				// 	data.Javascript['1:3'] === 'complete'
+				// ) {
+				// 	await updateDoc(progressRef, {
+				// 		'Javascript.1': 'complete',
+				// 	});
+				// }
 			}
 		}
 	};

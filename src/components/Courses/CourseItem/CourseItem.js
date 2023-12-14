@@ -11,17 +11,12 @@ import {
 	Firestore,
 	getDoc,
 } from 'firebase/firestore';
-import { OpenAI } from 'openai';
 
 // Import Icons
 import jsIcon from '../../../assets/icons/js-icon.png';
 import pythonIcon from '../../../assets/icons/python-icon.png';
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 
-const openai = new OpenAI({
-	apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-	dangerouslyAllowBrowser: true,
-});
 
 export const CourseItem = ({ name, syllabus }) => {
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
