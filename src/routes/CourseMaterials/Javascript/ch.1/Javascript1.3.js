@@ -118,7 +118,7 @@ const Examination = () => {
             console.log(result);
             const resultJson = JSON.parse(result);
             feedback = resultJson.feedback;
-            setOutput(resultJson.evaluation);
+            setOutput(resultJson.feedback);
         } catch (error) {
             console.error('Error:', error.message);
         }
