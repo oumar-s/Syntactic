@@ -1,21 +1,21 @@
-### ⚡️⚡️⚡️ Syntactic 
+### ⚡️ Syntactic 
 
-### Authors
-[Oumar S.](https://github.com/oumar-s)
-[Anup T.](https://github.com/devanup) 
-[Alamin M.](https://github.com/Alaminium)
-[Iris S.](https://github.com/irisshakya)
+### 👨🏽‍💻 Authors
+- Oumar Siby: https://github.com/oumar-s
+- Anup Thapa: https://github.com/devanup
+- Alamin Miah: https://github.com/Alaminium
+- Iris Shakya: https://github.com/irisshakya
 
 ### ✨ Description 
 `Syntactic` is a learning platform that incorporates AI driven feedback and effective learning techniques such as active recall, interleaving, and spaced repetition to provide an efficient way to learn programming languages. Our goal is to prevent tutorial hell and reduce the amount of money and time it takes to learn a programming language. 
 
 ### 🌐 Live Site
 The site is currently deployed [here](https://syntactic-71b1c.firebaseapp.com):
-Live site: https://syntactic-71b1c.firebaseapp.com
+- Live site: https://syntactic-71b1c.firebaseapp.com
 
 ### 📁 Backend Repo
 The backend repo is [here](https://github.com/oumar-s/Syntactic-Backend): 
-Syntactic-Backend: https://github.com/oumar-s/Syntactic-Backend
+- Syntactic-Backend: https://github.com/oumar-s/Syntactic-Backend
 
 ### ⚙ Technologies Used
 - `React` for the front-end
@@ -26,20 +26,18 @@ Syntactic-Backend: https://github.com/oumar-s/Syntactic-Backend
 
 ### 💨 To Get Started Locally
 - This project is heavily coupled with firebase, so you will need to create a firebase project and enable firestore and authentication. 
-- Also, please clone the backend repo that repo as well and follow the instructions there to get the backend running locally.
-
-#### Ensure that Firebase Firestore has the following collections:
-- `Courses` with each document being named after the course code (e.g. `javascript`)
+- Also, please clone the backend repo as well.
+- Ensure that Firebase Firestore has the following collections: `Courses` with each document being named after the course code (e.g. `javascript`)
 - Structure for each document in courses collection:  
 
-id: string
-title: string
-syllabus: array of objects
-    chapter: string
-    topics: array of objects
-        id: string
-        name: string
-        pid: string
+    - id: string
+    - title: string
+    - syllabus: array of objects
+        - chapter: string
+        - topics: array of objects
+            - id: string
+            - name: string
+            - pid: string
     
 
 #### 🏃‍♀️ Running the app locally
