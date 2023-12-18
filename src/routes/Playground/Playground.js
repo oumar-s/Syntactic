@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import Chatbot from '../../components/Chatbot/Chatbot';
 

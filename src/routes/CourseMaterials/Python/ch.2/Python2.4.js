@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	getDoc,
-	collection,
 	setDoc,
 	arrayUnion,
 	updateDoc,
 	increment,
 	doc,
-	Firestore,
 } from 'firebase/firestore';
 
 import { Link } from 'react-router-dom'; 
@@ -39,43 +37,6 @@ const PythonExamination2 = () => {
 	const [output, setOutput] = useState('');
 	const [selectedTab, setSelectedTab] = useState(1);
 	const [practice, setPractice] = useState(Chapter1.exam[1]);
-	//const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
-	const [userUID, setUserUID] = useState(null);
-
-	// useEffect(() => {
-	// 	const currentUser = auth.currentUser;
-
-	// 	if (currentUser) {
-	// 		setUserUID(currentUser.uid);
-	// 		const fetchReviewData = async () => {
-	// 			try {
-	// 				const docRef = doc(db, 'reviews', `${userUID}`);
-	// 				const docSnap = await getDoc(docRef);
-	// 				if (docSnap.exists()) {
-	// 					console.log(
-	// 						'Document Data (review):',
-	// 						docSnap.data(),
-	// 					);
-	// 					leitner.boxes[0] = docSnap.data().Python.box1;
-	//                     leitner.boxes[1] = docSnap.data().Python.box2;
-	//                     leitner.boxes[2] = docSnap.data().Python.box2;
-	// leitner.addItem(Chapter1.exam[1]);
-	// leitner.addItem(Chapter1.exam[2]);
-	// leitner.addItem(Chapter1.exam[3]);
-	// leitner.addItem(Chapter1.exam[4]);
-	// leitner.addItem(Chapter1.exam[5]);
-	// 				} else {
-	// 					// doc.data() will be undefined in this case
-	// 					console.log('No such document!');
-	// 				}
-	// 			} catch (error) {
-	// 				console.error('Error fetching data:', error);
-	// 			}
-	// 		};
-
-	// 		fetchReviewData();
-	// 	}
-	// }, [userUID, leitner]);
 
 	const handleTabClick = (tabNumber) => {
 		console.log('practice', practice);

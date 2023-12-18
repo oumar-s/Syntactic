@@ -2,13 +2,9 @@ import React from 'react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	getDoc,
-	collection,
-	setDoc,
-	arrayUnion,
 	updateDoc,
 	increment,
 	doc,
-	Firestore,
 } from 'firebase/firestore';
 import { Link } from 'react-router-dom'; 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';

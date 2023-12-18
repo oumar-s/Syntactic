@@ -4,13 +4,10 @@ import { Link } from 'react-router-dom';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	setDoc,
-	collection,
-	addDoc,
 	arrayUnion,
 	updateDoc,
 	increment,
 	doc,
-	Firestore,
 	getDoc,
 } from 'firebase/firestore';
 
@@ -29,15 +26,12 @@ const PythonIf = () => {
 
 	const [output1, setOutput1] = useState('');
 	const [output2, setOutput2] = useState('');
-	const [output3, setOutput3] = useState('');
 
 	const [feedback1, setFeedback1] = useState('');
 	const [feedback2, setFeedback2] = useState('');
-	const [feedback3, setFeedback3] = useState('');
 
 	const [toggle1, setToggle1] = useState(false);
 	const [toggle2, setToggle2] = useState(false);
-	const [toggle3, setToggle3] = useState(false);
 
 	function handleEditorChange1(value) {
 		console.log('here is the current model value:', value);
@@ -46,10 +40,6 @@ const PythonIf = () => {
 	function handleEditorChange2(value) {
 		console.log('here is the current model value:', value);
 		setCode2(value);
-	}
-	function handleEditorChange3(value) {
-		console.log('here is the current model value:', value);
-		setCode3(value);
 	}
 
 	const handleRun1 = async () => {
@@ -96,30 +86,6 @@ const PythonIf = () => {
             const result = await response.json();
             console.log(result);
             setOutput2(result);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    }
-    const handleRun3 = async () => {
-        setToggle3(true);
-        setOutput3('Loading...');
-        setFeedback2('');
-        try {
-            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/runcode', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ code: code3 }),
-            });
-      
-            if (!response.ok) {
-              throw new Error('Failed to fetch');
-            }
-      
-            const result = await response.json();
-            console.log(result);
-            setOutput3(result);
         } catch (error) {
             console.error('Error:', error.message);
         }
@@ -212,52 +178,6 @@ const PythonIf = () => {
                     feedbacks: [{course: 'Python', feedback: feedback, problem: Chapter1.topic1.practice2}]
                 });
             }
-
-        };
-    };
-    const handleSubmit3 = async () => {
-        setToggle3(true);
-        setFeedback3('Loading...');
-        setOutput3('Loading...');
-        let feedback = '';
-        try {
-            const response = await fetch('https://syntactic-backend-d1b6d0af8db5.herokuapp.com/api/submitcode', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ code: code1, practice: Chapter1.topic1.practice3}),
-            });
-      
-            if (!response.ok) {
-              throw new Error('Failed to fetch');
-            }
-      
-            const result = await response.json();
-            console.log(result);
-            const resultJson = JSON.parse(result);
-            feedback = resultJson.feedback;
-            setFeedback3(resultJson.feedback);
-            setOutput3(resultJson.evaluation);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-        //Add feedback to Firebase
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            const docRef = doc(db, 'course_feedbacks', `${currentUser.uid}`);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                updateDoc(docRef, {
-                    feedbacks: arrayUnion({ feedback: feedback, course: 'Python', problem:  Chapter1.topic1.practice3})
-                });
-            } else {
-                
-                await setDoc(docRef, {
-                    feedbacks: [{course: 'Python', feedback: feedback, problem: Chapter1.topic1.practice3}]
-                });
-            }
-
 
         };
     };

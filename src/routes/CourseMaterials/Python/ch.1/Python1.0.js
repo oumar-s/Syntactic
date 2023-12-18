@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'; 
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
-	setDoc,
-	collection,
-	addDoc,
-	arrayUnion,
 	updateDoc,
 	increment,
 	doc,
-	Firestore,
 	getDoc,
 } from 'firebase/firestore';
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
