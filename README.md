@@ -25,8 +25,9 @@ The backend repo is [here](https://github.com/oumar-s/Syntactic-Backend):
 - `Firebase` and `Heroku` for deployment
 
 ### 💨 To Get Started Locally
+- Make sure you have a valid OpenAI api key.
+- Please clone the backend repo as well.
 - This project is heavily coupled with firebase, so you will need to create a firebase project and enable firestore and authentication. 
-- Also, please clone the backend repo as well.
 - Ensure that Firebase Firestore has the following collections: `Courses` with each document being named after the course code (e.g. `javascript`)
 - Structure for each document in courses collection:  
 
@@ -52,6 +53,7 @@ python -m venv .venv       # Create a virtual environment
 source .venv/bin/activate  # Activate the virtual environment (Linux/Mac)
 .\.venv\Scripts\activate   # Activate the virtual environment (Windows)
 pip install -r requirements.txt  # Install dependencies
+# create a .env file and add the fibebase credentials and openai api key
 flask run                  # Run the flask server
 ```
 
