@@ -17,16 +17,7 @@ const Arrays = () => {
 					'Javascript.5:0': 'complete',
 					'Javascript.percent': increment(2.4),
 				});
-			}
-
-			//check if all topics are complete
-			// const allTopics = data.Javascript;
-			// let allComplete = true;
-			// for (const topic in allTopics) {
-			//     if (allTopics[topic] !== 'complete') {
-			//         allComplete = false;
-			//     }
-			// }
+			}			
 
 			if (
 				data.Javascript['5:0'] === 'complete' &&

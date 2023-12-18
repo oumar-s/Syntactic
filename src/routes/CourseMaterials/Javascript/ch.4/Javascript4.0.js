@@ -19,15 +19,6 @@ const Functions = () => {
 				});
 			}
 
-			//check if all topics are complete
-			// const allTopics = data.Javascript;
-			// let allComplete = true;
-			// for (const topic in allTopics) {
-			//     if (allTopics[topic] !== 'complete') {
-			//         allComplete = false;
-			//     }
-			// }
-
 			if (
 				data.Javascript['4:0'] === 'complete' &&
 				data.Javascript['4:1'] === 'complete' &&

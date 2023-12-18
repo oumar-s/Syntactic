@@ -4,13 +4,10 @@ import { Link } from 'react-router-dom';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	setDoc,
-	collection,
-	addDoc,
 	arrayUnion,
 	updateDoc,
 	increment,
 	doc,
-	Firestore,
 	getDoc,
 } from 'firebase/firestore';
 
@@ -284,14 +281,7 @@ const LoopControlStatements = () => {
 				});
 			}
 
-			//check if all topics are complete
-			// const allTopics = data.Javascript;
-			// let allComplete = true;
-			// for (const topic in allTopics) {
-			//     if (allTopics[topic] !== 'complete') {
-			//         allComplete = false;
-			//     }
-			// }
+			
 
 			if (
 				data.Javascript['3:0'] === 'complete' &&

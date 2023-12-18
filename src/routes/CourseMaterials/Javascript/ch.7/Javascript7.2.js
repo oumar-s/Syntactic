@@ -280,14 +280,7 @@ const SettingPropertyInObject = () => {
 				});
 			}
 
-			//check if all topics are complete
-			// const allTopics = data.Javascript;
-			// let allComplete = true;
-			// for (const topic in allTopics) {
-			//     if (allTopics[topic] !== 'complete') {
-			//         allComplete = false;
-			//     }
-			// }
+			
 
 			if (
 				data.Javascript['7:0'] === 'complete' &&
