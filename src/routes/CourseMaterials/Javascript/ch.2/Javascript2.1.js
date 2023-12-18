@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	setDoc,
@@ -163,7 +163,7 @@ const IntroConditionalStatements = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic1.practice1})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic1.practice1}]
                 });
@@ -208,7 +208,7 @@ const IntroConditionalStatements = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic1.practice2})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic1.practice2}]
                 });
@@ -253,7 +253,7 @@ const IntroConditionalStatements = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic1.practice3})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic1.practice3}]
                 });

@@ -1,5 +1,4 @@
 //A simple spaced repetition algorithm based on the the Leitner System.
-
 class LeitnerSystem {
     constructor() {
       this.boxes = Array.from({ length: 3 }, () => []);
@@ -11,25 +10,6 @@ class LeitnerSystem {
       this.boxes[0].push(item);
     }
   
-    // // Move an item to the next box.
-    // moveToNextBox(item) {
-    //   if (this.currentBox < this.boxes.length - 1) {
-    //     this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
-    //     console.log("index of item: ", this.boxes[this.currentBox].indexOf(item));
-    //     //this.currentBox++;
-    //     this.boxes[this.currentBox + 1].push(item);
-    //   }
-    // }
-  
-    // // Move an item back to the first box (box 0).
-    // moveToFirstBox(item) {
-    //   this.boxes[this.currentBox].splice(this.boxes[this.currentBox].indexOf(item), 1);
-    //   console.log("index of item: ", this.boxes[this.currentBox].indexOf(item));
-    //   this.currentBox = 0;
-    //   this.boxes[0].push(item);
-    // }
-
-    // Move an item to the next box.
 moveToNextBox(item) {
   if (this.currentBox < this.boxes.length - 1) {
     const itemIndex = this.findItemIndexById(this.boxes[this.currentBox], item.id);
@@ -83,26 +63,3 @@ findItemIndexById(box, itemId) {
   }
 
   export default LeitnerSystem;
-  
-  // Example usage:
-//   const leitner = new LeitnerSystem(3); // Create a Leitner System with 3 boxes
-  
-//   leitner.addItem("Item 1");
-//   leitner.addItem("Item 2");
-//   leitner.addItem("Item 3");
-  
-//   console.log("Review items in order:");
-//   while (true) {
-//     const item = leitner.getNextItemToReview();
-//     if (item === null) {
-//       break;
-//     }
-  
-//     console.log("Reviewing", item);
-//     // Simulate the user's response (e.g., answer correctly or incorrectly).
-//     if (Math.random() < 0.5) {
-//       leitner.moveToNextBox(item); // Move to the next box.
-//     } else {
-//       leitner.moveToFirstBox(item); // Move back to the first box.
-//     }
-//   }

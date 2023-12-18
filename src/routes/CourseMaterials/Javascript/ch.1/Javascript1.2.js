@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	getDoc,
-	collection,
 	setDoc,
 	arrayUnion,
 	increment,
 	updateDoc,
 	doc,
-	Firestore,
 } from 'firebase/firestore';
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
@@ -161,7 +159,7 @@ const DataTypesAndVariables = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice1})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice1}]
                 });
@@ -206,7 +204,7 @@ const DataTypesAndVariables = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice2})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice2}]
                 });
@@ -251,7 +249,7 @@ const DataTypesAndVariables = () => {
                     feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript', problem:  Chapter1.topic2.practice3})
                 });
             } else {
-                // Add a new document in collection "cities"
+                
                 await setDoc(docRef, {
                     feedbacks: [{course: 'Javascript', feedback: feedback, problem: Chapter1.topic2.practice3}]
                 });

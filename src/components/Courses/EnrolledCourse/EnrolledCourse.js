@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 

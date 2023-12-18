@@ -6,13 +6,10 @@ const Playground = () => {
     const [code, setCode] = useState('');
     const [output, setOutput] = useState('');
 
-    // Handle code changes in the editor
     function handleEditorChange(value) {
-        // console.log('here is the current model value:', value);
         setCode(value);
     }
 
-    // Run code using OpenAI
     const handleRun = async () => {
         setOutput('Loading...');
         try {

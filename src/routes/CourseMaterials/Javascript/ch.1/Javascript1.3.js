@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
 import { auth, db } from '../../../../config/firebaseConfig';
 import {
 	getDoc,
-	collection,
 	setDoc,
 	increment,
 	arrayUnion,
 	updateDoc,
 	doc,
-	Firestore,
 } from 'firebase/firestore';
 
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
@@ -38,7 +36,7 @@ const Examination = () => {
 		false,
 		false,
 	]);
-	// const [userUID, setUserUID] = useState(null);
+	
 
 	const leitner = new LeitnerSystem(); // Create a Leitner System with 3 boxes
 	leitner.addItem(Chapter1.exam[1]);
@@ -46,10 +44,6 @@ const Examination = () => {
 	leitner.addItem(Chapter1.exam[3]);
 	leitner.addItem(Chapter1.exam[4]);
 	leitner.addItem(Chapter1.exam[5]);
-
-	// console.log('leitner current box', leitner.currentBox);
-
-	const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
 
 	// Handle tab selection
 	const handleTabClick = (tabNumber) => {
@@ -64,7 +58,6 @@ const Examination = () => {
 
 	// Handle code changes in the editor
 	function handleEditorChange(value, event) {
-		// console.log('here is the current model value:', value);
 		setCode(value);
 		setCodeMap(new Map(codeMap.set(selectedTab, value))); // Update code in map
 	}
@@ -134,8 +127,6 @@ const Examination = () => {
 				leitner.addItem(Chapter1.exam[5]);
 				//update review in Firebase
 				const docRefReview = doc(db, 'reviews', `${currentUser.uid}`);
-				//const docSnapReview = await getDoc(docRefReview);
-				console.log('leitner boxes', leitner.boxes);
 				updateDoc(docRefReview, {
 					Javascript: {
 						box1: leitner.boxes[0],
@@ -173,44 +164,13 @@ const Examination = () => {
 			//make feedback lowwer case
 			console.log('practice Problem: ', practice?.practice);
 			if (feedback.includes('correct')) {
-				console.log(feedback, 'correct has run in Javascript1.3.js');
-				const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-				const data = (await getDoc(progressRef)).data();
 				setPerformance((prevPerformance) => {
 					const updatedPerformance = {
 						...prevPerformance,
 						[selectedTab - 1]: true,
 					};
-
-					// //check if all performance is true
-					// if (
-					// 	updatedPerformance[0] &&
-					// 	updatedPerformance[1] &&
-					// 	updatedPerformance[2] &&
-					// 	updatedPerformance[3] &&
-					// 	updatedPerformance[4]
-					// ) {
-					// 	//update progress
-					// 	const progressRef = doc(db, 'progress', `${currentUser.uid}`);
-					// 	updateDoc(progressRef, {
-					// 		'Javascript.1:3': 'complete',
-					// 		'Javascript.percent': increment(2.4),
-					// 	});
-					// }
-
 					return updatedPerformance;
 				});
-
-				// if (
-				// 	data.Javascript['1:0'] === 'complete' &&
-				// 	data.Javascript['1:1'] === 'complete' &&
-				// 	data.Javascript['1:2'] === 'complete' &&
-				// 	data.Javascript['1:3'] === 'complete'
-				// ) {
-				// 	await updateDoc(progressRef, {
-				// 		'Javascript.1': 'complete',
-				// 	});
-				// }
 			}
 		}
 	};

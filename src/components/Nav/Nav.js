@@ -1,6 +1,6 @@
 // Import dependencies
 import { useState, useEffect, useRef } from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { NavLink } from 'react-router-dom';
 
 import { auth } from '../../config/firebaseConfig';
 import { signOut } from 'firebase/auth';
@@ -71,9 +71,8 @@ export const Nav = () => {
 				<div className='collapsible flex items-center justify-between w-full'>
 					<div className='m-auto text-center'>
 						<ul
-							className={`menu-ul flex justify-center space-x-10 ${
-								isActive ? 'active' : ''
-							}`}
+							className={`menu-ul flex justify-center space-x-10 ${isActive ? 'active' : ''
+								}`}
 						>
 							{isUserLoggedIn ? (
 								<>
@@ -146,9 +145,8 @@ export const Nav = () => {
 					</div>
 
 					<div
-						className={`account-cta absolute right-4 ${
-							isActive ? 'active' : ''
-						}`}
+						className={`account-cta absolute right-4 ${isActive ? 'active' : ''
+							}`}
 					>
 						{isUserLoggedIn ? (
 							<>

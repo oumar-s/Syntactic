@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 import leftArrowIcon from '../../../assets/icons/angle-left.png';
 
 import Chatbot from '../../../components/Chatbot/Chatbot';

@@ -8,7 +8,6 @@ import {
 
 import googleIcon from '../../assets/icons/google.png';
 import githubIcon from '../../assets/icons/github.png';
-// import { currentUser, signInWithPopup } from 'firebase/auth'; // <- not sure why currentUser is imported
 
 import { signInWithPopup } from 'firebase/auth';
 
@@ -19,7 +18,6 @@ export const Login = () => {
 		try {
 			await signInWithPopup(auth, googleProvider);
 			navigate('/dashboard');
-			// console.log('CurrentUser: ', auth?.currentUser);
 		} catch (err) {
 			console.error(err);
 		}
@@ -30,7 +28,6 @@ export const Login = () => {
 		try {
 			await signInWithPopup(auth, githubProvider);
 			navigate('/dashboard');
-			// console.log('Signed in as: ', auth?.currentUser?.email);
 		} catch (err) {
 			console.error(err);
 		}
@@ -38,7 +35,6 @@ export const Login = () => {
 
 	document.title = 'Login';
 	return (
-		// <div className='courses-wrap bg-blue-200 sm:bg-green-200 md:bg-yellow-200 lg:bg-red-200 w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/4 m-auto mt-20'>
 		<div className='courses-wrap w-4/5 sm:w-3/5 md:w-2/5 lg:w-1/4 m-auto mt-20'>
 			<h1 className='font-bold text-center text-2xl mb-4'>
 				Sign In to Continue

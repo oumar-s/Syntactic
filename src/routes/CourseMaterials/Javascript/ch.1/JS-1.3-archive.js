@@ -11,7 +11,7 @@ import {
 	Firestore,
 } from 'firebase/firestore';
 
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';
 import rightArrowIcon from '../../../../assets/icons/angle-right.png';
@@ -158,7 +158,7 @@ const Examination = () => {
 			// 		feedbacks: arrayUnion({ feedback: feedback, course: 'Javascript' }),
 			// 	});
 			// } else {
-			// 	// Add a new document in collection "cities"
+			// 	
 			// 	await setDoc(docRef, {
 			// 		feedbacks: [{ course: 'Javascript', feedback: feedback }],
 			// 	});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import NavLink
+import { Link } from 'react-router-dom'; 
 import { auth, db } from '../../../../config/firebaseConfig';
 import { updateDoc, increment, doc, getDoc } from 'firebase/firestore';
 import leftArrowIcon from '../../../../assets/icons/angle-left.png';

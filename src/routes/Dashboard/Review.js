@@ -3,19 +3,12 @@ import Editor from '@monaco-editor/react';
 import { auth, db } from '../../config/firebaseConfig';
 import {
     getDoc,
-    collection,
     setDoc,
     arrayUnion,
     updateDoc,
     doc,
-    Firestore
 } from 'firebase/firestore';
 import { useParams } from "react-router-dom";
-
-import { Link } from 'react-router-dom'; // Import NavLink
-
-import leftArrowIcon from '../../assets/icons/angle-left.png';
-import rightArrowIcon from '../../assets/icons/angle-right.png';
 import Chatbot from '../../components/Chatbot/Chatbot';
 
 import LeitnerSystem from '../../utilities/Leitner'; //Spaced Repetition Algorithm
@@ -29,9 +22,7 @@ const Review = () => {
 
     const [code, setCode] = useState('');
     const [output, setOutput] = useState('');
-    const [selectedTab, setSelectedTab] = useState(1);
     const [practice, setPractice] = useState(Chapter1.exam[params.topicId]); 
-    //const [review, setReview] = useState(leitner); //Spaced Repetition Algorithm
     const [userUID, setUserUID] = useState(null);
 
 	useEffect(() => {
@@ -62,14 +53,8 @@ const Review = () => {
 
 			fetchReviewData();
 		}
-	}, [userUID, leitner]);
+	}, [userUID, leitner.boxes]);
 
-
-    const handleTabClick = (tabNumber) => {
-        console.log('practice', practice);
-        setSelectedTab(tabNumber);
-        setPractice(Chapter1.exam[tabNumber]);
-    };
 
 
     function handleEditorChange(value, event) {
@@ -122,10 +107,8 @@ const Review = () => {
             setOutput(resultJson.evaluation);
             const correctness = resultJson.evaluation;
             if((correctness.toLowerCase()) === 'correct'){
-                //leitner.addItem(practice);
                 leitner.moveToNextBox(practice);
             }else{  
-                //leitner.addItem(practice);
                 leitner.moveToFirstBox(practice);
             }
 
@@ -133,21 +116,11 @@ const Review = () => {
             console.error('Error:', error.message);
         }
 
-        //check correctness
-        // const response2 = await openai.chat.completions.create({
-        //     messages: [{ role: "assistant", content: `The code bellow is an attempt to solve the given practice problem bellow. Based on this attempt determine if the code correctly solve the practice problem. if the code is correct return "Correct" else return "Incorrect". code is ${code}, practice problem is ${practice.practice}` }],
-        //     model: "gpt-3.5-turbo",
-        //     max_tokens: 5
-        // });
-        // console.log('correctness', correctness);
-        
-
         const currentUser = auth.currentUser;
         if (currentUser) {
             
             //update review in Firebase
             const docRefReview = doc(db, 'reviews', `${currentUser.uid}`);
-            //const docSnapReview = await getDoc(docRefReview);
             console.log('leitner boxes', leitner.boxes);
             updateDoc(docRefReview, {
                 Javascript: {box1: leitner.boxes[0], box2: leitner.boxes[1], box3: leitner.boxes[2], current: leitner.currentBox, next: leitner.getNextItemToReview()}
@@ -170,7 +143,7 @@ const Review = () => {
 						{
 							course: 'Javascript',
 							feedback: feedback,
-							problem: practice, // Include practice problem
+							problem: practice, 
 						},
 					],
 				});
@@ -196,15 +169,6 @@ const Review = () => {
                         {Chapter1.exam[params.topicId].practice}
                         
                     </div>
-                    
-                    {/* <div className='buttons-and-info-div flex space-x-2 justify-center pt-30 pb-16 mt-16'>
-                        <button className='hover:bg-gray-600 p-4 text-white font-semibold bg-slate-900'>
-                            More Practice Problems
-                        </button>
-                    </div> */}
-
-
-
                 </div>
 
                 <div className='w-1/2'>
@@ -234,14 +198,6 @@ const Review = () => {
                 </div>
             </div>
             <Chatbot />
-            {/* <div className='flex justify-center space-x-8 p-5 m-5'>
-                <Link to='/javascript/1.1'>
-                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={leftArrowIcon} alt='Left arrow Icon' />
-                </Link>
-                <Link to='/javascript/1.3'>
-                    <img className='bg-slate-400 hover:bg-gray-300 p-2' src={rightArrowIcon} alt='Right arrow Icon' />
-                </Link>
-            </div> */}
         </div>
     );
 }

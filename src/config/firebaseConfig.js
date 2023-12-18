@@ -1,8 +1,6 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import {
 	getAuth,
-	onAuthStateChanged,
 	GoogleAuthProvider,
 	GithubAuthProvider,
 } from 'firebase/auth';
@@ -19,8 +17,6 @@ const firebaseConfig = {
 	appId: process.env.REACT_APP_AppId,
 	measurementId: process.env.REACT_APP_MeasurementId,
 };
-const hello = { hello: process.env.REACT_SECRET_HELLO };
-// console.log(hello.hello);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -29,5 +25,4 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const githubProvider = new GithubAuthProvider();
 export const db = getFirestore(app);
-// console.log(db);
 export const storage = getStorage(app);

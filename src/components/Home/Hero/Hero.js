@@ -27,9 +27,7 @@ export const Hero = () => {
 					</div>
 				</div>
 
-				{/* <img src={goalImg} alt='Goal' className='w-48 h-w-48 md:w-96 md:h-96' /> */}
 			</div>
-
 			{/* Header on the right */}
 			<div className='w-full right md:w-1/2 flex justify-center items-center p-6'>
 				<h1 className='text-2xl md:text-4xl font-bold'>

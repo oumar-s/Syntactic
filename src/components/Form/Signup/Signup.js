@@ -2,7 +2,6 @@ import React from 'react';
 
 import googleIcon from '../../../assets/icons/google.png';
 import githubIcon from '../../../assets/icons/github.png';
-import { useState } from 'react';
 import {
 	auth,
 	googleProvider,
@@ -24,7 +23,7 @@ export const Signup = () => {
 		}
 	};
 
-	//signupwith google
+	//signupwith github
 	const signInWithGithub = async () => {
 		try {
 
@@ -41,30 +40,6 @@ export const Signup = () => {
 			<p className='mb-4 text-lg font-normal text-gray-600'>
 				Your gateway to endless learning starts here
 			</p>
-			{/* <form action='' className='text-lg font-mono font-normal'>
-				<input
-					type='text'
-					name='email'
-					id='email'
-					placeholder='Email'
-					className='w-full p-2 mb-4 rounded-md'
-					required
-				/>
-				<input
-					type='text'
-					name='password'
-					id='password'
-					placeholder='Password'
-					className='w-full p-2 mb-4 rounded-md'
-					required
-				/>
-				<input
-					type='submit'
-					value='Sign Up'
-					className='w-full bg-neon-blue text-white p-3 rounded-md cursor-pointer'
-				/>
-
-			</form> */}
 			<div
 				className='signup-google-wrap flex items-center text-lg	 border-2 border-midnight hover:bg-neon-blue hover:text-white transition duration-300 transform hover:scale-105 rounded-xl p-4 cursor-pointer my-4'
 				onClick={signInWithGoogle}
