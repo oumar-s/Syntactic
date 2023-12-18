@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+### ⚡️⚡️⚡️ Syntactic 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Authors
+[Oumar S.](https://github.com/oumar-s)
+[Anup T.](https://github.com/devanup) 
+[Alamin M.](https://github.com/Alaminium)
+[Iris S.](https://github.com/irisshakya)
 
-## Available Scripts
+### ✨ Description 
+`Syntactic` is a learning platform that incorporates AI driven feedback and effective learning techniques such as active recall, interleaving, and spaced repetition to provide an efficient way to learn programming languages. Our goal is to prevent tutorial hell and reduce the amount of money and time it takes to learn a programming language. 
 
-In the project directory, you can run:
+### 🌐 Live Site
+The site is currently deployed [here](https://syntactic-71b1c.firebaseapp.com):
+Live site: https://syntactic-71b1c.firebaseapp.com
 
-### `npm start`
+### 📁 Backend Repo
+The backend repo is [here](https://github.com/oumar-s/Syntactic-Backend): 
+Syntactic-Backend: https://github.com/oumar-s/Syntactic-Backend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### ⚙ Technologies Used
+- `React` for the front-end
+- `Tailwind` for styling
+- `Firebase` and `Flask` for the back-end
+- `ChatGPT` for the AI features
+- `Firebase` and `Heroku` for deployment
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 💨 To Get Started Locally
+- This project is heavily coupled with firebase, so you will need to create a firebase project and enable firestore and authentication. 
+- Also, please clone the backend repo that repo as well and follow the instructions there to get the backend running locally.
 
-### `npm test`
+#### Ensure that Firebase Firestore has the following collections:
+- `Courses` with each document being named after the course code (e.g. `javascript`)
+- Structure for each document in courses collection:  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+id: string
+title: string
+syllabus: array of objects
+    chapter: string
+    topics: array of objects
+        id: string
+        name: string
+        pid: string
+    
 
-### `npm run build`
+#### 🏃‍♀️ Running the app locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For local development you will need two terminals open, one for the react-client and one for the flask backend.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+_Clone_ this app, then:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# flask-backend terminal 1
+python -m venv .venv       # Create a virtual environment
+source .venv/bin/activate  # Activate the virtual environment (Linux/Mac)
+.\.venv\Scripts\activate   # Activate the virtual environment (Windows)
+pip install -r requirements.txt  # Install dependencies
+flask run                  # Run the flask server
+```
 
-### `npm run eject`
+```bash
+# react-client terminal 2
+npm install               # Install dependencies
+npm start              # Run the react client
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    
