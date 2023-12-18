@@ -3,34 +3,35 @@ import React, { useState, useEffect, useRef } from 'react';
 const Chatbot = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([{id: 1, type: 'bot', message: 'Hello! How can I help you?'}]);
+  const [chatHistory, setChatHistory] = useState([{ id: 1, type: 'bot', message: 'Hello! How can I help you?' }]);
 
-  // Ref for the chat container
+  // Scroll to bottom of chat container when chat history changes
   const chatContainerRef = useRef(null);
 
-  // Effect to scroll to the bottom of the chat on chat history update
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [chatHistory]);
 
-
+  // Toggle chat window
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
   };
 
+  // Handle input change
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
 
+  // Handle send button click
   const handleSendClick = async () => {
     if (message.trim() !== '') {
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         { id: prevChatHistory.length + 1, type: 'user', message: message },
       ]);
-  
+
       const question = message;
       setMessage('');
 
@@ -42,11 +43,11 @@ const Chatbot = () => {
           },
           body: JSON.stringify({ question: question }),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to fetch');
         }
-  
+
         const result = await response.json();
         console.log(result);
         setChatHistory((prevChatHistory) => [
@@ -58,12 +59,12 @@ const Chatbot = () => {
           },
         ]);
       } catch (error) {
-          console.error('Error:', error.message);
+        console.error('Error:', error.message);
       }
-  
+
     }
   };
-  
+
 
   return (
     <div className="fixed bottom-5 right-5 z-50">

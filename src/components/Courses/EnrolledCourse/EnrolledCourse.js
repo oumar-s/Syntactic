@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom'; // Import NavLink
 
-// Import Icons
 import dropDownIcon from '../../../assets/icons/drop-down.png';
 
 let allTopics = [];
@@ -13,14 +12,11 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 
 	const [isOpen, setIsOpen] = useState(false); // State to track accordion open/close
 	const [topics, setTopics] = useState(allTopics);
-	//const [progress, setProgress] = useState({});
-	//const [user, setUser] = useState(auth.currentUser);
 
 	const toggleAccordion = () => {
 		setIsOpen(!isOpen);
 	};
 	const toggleDropdown = (index) => {
-		// console.log('toggleDropdown called with index:', index);
 		const newTopics = [...topics];
 		newTopics[index].dropdown = !newTopics[index].dropdown;
 		setTopics(newTopics);
@@ -68,11 +64,10 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 							<li className='flex flex-col' key={index}>
 								<div className='flex'>
 									<div
-										className={`rounded-full  text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${
-											progress[index + 1] === 'complete'
+										className={`rounded-full  text-white w-6 h-6 flex items-center justify-center mr-5 p-5 ${progress[index + 1] === 'complete'
 												? 'bg-green-600'
 												: 'bg-midnight'
-										}`}
+											}`}
 									>
 										{index + 1}
 									</div>
@@ -84,9 +79,8 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 										<img
 											src={dropDownIcon}
 											alt='Dropdown Icon'
-											className={`w-6 h-6 ml-2 cursor-pointer ${
-												topic.dropdown ? 'rotate-180' : ''
-											}`}
+											className={`w-6 h-6 ml-2 cursor-pointer ${topic.dropdown ? 'rotate-180' : ''
+												}`}
 										/>
 									</div>
 								</div>
@@ -96,11 +90,10 @@ export const EnrolledCourse = ({ name, syllabus, progress }) => {
 											<ol className='list-disc space-y-7'>
 												{topic.topics.map((subtopic) => (
 													<li
-														className={`transition-transform duration-300 ease-in-out hover:translate-x-2 ${
-															progress[subtopic.pid] === 'complete'
+														className={`transition-transform duration-300 ease-in-out hover:translate-x-2 ${progress[subtopic.pid] === 'complete'
 																? 'text-green-600'
 																: console.log('here: ', progress[subtopic.pid])
-														} `}
+															} `}
 													>
 														<Link
 															to={`/${courseName}/${subtopic.id}`}

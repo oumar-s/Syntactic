@@ -1,4 +1,3 @@
-/* I added an 'edit' to allow a user to select which course they want feedback and review for */
 //Import Components
 import { EnrolledCourse } from '../Courses/EnrolledCourse/EnrolledCourse';
 
@@ -8,10 +7,7 @@ import { Link } from 'react-router-dom';
 import { auth, db } from '../../config/firebaseConfig';
 import {
 	getDoc,
-	collection,
 	setDoc,
-	deleteDoc,
-	updateDoc,
 	doc,
 } from 'firebase/firestore';
 
@@ -37,11 +33,9 @@ export const DashboardContent = () => {
 						console.log(
 							'Document Data (Enrollment):',
 							docSnap.data().enrollments,
-							// docSnap.data().enrollments[0].title,
 						);
 						setEnrolledCourses(docSnap.data().enrollments);
 					} else {
-						// doc.data() will be undefined in this case
 						console.log('No such document!');
 					}
 				} catch (error) {
@@ -56,7 +50,6 @@ export const DashboardContent = () => {
 					console.log('test1');
 					setNextTopicToReview(docSnap.data().Javascript?.next);
 				} else {
-					// Add a new document in collection "cities"
 					await setDoc(docRef, {
 						Javascript: {
 							box1: [],
@@ -73,10 +66,8 @@ export const DashboardContent = () => {
 				const progressRef = doc(db, 'progress', `${auth.currentUser.uid}`);
 				const progressSnap = await getDoc(progressRef);
 				if (progressSnap.exists()) {
-					//console.log('Document data:', progressSnap.data());
 					setProgress(progressSnap.data());
 				} else {
-					// Add a new document in collection "cities"
 					await setDoc(progressRef, {
 						Javascript: {},
 						Python: {},
@@ -131,7 +122,6 @@ export const DashboardContent = () => {
 				</div>
 			</div>
 
-			{/* CourseList component goes here */}
 			<div className='bg-white shadow-sm p-4 rounded-md w-4/5 sm:w-4/5 md:w-4/5 lg:w-3/4 m-auto mt-14'>
 				<h2 className='text-xl font-bold'>Your Courses</h2>
 				{enrolledCourses.length ? (
