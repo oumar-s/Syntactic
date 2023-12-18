@@ -1,4 +1,4 @@
-### ⚡️ Syntactic 
+# ⚡️ Syntactic 
 
 ### 👨🏽‍💻 Authors
 - Oumar Siby: https://github.com/oumar-s
